@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "team-icon-click.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

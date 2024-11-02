@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tasks-click.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

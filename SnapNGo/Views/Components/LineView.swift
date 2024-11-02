@@ -1,0 +1,24 @@
+//
+//  LineView.swift
+//  SnapNGo
+//
+//  Created by Austin Xu on 2024/11/2.
+//
+
+import Foundation
+import SwiftUI
+
+struct LineView: View {
+    var color: Color = .accentColor
+    var height: CGFloat = 2
+    var horizontalPadding: CGFloat = 16
+    var verticalPadding: CGFloat = 8
+
+    var body: some View {
+        Rectangle()
+            .frame(height: height)
+            .foregroundColor(color)
+            .padding(.horizontal, horizontalPadding)
+            .padding(.vertical, verticalPadding)
+    }
+}
