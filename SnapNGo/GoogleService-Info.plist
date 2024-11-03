@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>263960076808-hkt6kcu83stcogbdumujk4684atq0mup.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.263960076808-hkt6kcu83stcogbdumujk4684atq0mup</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBmjIZ6z8yfSVeTZjx7P8UF_qFx31RX314</string>
+	<key>GCM_SENDER_ID</key>
+	<string>263960076808</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.austinxu.SnapNGo</string>
+	<key>PROJECT_ID</key>
+	<string>snapngo-4e18b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>snapngo-4e18b.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:263960076808:ios:837251cc46634eee5f27bd</string>
+</dict>
+</plist>

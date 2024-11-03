@@ -11,7 +11,7 @@ import SwiftUI
 struct LineView: View {
     var color: Color = .accentColor
     var height: CGFloat = 2
-    var horizontalPadding: CGFloat = 16
+    var horizontalPadding: CGFloat = 8
     var verticalPadding: CGFloat = 8
 
     var body: some View {
