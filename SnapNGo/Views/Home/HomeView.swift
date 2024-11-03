@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
+    let aboutUsItems = [
+        ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
+        ("sample", "Campus Life", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
+    ]
+    
     var body: some View {
         ScrollView {
             VStack{
@@ -15,39 +20,11 @@ struct HomeView: View {
                 
                 LineView()
                 
-                VStack(alignment: .leading){
-                    Text("Map")
-                        .fontWeight(.semibold)
-
-                    Image("sample")
-                        .resizable()
-                        .frame(maxWidth: .infinity, maxHeight: 150)
-                }
-                .frame(maxWidth: .infinity, minHeight: 125)
+                mapSectionView
                 
                 LineView()
                 
-                VStack(alignment: .leading){
-                    HStack {
-                        Text("About Us")
-                            .fontWeight(.semibold)
-                        Spacer()
-                        Button {
-                            //
-                        } label: {
-                            Text("View All")
-                                .underline()
-                                .fontWeight(.semibold)
-                        }
-
-                    }
-
-                    Image("sample")
-                        .resizable()
-                        .frame(maxWidth: .infinity, maxHeight: 150)
-                }
-                .frame(maxWidth: .infinity, minHeight: 125)
-
+                aboutUsSectionView
             }
             .padding(.horizontal, 16)
         }
@@ -81,7 +58,7 @@ struct HomeView: View {
         
     }
     
-    //MARK: - Task Section View
+    //MARK: - Task Section
     private var taskSectionView: some View{
         HStack {
             Image("sample")
@@ -107,6 +84,53 @@ struct HomeView: View {
         .background(RoundedRectangle(cornerRadius: 10).fill(.white))
         .frame(minWidth: 300, minHeight: 125)
 
+    }
+    
+    //MARK: - Map Section
+    private var mapSectionView: some View{
+        VStack(alignment: .leading){
+            Text("Map")
+                .fontWeight(.semibold)
+
+            Image("sample")
+                .resizable()
+                .frame(maxWidth: .infinity, maxHeight: 150)
+        }
+        .frame(maxWidth: .infinity, minHeight: 125)
+    }
+    
+    //MARK: - About Us Section
+    private var aboutUsSectionView: some View{
+        VStack(alignment: .leading){
+            HStack {
+                Text("About Us")
+                    .fontWeight(.semibold)
+                Spacer()
+                Button {
+                    //
+                } label: {
+                    Text("View All")
+                        .underline()
+                        .fontWeight(.semibold)
+                }
+
+            }
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 16) {
+                    ForEach(aboutUsItems, id: \.1) { item in
+                        AboutUsCardView(
+                            image: item.0,
+                            title: item.1,
+                            description: item.2) {
+                                print("hello")
+                            }
+                    }
+                }
+                .padding(4)
+            }.frame(maxWidth: .infinity)
+        }
+        .frame(maxWidth: .infinity, minHeight: 125)
     }
 }
 
