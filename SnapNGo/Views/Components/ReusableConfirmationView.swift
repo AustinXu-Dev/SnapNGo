@@ -18,25 +18,32 @@ struct ReusableConfirmationView: View{
         VStack(alignment: .center){
             Image(image)
                 .resizable()
-                .frame(width: 300, height: 200)
                 .aspectRatio(contentMode: .fit)
+                .padding(.bottom, 8)
             Text(title)
                 .fontWeight(.semibold)
+                .padding(.bottom, 8)
             Text(desc)
+                .frame(width: 280)
+                .multilineTextAlignment(.center)
+                .fontWeight(.light)
+                .padding(.bottom, 8)
             Button {
                 action()
             } label: {
                 Text(buttonText)
+                    .frame(width: 300)
             }
-
-            
+            .buttonStyle(.borderedProminent)
+                        
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ColorConstants.background)
     }
 }
 
 #Preview{
-    ReusableConfirmationView(image: "oops_image", title: "Successfuly snap a photo", desc: "click contrinue", buttonText: "Continue") {
+    ReusableConfirmationView(image: "yay_human_image", title: "Successfuly snap a photo", desc: "Try Retaking Photo. Do not upload from your image folder.", buttonText: "Continue") {
         print("hello")
     }
 }

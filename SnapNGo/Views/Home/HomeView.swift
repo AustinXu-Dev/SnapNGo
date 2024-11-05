@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     let aboutUsItems = [
         ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
         ("sample", "Campus Life", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
@@ -30,30 +32,43 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
-
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+        .safeAreaInset(edge: .top, content: {
+            Color.clear
+                .frame(height: 70)
+        })
+        .overlay {
+            ZStack{
+                Color.clear
+                    .frame(height: 120)
+                    .background(.ultraThinMaterial)
+                    .blur(radius: 1)
+                    .ignoresSafeArea(edges: .top)
                 HStack{
-                    Image(systemName: "person")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 10)
-                    Spacer()
-                    Text("Jane Doe")
-                }
-                .frame(maxWidth: 200)
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Image("currency")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .overlay {
-                        Text("1000")
-                            .font(.footnote)
-                            .foregroundStyle(.white)
-                            .offset(x: 14, y: -3)
+                    HStack{
+                        Image("profile")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                        Text("Jane Doe")
+                            .fontWeight(.semibold)
+                            .font(.title3)
                     }
-            }
+                    .padding(.bottom, 10)
+                    Spacer()
+                    Image("currency")
+                        .resizable()
+                        .frame(width: 110, height: 50)
+                        .aspectRatio(contentMode: .fill)
+                        .overlay {
+                            Text("1000")
+                                .font(.footnote)
+                                .foregroundStyle(.white)
+                                .offset(x: 14, y: -3)
+                        }
+                        .padding(.bottom, 10)
+                }
+                .offset(y: -30)
+                .padding(.horizontal)
+            }.frame(maxHeight: .infinity, alignment: .top)
         }
         
     }
@@ -123,7 +138,7 @@ struct HomeView: View {
                             image: item.0,
                             title: item.1,
                             description: item.2) {
-                                print("hello")
+                                AppCoordinator.push(.tasks)
                             }
                     }
                 }

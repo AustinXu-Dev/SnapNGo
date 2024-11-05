@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TabScreenView: View {
     
+    @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @State var selectedTab: TabViewEnum = .home
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             TeamView()
@@ -32,8 +34,11 @@ struct TabScreenView: View {
                     Label("", image: selectedTab == .profile ? "profile-icon-click" : "profile-icon")
                 }
                 .tag(TabViewEnum.profile)
-            
         }
+        .onAppear {
+            UITabBar.appearance().backgroundColor = .white
+        }
+
     }
 }
 
