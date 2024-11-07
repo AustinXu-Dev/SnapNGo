@@ -16,7 +16,7 @@ extension APIManager {
     
     // MARK: - Adding a route to a Default Main Route of an API
     var url: URL {
-        let urlString = "https://hive-event.vercel.app/api" + methodPath
+        let urlString = "https://snap-n-go.vercel.app/api" + methodPath
         guard let url = URL(string: urlString) else {
             fatalError("Invalid URL: \(urlString)")
         }

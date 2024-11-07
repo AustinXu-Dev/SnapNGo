@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @StateObject var getHistoryVM: GetHistoryDataViewModel = GetHistoryDataViewModel()
     let aboutUsItems = [
         ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
         ("sample", "Campus Life", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
@@ -70,7 +71,11 @@ struct HomeView: View {
                 .padding(.horizontal)
             }.frame(maxHeight: .infinity, alignment: .top)
         }
-        
+        .onAppear {
+            if getHistoryVM.history.isEmpty{
+                getHistoryVM.fetchHistory()
+            }
+        }
     }
     
     //MARK: - Task Section

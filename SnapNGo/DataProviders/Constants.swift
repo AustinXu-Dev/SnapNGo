@@ -21,4 +21,17 @@ struct Constants{
         static let description = "Ready to Snap and Explore? Let’s make campus tour an unforgettable adventure. Join Team and start your journey now!"
         static let joinButtonText = "Join Team"
     }
+    
+    struct AuthenticationViewConstant{
+        static let emailTitle = "Email"
+        static let passwordTitle = "Password"
+        static let confirmPasswordTitle = "Confirm Password"
+        static let emailPlaceholder = "enter email address"
+        static let passwordPlaceholder = "enter password"
+        static let confirmPasswordPlaceholder = "eonfirm password"
+        static let noAccountText = "Don't have an account yet?"
+        static let haveAccountText = "Already have an account?"
+        static let signInText = "Sign In"
+        static let signUpText = "Sign Up"
+    }
 }
