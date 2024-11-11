@@ -15,11 +15,21 @@ struct Constants{
     }
     
     struct TeamViewConstant{
-        static let teamHomeImage = "team_home_image"
+        static let teamHomeImage = "join_team_image"
         static let logo = "logo"
-        static let welcomeMessage = "Welcome to SnapNGo!"
-        static let description = "Ready to Snap and Explore? Let’s make campus tour an unforgettable adventure. Join Team and start your journey now!"
-        static let joinButtonText = "Join Team"
+        static let welcomeMessage = "Looks like you haven't hopped on the team train!"
+        static let description = "Scan the QR code to join the fun!"
+        static let joinButtonText = "Scan QR code"
+        static let participantIcon = "participant_icon"
+    }
+    
+    
+    struct LayoutPadding{
+        static let xsmall: CGFloat = 4
+        static let small: CGFloat = 8
+        static let medium: CGFloat = 16
+        static let large: CGFloat = 24
+        static let xLarge: CGFloat = 32
     }
     
     struct AuthenticationViewConstant{

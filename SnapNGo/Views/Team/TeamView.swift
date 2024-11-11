@@ -15,30 +15,30 @@ struct TeamView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.bottom, 8)
-            Image(Constants.TeamViewConstant.logo)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(.bottom, 8)
             Text(Constants.TeamViewConstant.welcomeMessage)
                 .fontWeight(.semibold)
                 .padding(.bottom, 8)
+                .frame(maxWidth: 300)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
             Text(Constants.TeamViewConstant.description)
                 .frame(width: 280)
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .fontWeight(.light)
                 .padding(.bottom, 8)
-            Button {
-                print("hello")
-            } label: {
+            Button(action: scanQRcode) {
                 Text(Constants.TeamViewConstant.joinButtonText)
                     .frame(width: 300)
             }
             .buttonStyle(.borderedProminent)
-                        
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+    }
+    
+    func scanQRcode() {
+        print("hello")
     }
 }
 
