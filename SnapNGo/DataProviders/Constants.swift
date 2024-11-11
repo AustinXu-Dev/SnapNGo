@@ -12,6 +12,9 @@ struct Constants{
     struct MyTasks{
         static let title = "My Tasks"
         static let progressLabel = "Progress"
+        static let teamEmptyTitle = "Your Team is Empty"
+        static let teamEmptyDesc = "Scan the QR code to become part of the team!"
+        static let scanButtonText = "Scan"
     }
     
     struct TeamViewConstant{

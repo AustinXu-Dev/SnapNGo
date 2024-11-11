@@ -106,6 +106,34 @@ struct HomeView: View {
 
     }
     
+    //MARK: - No team View
+    private var noTeamView: some View{
+        HStack{
+            VStack(alignment: .leading){
+                Text(Constants.MyTasks.teamEmptyTitle)
+                    .font(.system(size: 20))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.accentColor)
+                Text(Constants.MyTasks.teamEmptyDesc)
+                    .font(.system(size: 12))
+                    .fontWeight(.semibold)
+            }
+            .padding(.vertical, Constants.LayoutPadding.medium)
+            .padding(.leading, Constants.LayoutPadding.medium)
+            Spacer(minLength: 20)
+                
+            Button(action: scanQRCode) {
+                Text(Constants.MyTasks.scanButtonText)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(.vertical, Constants.LayoutPadding.medium)
+            .padding(.trailing, Constants.LayoutPadding.medium)
+
+        }
+        .background(RoundedRectangle(cornerRadius: 10).fill(.white))
+        .frame(minWidth: 300, minHeight: 68)
+    }
+    
     //MARK: - Map Section
     private var mapSectionView: some View{
         VStack(alignment: .leading){
@@ -151,6 +179,10 @@ struct HomeView: View {
             }.frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity, minHeight: 125)
+    }
+    
+    func scanQRCode(){
+        
     }
 }
 
