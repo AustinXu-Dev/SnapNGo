@@ -51,7 +51,7 @@ struct HomeView: View {
                             .frame(width: 50, height: 50)
                         Text("Jane Doe")
                             .fontWeight(.semibold)
-                            .font(.title3)
+                            .heading1()
                     }
                     .padding(.bottom, 10)
                     Spacer()

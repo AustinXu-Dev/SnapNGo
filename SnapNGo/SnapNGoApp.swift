@@ -11,8 +11,8 @@ import SwiftUI
 struct SnapNGoApp: App {
     var body: some Scene {
         WindowGroup {
-//            CoordinatorView()
-            SignUpView()
+            CoordinatorView()
+//            SignUpView()
         }
     }
 }
