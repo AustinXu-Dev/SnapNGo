@@ -14,6 +14,8 @@ struct LinkBoxView: View {
         VStack{
             Text(text)
                 .body2()
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
             Link(url, destination: URL(string: url)!)
                 .heading3()
         }

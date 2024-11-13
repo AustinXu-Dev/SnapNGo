@@ -29,15 +29,15 @@ struct HistoryDetailView: View {
                         .frame(height: 125)
                 }
                 ExpandableText(HistoryMockData.body0)
+                    .font(.system(size: 12, weight: .regular))
+                    .expandAnimation(.easeInOut)
+                    .moreButtonColor(.accent)
                     .enableCollapse(true)
                     .lineLimit(7)
-                    .moreButtonColor(.accent)
-                    .body1()
             }
             .frame(width: 370)
             .padding(Constants.LayoutPadding.small)
             .background(RoundedRectangle(cornerRadius: 8).fill(.white))
-            .padding(Constants.LayoutPadding.medium)
             
             LineView()
                 .padding(.horizontal, Constants.LayoutPadding.small)

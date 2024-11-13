@@ -22,6 +22,11 @@ struct Constants{
         static let mapNavigateButtonText = "Navigate your next location"
     }
     
+    struct DetailView{
+        static let location_icon = "location_icon"
+        static let massScheduleText = "Mass Schedule"
+    }
+    
     struct TeamViewConstant{
         static let teamHomeImage = "join_team_image"
         static let logo = "logo"
