@@ -11,6 +11,9 @@ struct HomeView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @StateObject var getHistoryVM: GetHistoryDataViewModel = GetHistoryDataViewModel()
+    
+    @State private var selectedSegment = 0
+    
     let aboutUsItems = [
         ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
         ("sample", "Campus Life", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
@@ -136,51 +139,67 @@ struct HomeView: View {
     
     //MARK: - Map Section
     private var mapSectionView: some View{
-        VStack(alignment: .leading){
-            Text("Map")
-                .fontWeight(.semibold)
+        ZStack{
+            VStack(alignment: .leading){
+                Text(Constants.HomeView.mapTitle)
+                    .fontWeight(.semibold)
+                
+                Image("sample")
+                    .resizable()
+                    .frame(maxWidth: .infinity, maxHeight: 300)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
 
-            Image("sample")
-                .resizable()
-                .frame(maxWidth: .infinity, maxHeight: 150)
+            }
+            .frame(maxWidth: .infinity, minHeight: 125)
+            
+            Button {
+                // Navigation push to map
+                print("tap!")
+            } label: {
+                Text(Constants.HomeView.mapNavigateButtonText)
+                    .body1()
+            }
+            .buttonStyle(.borderedProminent)
+            .offset(y: 130)
+
         }
-        .frame(maxWidth: .infinity, minHeight: 125)
+        
     }
     
     //MARK: - About Us Section
     private var aboutUsSectionView: some View{
         VStack(alignment: .leading){
-            HStack {
-                Text("About Us")
-                    .fontWeight(.semibold)
-                Spacer()
-                Button {
-                    //
-                } label: {
-                    Text("View All")
-                        .underline()
-                        .fontWeight(.semibold)
-                }
-
+            Picker("Options", selection: $selectedSegment) {
+                Text("About Us").tag(0)
+                Text("Faculties").tag(1)
             }
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 16) {
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.bottom, Constants.LayoutPadding.medium)
+            
+            if selectedSegment == 0 {
+                LazyVStack(spacing: 8){
                     ForEach(aboutUsItems, id: \.1) { item in
-                        AboutUsCardView(
-                            image: item.0,
-                            title: item.1,
-                            description: item.2) {
-                                AppCoordinator.push(.tasks)
-                            }
+                        AboutUsLongCardView(image: item.0, title: item.1, description: item.2) {
+                            print("hello")
+                        }
                     }
                 }
-                .padding(4)
-            }.frame(maxWidth: .infinity)
+            } else {
+                LazyVStack(spacing: 8){
+                    ForEach(aboutUsItems, id: \.1) { item in
+                        AboutUsLongCardView(image: item.0, title: item.1, description: item.2) {
+                            print("hello")
+                        }
+                    }
+                }
+            }
         }
-        .frame(maxWidth: .infinity, minHeight: 125)
+        .frame(maxWidth: .infinity)
     }
     
+    
+    
+    // MARK: - Scan QR code function
     func scanQRCode(){
         
     }

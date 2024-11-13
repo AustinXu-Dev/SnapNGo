@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B344000C2CE4FF6B005D9515 /* ExpandableText in Frameworks */ = {isa = PBXBuildFile; productRef = B344000B2CE4FF6B005D9515 /* ExpandableText */; };
 		B36E34AC2CD7C9B40081FB4E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34AB2CD7C9B40081FB4E /* FirebaseAnalytics */; };
 		B36E34AE2CD7C9B40081FB4E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34AD2CD7C9B40081FB4E /* FirebaseAnalyticsOnDeviceConversion */; };
 		B36E34B02CD7C9B40081FB4E /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34AF2CD7C9B40081FB4E /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -53,6 +54,7 @@
 				B36E34B22CD7C9B40081FB4E /* FirebaseAppCheck in Frameworks */,
 				B36E34B62CD7C9B40081FB4E /* FirebaseAuth in Frameworks */,
 				B36E34AC2CD7C9B40081FB4E /* FirebaseAnalytics in Frameworks */,
+				B344000C2CE4FF6B005D9515 /* ExpandableText in Frameworks */,
 				B36E34B42CD7C9B40081FB4E /* FirebaseAppDistribution-Beta in Frameworks */,
 				B36E34B02CD7C9B40081FB4E /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				B36E34BF2CD7CA040081FB4E /* GoogleSignInSwift in Frameworks */,
@@ -122,6 +124,7 @@
 				B36E34BC2CD7CA040081FB4E /* GoogleSignIn */,
 				B36E34BE2CD7CA040081FB4E /* GoogleSignInSwift */,
 				B36E34C12CD7CA3D0081FB4E /* KeychainSwift */,
+				B344000B2CE4FF6B005D9515 /* ExpandableText */,
 			);
 			productName = SnapNGo;
 			productReference = BC2172552CC69ACD00C042EA /* SnapNGo.app */;
@@ -155,6 +158,7 @@
 				B36E34A92CD7C98C0081FB4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B36E34BB2CD7CA040081FB4E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B36E34C02CD7CA3D0081FB4E /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BC2172562CC69ACD00C042EA /* Products */;
@@ -398,6 +402,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/n3d1117/ExpandableText";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		B36E34A92CD7C98C0081FB4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -425,6 +437,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B344000B2CE4FF6B005D9515 /* ExpandableText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */;
+			productName = ExpandableText;
+		};
 		B36E34AB2CD7C9B40081FB4E /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B36E34A92CD7C98C0081FB4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

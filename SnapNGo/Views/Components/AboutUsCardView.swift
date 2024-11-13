@@ -9,41 +9,31 @@ import Foundation
 import SwiftUI
 
 struct AboutUsCardView: View {
-    var image: String // Image URL or name
+    var image: String
     var title: String
     var description: String
-    var action:() -> Void
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
             Image(image) // Replace with AsyncImage if loading from a URL
                 .resizable()
                 .scaledToFit()
-                .frame(height: 120)
+                .frame(height: 100)
                 .cornerRadius(8)
             
             Text(title)
-                .font(.headline)
-                .padding(.top, 8)
-            
+                .heading2()
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
             Text(description)
-                .font(.subheadline)
+                .body2()
                 .foregroundColor(.secondary)
-                .lineLimit(6)
-            Spacer()
-            HStack {
-                Spacer()
-                Button {
-                    action()
-                } label: {
-                    Text("Explore")
-                }
-                .buttonStyle(.borderedProminent)
-            }
+                .multilineTextAlignment(.center)
+                .padding(.top, Constants.LayoutPadding.small)
 
         }
-        .frame(width: 200, height: 280) // Adjust width for horizontal scrolling
-        .padding()
+        .frame(width: 170, height: 250)
+        .padding(Constants.LayoutPadding.small)
         .background(Color.white)
         .cornerRadius(12)
         .shadow(color: .gray, radius: 3, x: 0, y:4)

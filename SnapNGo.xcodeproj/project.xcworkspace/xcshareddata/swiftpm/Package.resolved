@@ -1,5 +1,5 @@
 {
-  "originHash" : "757b1222dfc4147676f2038d2a010e4703501adb0c9f35929e13cf16c7636f46",
+  "originHash" : "cdcacd82636cd39683b71b0d1a7df2381d359858b777d9465e9ce5a96aeb7ee5",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "c89ed571ae140f8eb1142735e6e23d7bb8c34cb2",
         "version" : "1.7.5"
+      }
+    },
+    {
+      "identity" : "expandabletext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/n3d1117/ExpandableText",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2b0dd2f3d2870fe933ffe5c2ee057d2e9fa647e2"
       }
     },
     {

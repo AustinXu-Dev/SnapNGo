@@ -17,6 +17,11 @@ struct Constants{
         static let scanButtonText = "Scan"
     }
     
+    struct HomeView {
+        static let mapTitle = "Our map"
+        static let mapNavigateButtonText = "Navigate your next location"
+    }
+    
     struct TeamViewConstant{
         static let teamHomeImage = "join_team_image"
         static let logo = "logo"
