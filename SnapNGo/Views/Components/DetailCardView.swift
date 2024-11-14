@@ -25,7 +25,7 @@ struct DetailCardView: View {
                 .lineLimit(2)
                 .heading3()
             HStack{
-                Image("location_icon")
+                Image(Constants.DetailView.locationIcon)
                 Text(location)
                     .body2()
                     .lineLimit(2)
@@ -39,7 +39,7 @@ struct DetailCardView: View {
                 .lineLimit(7)
             
         }
-        .frame(width: 370)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(Constants.LayoutPadding.small)
         .background(RoundedRectangle(cornerRadius: 8).fill(.white))
     }

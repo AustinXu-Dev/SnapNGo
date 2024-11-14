@@ -16,10 +16,11 @@ struct LinkBoxView: View {
                 .body2()
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
+                .frame(alignment: .center)
             Link(url, destination: URL(string: url)!)
                 .heading3()
         }
-        .frame(width: 380, height: 44)
+        .frame(width: 370, height: 44)
         .background(RoundedRectangle(cornerRadius: 8).fill(.white))
     }
 }

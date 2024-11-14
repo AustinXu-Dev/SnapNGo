@@ -23,7 +23,9 @@ struct Constants{
     }
     
     struct DetailView{
-        static let location_icon = "location_icon"
+        static let locationIcon = "location_icon"
+        static let phoneIcon = "phone_icon"
+        static let emailIcon = "email_icon"
         static let massScheduleText = "Mass Schedule"
     }
     

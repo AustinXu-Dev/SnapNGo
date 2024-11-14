@@ -11,6 +11,10 @@ import SwiftUI
 enum Screen: Identifiable, Hashable {
     case tab
     case teamMembers
+    case historyDetail
+    case chapelDetail
+    case campusDetail
+    case facultyDetail
     case tasks
     
     var id: Self { return self }

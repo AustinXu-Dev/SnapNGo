@@ -32,7 +32,7 @@ struct AboutUsCardView: View {
                 .padding(.top, Constants.LayoutPadding.small)
 
         }
-        .frame(width: 170, height: 250)
+        .frame(width: 160, height: 250)
         .padding(Constants.LayoutPadding.small)
         .background(Color.white)
         .cornerRadius(12)

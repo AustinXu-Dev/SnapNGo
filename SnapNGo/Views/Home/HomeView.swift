@@ -15,8 +15,10 @@ struct HomeView: View {
     @State private var selectedSegment = 0
     
     let aboutUsItems = [
-        ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
-        ("sample", "Campus Life", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity."),
+        ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity.", "history"),
+        ("sample", "Chapel", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity.", "chapel"),
+        ("sample", "Campus", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity.", "campus"),
+        ("sample", "Faculty", "asdfFounded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity.", "faculty"),
     ]
     
     var body: some View {
@@ -41,38 +43,7 @@ struct HomeView: View {
                 .frame(height: 70)
         })
         .overlay {
-            ZStack{
-                Color.clear
-                    .frame(height: 120)
-                    .background(.ultraThinMaterial)
-                    .blur(radius: 1)
-                    .ignoresSafeArea(edges: .top)
-                HStack{
-                    HStack{
-                        Image("profile")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        Text("Jane Doe")
-                            .fontWeight(.semibold)
-                            .heading1()
-                    }
-                    .padding(.bottom, 10)
-                    Spacer()
-                    Image("currency")
-                        .resizable()
-                        .frame(width: 110, height: 50)
-                        .aspectRatio(contentMode: .fill)
-                        .overlay {
-                            Text("1000")
-                                .font(.footnote)
-                                .foregroundStyle(.white)
-                                .offset(x: 14, y: -3)
-                        }
-                        .padding(.bottom, 10)
-                }
-                .offset(y: -30)
-                .padding(.horizontal)
-            }.frame(maxHeight: .infinity, alignment: .top)
+            topOverlayView
         }
         .onAppear {
             if getHistoryVM.history.isEmpty{
@@ -137,6 +108,42 @@ struct HomeView: View {
         .frame(minWidth: 300, minHeight: 68)
     }
     
+    //MARK: - Top Overlay View
+    private var topOverlayView: some View{
+        ZStack{
+            Color.clear
+                .frame(height: 120)
+                .background(.ultraThinMaterial)
+                .blur(radius: 1)
+                .ignoresSafeArea(edges: .top)
+            HStack{
+                HStack{
+                    Image("profile")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                    Text("Jane Doe")
+                        .fontWeight(.semibold)
+                        .heading1()
+                }
+                .padding(.bottom, 10)
+                Spacer()
+                Image("currency")
+                    .resizable()
+                    .frame(width: 110, height: 50)
+                    .aspectRatio(contentMode: .fill)
+                    .overlay {
+                        Text("1000")
+                            .font(.footnote)
+                            .foregroundStyle(.white)
+                            .offset(x: 14, y: -3)
+                    }
+                    .padding(.bottom, 10)
+            }
+            .offset(y: -30)
+            .padding(.horizontal)
+        }.frame(maxHeight: .infinity, alignment: .top)
+    }
+    
     //MARK: - Map Section
     private var mapSectionView: some View{
         ZStack{
@@ -180,7 +187,18 @@ struct HomeView: View {
                 LazyVStack(spacing: 8){
                     ForEach(aboutUsItems, id: \.1) { item in
                         AboutUsLongCardView(image: item.0, title: item.1, description: item.2) {
-                            print("hello")
+                            switch item.3{
+                            case "history":
+                                AppCoordinator.push(.historyDetail)
+                            case "chapel":
+                                AppCoordinator.push(.chapelDetail)
+                            case "campus":
+                                AppCoordinator.push(.campusDetail)
+                            case "faculty":
+                                AppCoordinator.push(.facultyDetail)
+                            default:
+                                AppCoordinator.popToRoot()
+                            }
                         }
                     }
                 }
