@@ -9,10 +9,14 @@ import SwiftUI
 
 @main
 struct SnapNGoApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             CoordinatorView()
 //            SignUpView()
+//            MapTest()
         }
     }
 }

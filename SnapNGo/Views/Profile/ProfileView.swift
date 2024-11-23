@@ -8,8 +8,21 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
+    @ObservedObject var googleVM = GoogleAuthViewModel()
+
     var body: some View {
-        Text("Hello, Profile!")
+        VStack{
+            Text("Hello, Profile!")
+            
+            Button {
+                googleVM.signOutWithGoogle()
+            } label: {
+                Text("sign out")
+            }
+        }
+
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 enum Screen: Identifiable, Hashable {
+    case signIn
     case tab
     case teamMembers
     case historyDetail

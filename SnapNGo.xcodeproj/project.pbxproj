@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B344000C2CE4FF6B005D9515 /* ExpandableText in Frameworks */ = {isa = PBXBuildFile; productRef = B344000B2CE4FF6B005D9515 /* ExpandableText */; };
+		B34400252CE7A675005D9515 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = B34400242CE7A675005D9515 /* CodeScanner */; };
 		B36E34AC2CD7C9B40081FB4E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34AB2CD7C9B40081FB4E /* FirebaseAnalytics */; };
 		B36E34AE2CD7C9B40081FB4E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34AD2CD7C9B40081FB4E /* FirebaseAnalyticsOnDeviceConversion */; };
 		B36E34B02CD7C9B40081FB4E /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34AF2CD7C9B40081FB4E /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -63,6 +64,7 @@
 				B36E34AE2CD7C9B40081FB4E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				B36E34B82CD7C9B40081FB4E /* FirebaseFirestore in Frameworks */,
 				B36E34BD2CD7CA040081FB4E /* GoogleSignIn in Frameworks */,
+				B34400252CE7A675005D9515 /* CodeScanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +127,7 @@
 				B36E34BE2CD7CA040081FB4E /* GoogleSignInSwift */,
 				B36E34C12CD7CA3D0081FB4E /* KeychainSwift */,
 				B344000B2CE4FF6B005D9515 /* ExpandableText */,
+				B34400242CE7A675005D9515 /* CodeScanner */,
 			);
 			productName = SnapNGo;
 			productReference = BC2172552CC69ACD00C042EA /* SnapNGo.app */;
@@ -159,6 +162,7 @@
 				B36E34BB2CD7CA040081FB4E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B36E34C02CD7CA3D0081FB4E /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */,
+				B34400232CE7A675005D9515 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BC2172562CC69ACD00C042EA /* Products */;
@@ -410,6 +414,14 @@
 				kind = branch;
 			};
 		};
+		B34400232CE7A675005D9515 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
 		B36E34A92CD7C98C0081FB4E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -441,6 +453,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */;
 			productName = ExpandableText;
+		};
+		B34400242CE7A675005D9515 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B34400232CE7A675005D9515 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
 		};
 		B36E34AB2CD7C9B40081FB4E /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

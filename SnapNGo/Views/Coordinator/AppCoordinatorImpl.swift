@@ -46,6 +46,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
     @ViewBuilder
     func build(_ screen: Screen) -> some View {
         switch screen {
+        case .signIn:
+            SignInView()
         case .tab:
             TabScreenView()
         case .tasks:

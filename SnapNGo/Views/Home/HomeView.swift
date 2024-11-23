@@ -46,9 +46,9 @@ struct HomeView: View {
             topOverlayView
         }
         .onAppear {
-            if getHistoryVM.history.isEmpty{
-                getHistoryVM.fetchHistory()
-            }
+//            if getHistoryVM.history.isEmpty{
+//                getHistoryVM.fetchHistory()
+//            }
         }
     }
     

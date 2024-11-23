@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import CodeScanner
 
 struct TeamView: View {
     
+    @State private var isShowingScanner = false
+
     var body: some View {
         VStack(alignment: .center){
             Image(Constants.TeamViewConstant.teamHomeImage)
@@ -35,10 +38,35 @@ struct TeamView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+        .sheet(isPresented: $isShowingScanner) {
+            CodeScannerView(codeTypes: [.qr], simulatedData: "https://www.google.com", completion: handleScan)
+        }
     }
     
     func scanQRcode() {
-        print("hello")
+        isShowingScanner = true
+    }
+    
+    func handleScan(result: Result<ScanResult, ScanError>) {
+        isShowingScanner = false
+        switch result {
+        case .success(let result):
+            //MARK: - Default open the link, Change to join team after scanning using navigation
+            if let url = URL(string: result.string) {
+                // Open the link in the browser
+                UIApplication.shared.open(url, options: [:]) { success in
+                    if success {
+                        print("Opened \(url) successfully")
+                    } else {
+                        print("Failed to open \(url)")
+                    }
+                }
+            } else {
+                print("Invalid URL: \(result.string)")
+            }
+        case .failure(let error):
+            print("Scanning failed: \(error.localizedDescription)")
+        }
     }
 }
 

@@ -11,8 +11,11 @@ struct SignInView: View {
     
     @State var email: String = ""
     @State var password: String = ""
-    
+    @ObservedObject var googleVM = GoogleAuthViewModel()
+    @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
+
     @FocusState var isFocused: Bool
+    
     var body: some View {
         VStack(alignment: .center, spacing: 5){
             Image("logo")
@@ -45,11 +48,19 @@ struct SignInView: View {
             .padding(.vertical, 20)
             
             Button {
-                //
+                googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
+                    
+                }
             } label: {
                 Image("continue_with_google")
             }
             
+            Button {
+                userAppState = AppState.signedIn.rawValue
+            } label: {
+                Text("change")
+            }
+
             HStack{
                 Text(Constants.AuthenticationViewConstant.noAccountText)
                     .font(.system(size: 12))
