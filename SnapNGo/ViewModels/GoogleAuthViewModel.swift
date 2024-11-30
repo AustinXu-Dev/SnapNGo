@@ -134,6 +134,7 @@ class GoogleAuthViewModel: ObservableObject{
                 print("New User But not yet stored in backend")
                 print("In view model",self.signUpService.name, self.signUpService.email, self.signUpService.password)
                 self.signUpService.signUp()
+                self.userAppState = AppState.signedIn.rawValue
                 print("No user existing User app state is \(self.userAppState)")
                 completion(nil, true) // Returning true for new user
             }

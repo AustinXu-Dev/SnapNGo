@@ -98,6 +98,15 @@ struct SignUpView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+        .alert(isPresented: $signUpVM.success) {
+            Alert(
+                title: Text("Register Successful"),
+                message: Text("Please Sign in again!"),
+                dismissButton: .default(Text("OK")){
+                    appCoordinator.pop()
+                }
+            )
+        }
     }
     
     private var emailField: some View{

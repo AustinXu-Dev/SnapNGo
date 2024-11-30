@@ -15,6 +15,7 @@ class SignUpService: ObservableObject{
     @Published var password: String = ""
     @Published var school: String = ""
     @Published var errorMessage: String? = nil
+    @Published var success: Bool = false
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     
     init(name: String = "", email: String = "", password: String = "", school: String = "") {
@@ -35,7 +36,7 @@ class SignUpService: ObservableObject{
                 switch result{
                 case .success(_):
                     print("Signup successful")
-                    self.userAppState = AppState.signedIn.rawValue
+                    self.success = true
                 case .failure(let error):
                     if let urlError = error as? URLError, urlError.code == .badServerResponse {
                         if let responseData = try? JSONDecoder().decode(ServerError.self, from: Data(error.localizedDescription.utf8)) {

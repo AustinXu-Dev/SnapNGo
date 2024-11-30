@@ -14,8 +14,8 @@ enum Screen: Identifiable, Hashable {
     case tab
     case teamMembers
     case historyDetail
-    case chapelDetail
-    case campusDetail
+    case chapelDetail(named: HistoryData)
+    case campusDetail(named: HistoryData)
     case facultyDetail
     case tasks
     

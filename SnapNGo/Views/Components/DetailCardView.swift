@@ -23,7 +23,7 @@ struct DetailCardView: View {
             
             Text(title)
                 .lineLimit(2)
-                .heading3()
+                .heading2()
             HStack{
                 Image(Constants.DetailView.locationIcon)
                 Text(location)

@@ -8,38 +8,51 @@
 import SwiftUI
 
 struct ChapelView: View {
+    
+    var chapelData: HistoryData
+    
     var body: some View {
-        ScrollView{
-            VStack{
-                DetailCardView(image: "sample", title: "CHAPEL OF THE ANNUNCIATION, HUAMAK CAMPUS", location: "Assumption Hall (A Building)", description: HistoryMockData.body0)
-                    .padding(.bottom, Constants.LayoutPadding.small)
-                
-                LineTextView(text: Constants.DetailView.massScheduleText)
-                
-                ScheduleView(title: "Saturday Morning on the First Saturday of the Month", day: "Monday - Friday", massType: "Thai Mass", time: "5:00 pm")
-                
-                ScheduleView(title: "Weekly Adoration", day: "Monday - Friday", massType: "", time: "5:00 pm")
-                
-                LinkBoxView(text: "Want to know more about our awesome university chapels? Check out this link for all the details:", url: "https://ministry.au.edu/index.php/en/about-us")
+        TabView{
+            ForEach(chapelData.chapels ?? [], id: \.self) { chapel in
+                ScrollView{
+                    VStack{
+                        DetailCardView(image: "sample", title: chapel.name, location: chapel.location ?? "", description: chapel.description)
+                            .padding(.bottom, Constants.LayoutPadding.small)
+                        
+                        LineTextView(text: Constants.DetailView.massScheduleText)
+                        
+                        ScheduleView(title: "Saturday Morning on the First Saturday of the Month", day: "Monday - Friday", massType: "Thai Mass", time: "5:00 pm")
+                        
+                        ScheduleView(title: "Weekly Adoration", day: "Monday - Friday", massType: "", time: "5:00 pm")
+                        
+                        LinkBoxView(text: "Want to know more about our awesome university chapels? Check out this link for all the details:", url: chapel.link)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, Constants.LayoutPadding.medium)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(ColorConstants.background)
+//                .ignoresSafeArea(edges: .horizontal)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, Constants.LayoutPadding.medium)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ColorConstants.background)
-        .ignoresSafeArea(edges: .horizontal)
-
+        .frame(maxWidth: .infinity)
+        .ignoresSafeArea(edges: .bottom)
+        .tabViewStyle(.page(indexDisplayMode: .always))
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .navigationTitle(chapelData.title)
+        .navigationBarTitleDisplayMode(.inline) // Use inline title if needed
+        
     }
 }
 
 #Preview {
-    TabView{
-        ChapelView()
-        ChapelView()
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .ignoresSafeArea()
-    .tabViewStyle(.page(indexDisplayMode: .always))
-    .indexViewStyle(.page(backgroundDisplayMode: .always))
+//    TabView{
+//        ChapelView()
+//        ChapelView()
+//    }
+//    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//    .ignoresSafeArea()
+//    .tabViewStyle(.page(indexDisplayMode: .always))
+//    .indexViewStyle(.page(backgroundDisplayMode: .always))
 
 }

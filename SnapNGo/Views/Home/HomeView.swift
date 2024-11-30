@@ -46,9 +46,9 @@ struct HomeView: View {
             topOverlayView
         }
         .onAppear {
-//            if getHistoryVM.history.isEmpty{
-//                getHistoryVM.fetchHistory()
-//            }
+            if getHistoryVM.history.isEmpty{
+                getHistoryVM.fetchHistory()
+            }
         }
     }
     
@@ -185,15 +185,15 @@ struct HomeView: View {
             
             if selectedSegment == 0 {
                 LazyVStack(spacing: 8){
-                    ForEach(aboutUsItems, id: \.1) { item in
-                        AboutUsLongCardView(image: item.0, title: item.1, description: item.2) {
-                            switch item.3{
+                    ForEach(getHistoryVM.history, id: \._id) { item in
+                        AboutUsLongCardView(image: "sample", title: item.title, description: item.description) {
+                            switch item.type{
                             case "history":
                                 AppCoordinator.push(.historyDetail)
                             case "chapel":
-                                AppCoordinator.push(.chapelDetail)
+                                AppCoordinator.push(.chapelDetail(named: item))
                             case "campus":
-                                AppCoordinator.push(.campusDetail)
+                                AppCoordinator.push(.campusDetail(named: item))
                             case "faculty":
                                 AppCoordinator.push(.facultyDetail)
                             default:
