@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SignInView: View {
     
+    @EnvironmentObject var appCoordinator: AppCoordinatorImpl
     @State var email: String = ""
     @State var password: String = ""
+    @StateObject var signInVM = SignInService()
     @ObservedObject var googleVM = GoogleAuthViewModel()
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
 
@@ -30,7 +32,7 @@ struct SignInView: View {
             .padding(.top, 10)
             
             Button{
-                // Sign in
+                signInButtonAction()
             } label: {
                 Text(Constants.AuthenticationViewConstant.signInText)
                     .font(.headline)
@@ -54,18 +56,13 @@ struct SignInView: View {
             } label: {
                 Image("continue_with_google")
             }
-            
-            Button {
-                userAppState = AppState.signedIn.rawValue
-            } label: {
-                Text("change")
-            }
 
             HStack{
                 Text(Constants.AuthenticationViewConstant.noAccountText)
                     .font(.system(size: 12))
                 Button {
                     print("Go to sign up page")
+                    appCoordinator.push(.signUp)
                 } label: {
                     Text(Constants.AuthenticationViewConstant.signUpText)
                         .font(.system(size: 12))
@@ -112,7 +109,7 @@ struct SignInView: View {
                 .font(.headline)
                 .padding(.horizontal, 0)
             
-            TextField(Constants.AuthenticationViewConstant.passwordPlaceholder, text: $password)
+            SecureField(Constants.AuthenticationViewConstant.passwordPlaceholder, text: $password)
                 .autocapitalization(.none)
                 .padding()
                 .frame(width: 361, height: 41.49)
@@ -142,6 +139,12 @@ struct SignInView: View {
                 .foregroundColor(Color.accentColor)
         }
         .frame(width: 361)
+    }
+    
+    private func signInButtonAction() -> Void{
+        signInVM.email = email
+        signInVM.password = password
+        signInVM.signIn()
     }
 }
 

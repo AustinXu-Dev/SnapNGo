@@ -10,6 +10,7 @@ import SwiftUI
 
 enum Screen: Identifiable, Hashable {
     case signIn
+    case signUp
     case tab
     case teamMembers
     case historyDetail

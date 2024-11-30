@@ -49,11 +49,15 @@ struct Constants{
     
     struct AuthenticationViewConstant{
         static let emailTitle = "Email"
+        static let nameTitle = "Name"
+        static let schoolTitle = "Name of the School"
         static let passwordTitle = "Password"
         static let confirmPasswordTitle = "Confirm Password"
         static let emailPlaceholder = "enter email address"
+        static let namePlaceholder = "Jane Doe"
+        static let schoolPlaceholder = "For Example: Assumption Unviersity of Thailand"
         static let passwordPlaceholder = "enter password"
-        static let confirmPasswordPlaceholder = "eonfirm password"
+        static let confirmPasswordPlaceholder = "confirm password"
         static let noAccountText = "Don't have an account yet?"
         static let haveAccountText = "Already have an account?"
         static let signInText = "Sign In"

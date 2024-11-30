@@ -48,6 +48,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         switch screen {
         case .signIn:
             SignInView()
+        case .signUp:
+            SignUpView()
         case .tab:
             TabScreenView()
         case .tasks:

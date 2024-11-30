@@ -62,6 +62,10 @@ extension APIManager {
             }
             
             if !(200...299).contains(httpResponse.statusCode) {
+                print("HTTP Status Code: \(httpResponse.statusCode)")
+                if let responseData = data {
+                    print("Response Body: \(String(data: responseData, encoding: .utf8) ?? "No response body")")
+                }
                 completion(.failure(URLError(.badServerResponse)))
                 return
             }
@@ -72,10 +76,15 @@ extension APIManager {
             
             //MARK: - Get and Delete
             if let responseData = data {
+                if let jsonString = String(data: responseData, encoding: .utf8) {
+//                    print("Response JSON: \(jsonString)")
+                }
+                
                 do {
                     let decodeData = try JSONDecoder().decode(ModelType.self, from: responseData)
                     completion(.success(decodeData))
                 } catch {
+                    print("Decoding error: \(error)")
                     completion(.failure(error))
                 }
             } else if getMethod == "DELETE" && (200...299).contains(httpResponse.statusCode) {

@@ -11,4 +11,5 @@ struct SignUpSchema: Codable{
     let name: String
     let email: String
     let password: String
+    let school: String
 }
