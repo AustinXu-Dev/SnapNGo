@@ -10,6 +10,7 @@ import ExpandableText
 
 struct HistoryDetailView: View {
     
+    var historyData: HistoryData
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -29,7 +30,7 @@ struct HistoryDetailView: View {
                             .scaledToFit()
                             .frame(height: 125)
                     }
-                    ExpandableText(HistoryMockData.body0)
+                    ExpandableText(historyData.description)
                         .font(.system(size: 12, weight: .regular))
                         .expandAnimation(.easeInOut)
                         .moreButtonColor(.accent)
@@ -43,18 +44,21 @@ struct HistoryDetailView: View {
                 LineView(horizontalPadding: 0)
 
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(HistoryMockData.cards, id: \.0) { item in
-                        AboutUsCardView(image: "sample", title: item.0, description: item.1)
+                    ForEach(historyData.campuses ?? [], id: \.self){ item in
+                        AboutUsCardView(image: "sample", title: item.name, description: item.description)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 LineView(horizontalPadding: 0)
                 
-                LinkBoxView(text: "Check out our school website for detailed infos :", url: "https://www.au.edu/about-au")
+                LinkBoxView(text: "Check out our school website for detailed infos :", url: historyData.campuses?[0].link ?? "https://www.au.edu/about-au")
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, Constants.LayoutPadding.medium)
+            
+            .navigationTitle(historyData.title)
+            .navigationBarTitleDisplayMode(.inline)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
@@ -63,5 +67,5 @@ struct HistoryDetailView: View {
 }
 
 #Preview {
-    HistoryDetailView()
+//    HistoryDetailView()
 }

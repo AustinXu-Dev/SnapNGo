@@ -11,6 +11,7 @@ struct HomeView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @StateObject var getHistoryVM: GetHistoryDataViewModel = GetHistoryDataViewModel()
+    @StateObject var getFacultyVM: GetFacultyDataViewModel = GetFacultyDataViewModel()
     
     @State private var selectedSegment = 0
     
@@ -48,6 +49,9 @@ struct HomeView: View {
         .onAppear {
             if getHistoryVM.history.isEmpty{
                 getHistoryVM.fetchHistory()
+            }
+            if getFacultyVM.faculties.isEmpty{
+                getFacultyVM.fetchFaculties()
             }
         }
     }
@@ -189,13 +193,11 @@ struct HomeView: View {
                         AboutUsLongCardView(image: "sample", title: item.title, description: item.description) {
                             switch item.type{
                             case "history":
-                                AppCoordinator.push(.historyDetail)
+                                AppCoordinator.push(.historyDetail(named: item))
                             case "chapel":
                                 AppCoordinator.push(.chapelDetail(named: item))
                             case "campus":
                                 AppCoordinator.push(.campusDetail(named: item))
-                            case "faculty":
-                                AppCoordinator.push(.facultyDetail)
                             default:
                                 AppCoordinator.popToRoot()
                             }
@@ -204,9 +206,9 @@ struct HomeView: View {
                 }
             } else {
                 LazyVStack(spacing: 8){
-                    ForEach(aboutUsItems, id: \.1) { item in
-                        AboutUsLongCardView(image: item.0, title: item.1, description: item.2) {
-                            print("hello")
+                    ForEach(getFacultyVM.faculties, id: \.self) { faculty in
+                        AboutUsLongCardView(image: "sample", title: faculty.abbreviation, description: faculty.shortDescription) {
+                            AppCoordinator.push(.facultyDetail(named: faculty))
                         }
                     }
                 }

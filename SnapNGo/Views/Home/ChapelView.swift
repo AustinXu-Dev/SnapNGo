@@ -40,7 +40,7 @@ struct ChapelView: View {
         .tabViewStyle(.page(indexDisplayMode: .always))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
         .navigationTitle(chapelData.title)
-        .navigationBarTitleDisplayMode(.inline) // Use inline title if needed
+        .navigationBarTitleDisplayMode(.inline)
         
     }
 }

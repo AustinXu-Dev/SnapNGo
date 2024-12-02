@@ -56,14 +56,14 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             ContentView()
 //        case .detailHabit(named: let habit):
 //            DetailHabitView(habit: habit)
-        case .historyDetail:
-            HistoryDetailView()
+        case .historyDetail(named: let historyData):
+            HistoryDetailView(historyData: historyData)
         case .chapelDetail(named: let chapelData):
             ChapelView(chapelData: chapelData)
         case .campusDetail(named: let campusData):
             CampusDetailView(campusData: campusData)
-        case .facultyDetail:
-            FacultyDetailView()
+        case .facultyDetail(named: let facultyData):
+            FacultyDetailView(facultyData: facultyData)
         case .teamMembers:
             ContentView()
         }

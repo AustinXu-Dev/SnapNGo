@@ -13,10 +13,10 @@ enum Screen: Identifiable, Hashable {
     case signUp
     case tab
     case teamMembers
-    case historyDetail
+    case historyDetail(named: HistoryData)
     case chapelDetail(named: HistoryData)
     case campusDetail(named: HistoryData)
-    case facultyDetail
+    case facultyDetail(named: FacultyData)
     case tasks
     
     var id: Self { return self }

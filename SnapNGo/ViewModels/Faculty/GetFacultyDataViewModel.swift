@@ -1,28 +1,28 @@
 //
-//  GetHistoryDataViewModel.swift
+//  GetFacultyDataViewModel.swift
 //  SnapNGo
 //
-//  Created by Austin Xu on 2024/11/7.
+//  Created by Phyu Thandar Khin on 2/12/2567 BE.
 //
 
 import Foundation
 
-class GetHistoryDataViewModel: ObservableObject{
-    @Published var history : [HistoryData] = []
+class GetFacultyDataViewModel: ObservableObject{
+    @Published var faculties: [FacultyData] = []
     @Published var isLoading : Bool = false
     @Published var errorMessage : String? = nil
     
-    private let getAllHistory = GetAllHistoryData()
+    private let getAllFaculty = GetAllFacultyData()
     
-    func fetchHistory(){
+    func fetchFaculties(){
         isLoading = true
-        getAllHistory.execute { [weak self] result in
+        getAllFaculty.execute { [weak self] result in
             switch result{
             case.success(let response):
                 DispatchQueue.main.async {
                     self?.isLoading = false
-                    self?.history = response.data
-                    print(self?.history.count ?? "No history data found")
+                    self?.faculties = response
+                    print(self?.faculties ?? "No faculty data found")
                 }
             case .failure(let error):
                 print(error.localizedDescription)

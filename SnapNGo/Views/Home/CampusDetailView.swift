@@ -21,6 +21,8 @@ struct CampusDetailView: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, Constants.LayoutPadding.medium)
+            .navigationTitle(campusData.title)
+            .navigationBarTitleDisplayMode(.inline)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)

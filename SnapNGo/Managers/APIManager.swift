@@ -76,9 +76,9 @@ extension APIManager {
             
             //MARK: - Get and Delete
             if let responseData = data {
-                if let jsonString = String(data: responseData, encoding: .utf8) {
+//                if let jsonString = String(data: responseData, encoding: .utf8) {
 //                    print("Response JSON: \(jsonString)")
-                }
+//                }
                 
                 do {
                     let decodeData = try JSONDecoder().decode(ModelType.self, from: responseData)
