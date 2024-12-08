@@ -165,7 +165,7 @@ struct HomeView: View {
             
             Button {
                 // Navigation push to map
-                print("tap!")
+                AppCoordinator.push(.mapView)
             } label: {
                 Text(Constants.HomeView.mapNavigateButtonText)
                     .body1()

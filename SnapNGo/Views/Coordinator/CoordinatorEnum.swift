@@ -18,6 +18,7 @@ enum Screen: Identifiable, Hashable {
     case campusDetail(named: HistoryData)
     case facultyDetail(named: FacultyData)
     case tasks
+    case mapView
     
     var id: Self { return self }
 }

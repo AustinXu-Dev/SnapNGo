@@ -66,6 +66,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             FacultyDetailView(facultyData: facultyData)
         case .teamMembers:
             ContentView()
+        case .mapView:
+            MapDetailView()
         }
     }
     
