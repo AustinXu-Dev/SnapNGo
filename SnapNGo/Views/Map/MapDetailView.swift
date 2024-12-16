@@ -69,7 +69,7 @@ struct MapDetailView: View {
         .sheet(isPresented: $showSheet) {
             VStack(spacing: 20) {
                 HStack{
-                    Text("Start Location")
+                    Text(Constants.MapViewConstant.startLocation)
                         .font(.headline)
                     Spacer()
                     Picker("", selection: $startLocation) {
@@ -81,7 +81,7 @@ struct MapDetailView: View {
                     .labelsHidden()
                 }
                 HStack{
-                    Text("End Location")
+                    Text(Constants.MapViewConstant.endLocation)
                         .font(.headline)
                     Spacer()
                     Picker("", selection: $endLocation) {
@@ -92,7 +92,7 @@ struct MapDetailView: View {
                     .pickerStyle(.menu)
                     .labelsHidden()
                 }
-                Button("Done") {
+                Button(Constants.MapViewConstant.showMeButtonText) {
                     calculateRoute()
                     showSheet = false
                 }

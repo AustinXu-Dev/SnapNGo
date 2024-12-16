@@ -1,37 +1,35 @@
 //
-//  ReusableConfirmationView.swift
+//  CreateTeamPreScreen.swift
 //  SnapNGo
 //
-//  Created by Austin Xu on 2024/11/4.
+//  Created by Phyu Thandar Khin on 17/12/2567 BE.
 //
 
-import Foundation
 import SwiftUI
 
-struct ReusableConfirmationView: View{
-    var image: String
-    var title: String
-    var desc: String
-    var buttonText: String
-    var action: () -> Void
+struct CreateTeamPreScreen: View {
     var body: some View {
         VStack(alignment: .center){
-            Image(image)
+            Image(Constants.CreateTeamViewConstant.createTeamPreScreenImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.bottom, 8)
-            Text(title)
+            Image(Constants.CreateTeamViewConstant.logo)
+                .resizable()
+                .frame(width: 280, height: 84)
+                .aspectRatio(contentMode: .fill)
+            Text(Constants.CreateTeamViewConstant.welcomeMessage)
                 .heading1()
                 .padding(.bottom, 8)
-            Text(desc)
-                .frame(width: 280)
+            Text(Constants.CreateTeamViewConstant.description)
+                .frame(width: 380)
                 .multilineTextAlignment(.center)
                 .body1()
                 .padding(.bottom, 8)
             Button {
-                action()
+                //
             } label: {
-                Text(buttonText)
+                Text(Constants.CreateTeamViewConstant.createButtonText)
                     .heading2()
                     .frame(width: 300)
             }
@@ -43,8 +41,6 @@ struct ReusableConfirmationView: View{
     }
 }
 
-#Preview{
-    ReusableConfirmationView(image: "yay_human_image", title: "Successfuly snap a photo", desc: "Try Retaking Photo. Do not upload from your image folder.", buttonText: "Continue") {
-        print("hello")
-    }
+#Preview {
+    CreateTeamPreScreen()
 }

@@ -67,11 +67,11 @@ struct HomeView: View {
             VStack(alignment: .leading) {
                 Text(Constants.MyTasks.title)
                     .font(.headline)
-                    .foregroundColor(.yellow)
+                    .foregroundColor(.accent)
                 Text("15 Tasks")
                     .font(.subheadline)
                 ProgressView(value: 10, total: 15)
-                    .progressViewStyle(LinearProgressViewStyle(tint: .yellow))
+                    .progressViewStyle(LinearProgressViewStyle(tint: .accent))
                 Text("\(Constants.MyTasks.progressLabel) 10/15")
                     .font(.subheadline)
             }

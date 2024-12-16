@@ -38,6 +38,20 @@ struct Constants{
         static let participantIcon = "participant_icon"
     }
     
+    struct CreateTeamViewConstant{
+        static let createTeamPreScreenImage = "team_home_image"
+        static let createTeamImage = "create_team_image"
+        static let logo = "logo"
+        static let welcomeMessage = "Welcome to SnapNGo!"
+        static let description = "Ready to Snap and Explore?\nLet's make campus tour an unforgettable adventure.\nCreate Team and let them start the journey now!"
+        static let createButtonText = "Create Team"
+        static let createTeamSubtitle = "Create a Team.\nShow the students the QR Code.\nLet them scan it\nStart the journey!"
+        static let teamImageTitle = "Team Image"
+        static let chooseLocationsTitle = "Choose the locations (Maximum Location: 5)"
+        static let createQrButtonText = "Create QR"
+        static let scanQrText = "Scan QR code to Join the Team"
+        
+    }
     
     struct LayoutPadding{
         static let xsmall: CGFloat = 4
@@ -62,5 +76,13 @@ struct Constants{
         static let haveAccountText = "Already have an account?"
         static let signInText = "Sign In"
         static let signUpText = "Sign Up"
+    }
+    
+    struct MapViewConstant{
+        static let sheetTitle = "Where do you want to go?"
+        static let useCurrentLocation = "Use Current Location"
+        static let startLocation = "Start Location"
+        static let endLocation = "End Location"
+        static let showMeButtonText = "Show me the way"
     }
 }
