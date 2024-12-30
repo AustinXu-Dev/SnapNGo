@@ -14,6 +14,7 @@ struct CreateTeamView: View {
     let locations = ["Location 1", "Location 2", "Location 3", "Location 4", "Location 5", "Location 6"]
     
     @State private var selectedLocations: Set<String> = []
+    @StateObject var createTeamVM = CreateTeamViewModel()
     
     var body: some View {
         ScrollView{
@@ -57,6 +58,12 @@ struct CreateTeamView: View {
                 }
                 .background(Color.white)
                 .cornerRadius(8)
+                
+                Text("Max Members")
+                    .heading2()
+                TextField("Enter max members", text: $createTeamVM.maxMember)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
                 
                 Button {
                     //

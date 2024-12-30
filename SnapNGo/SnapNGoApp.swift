@@ -16,7 +16,7 @@ struct SnapNGoApp: App {
         WindowGroup {
             CoordinatorView()
 //            SignUpView()
-//            MapDetailView()
+//            CreateTeamView()
         }
     }
 }
