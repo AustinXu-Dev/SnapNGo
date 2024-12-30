@@ -26,4 +26,5 @@ struct SignUpUser: Codable {
     let completedTasks: [String]?
     let inventory: [String]?
     let role: String
+    let teamIds: [String]?
 }

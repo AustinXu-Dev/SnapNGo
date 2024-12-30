@@ -77,7 +77,7 @@ class GoogleAuthViewModel: ObservableObject{
                 self.signUpService.name = authResult.user.displayName ?? "No name"
                 self.signUpService.email = authResult.user.email ?? ""
                 self.signUpService.password = authResult.user.uid
-                self.signUpService.school = ""
+                self.signUpService.school = "ABAC"
                 
                 // For sign in
                 self.signInService.email = authResult.user.email ?? ""
@@ -87,12 +87,13 @@ class GoogleAuthViewModel: ObservableObject{
                 self.email = authResult.user.email ?? ""
                 self.uid = authResult.user.uid
                 
-                self.getAllUsersVM.getAllUsers()
+//                self.getAllUsersVM.getAllUsers()
                 
                 let isNewInFirebase = authResult.additionalUserInfo?.isNewUser ?? false
                 if isNewInFirebase{
                     print("New user in firebase")
                     print("In view model",self.signUpService.name, self.signUpService.email, self.signUpService.password)
+                    self.signUpService.signingInWithGoogle = true
                     self.signUpService.signUp()
                     completion(nil, true)
                 } else {

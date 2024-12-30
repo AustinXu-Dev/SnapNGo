@@ -32,6 +32,11 @@ struct CoordinatorView: View {
                     .navigationDestination(for: Screen.self) { screen in
                         appCoordinator.build(screen)
                     }
+            case .adminSignedIn:
+                appCoordinator.build(.adminTab)
+                    .navigationDestination(for: Screen.self) { screen in
+                        appCoordinator.build(screen)
+                    }
             }
 //                .sheet(item: $appCoordinator.sheet) { sheet in
 //                    appCoordinator.build(sheet)

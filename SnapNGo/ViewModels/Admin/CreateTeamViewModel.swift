@@ -19,7 +19,7 @@ class CreateTeamViewModel: ObservableObject{
     func createTeam() {
         isLoading = true
         
-        let createTeamBody = CreateTeamDTO(teamName: teamName, adminUsername: adminUsername, teamImageUrl: teamImageUrl, totalTasks: totalTasks, maxMember: Int(maxMember) ?? 0)
+        let createTeamBody = CreateTeamDTO(teamName: teamName, adminUsername: adminUsername, teamImageUrl: teamImageUrl, totalTasks: totalTasks, maxMember: Int(maxMember) ?? 0, assignedQuizzes: [])
         
         let createTeamManager = CreateTeamUseCase()
         

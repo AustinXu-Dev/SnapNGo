@@ -11,10 +11,11 @@ struct CreateTeamView: View {
     
     let maxSelections = 5
     
-    let locations = ["Location 1", "Location 2", "Location 3", "Location 4", "Location 5", "Location 6"]
+    let locations = ["bba", "ca", "vmes"]
     
     @State private var selectedLocations: Set<String> = []
     @StateObject var createTeamVM = CreateTeamViewModel()
+    @StateObject var quizVM = GetQuizViewModel()
     
     var body: some View {
         ScrollView{
@@ -65,8 +66,10 @@ struct CreateTeamView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                 
+                //MARK: - Create Team Button Here
                 Button {
-                    //
+                    print(selectedLocations)
+                    quizVM.fetchQuiz(locations: Array(selectedLocations))
                 } label: {
                     Text(Constants.CreateTeamViewConstant.createButtonText)
                         .heading2()

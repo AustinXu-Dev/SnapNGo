@@ -29,7 +29,11 @@ class SignInService: ObservableObject{
             DispatchQueue.main.async {
                 switch result{
                 case .success(let response):
-                    self.userAppState = AppState.signedIn.rawValue
+                    if response.user.role == "admin"{
+                        self.userAppState = AppState.adminSignedIn.rawValue
+                    } else {
+                        self.userAppState = AppState.signedIn.rawValue
+                    }
                     print(response.message)
                 case .failure(let error):
                     self.errorMessage = "Failed to sign in: \(error.localizedDescription)"

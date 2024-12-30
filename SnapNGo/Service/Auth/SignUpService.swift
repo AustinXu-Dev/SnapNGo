@@ -16,6 +16,7 @@ class SignUpService: ObservableObject{
     @Published var school: String = ""
     @Published var errorMessage: String? = nil
     @Published var success: Bool = false
+    @Published var signingInWithGoogle: Bool = false
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     
     init(name: String = "", email: String = "", password: String = "", school: String = "") {
@@ -34,19 +35,26 @@ class SignUpService: ObservableObject{
         signUpManager.execute(data: newUser, getMethod: "POST", token: nil) { result in
             DispatchQueue.main.async{
                 switch result{
-                case .success(_):
+                case .success(let response):
                     print("Signup successful")
                     self.success = true
-                case .failure(let error):
-                    if let urlError = error as? URLError, urlError.code == .badServerResponse {
-                        if let responseData = try? JSONDecoder().decode(ServerError.self, from: Data(error.localizedDescription.utf8)) {
-                            self.errorMessage = responseData.message
+                    if self.signingInWithGoogle{
+                        if response.user!.role == "admin"{
+                            self.userAppState = AppState.adminSignedIn.rawValue
                         } else {
-                            self.errorMessage = "An unknown error occurred."
+                            self.userAppState = AppState.signedIn.rawValue
                         }
-                    } else {
-                        self.errorMessage = error.localizedDescription
                     }
+                case .failure(let error):
+//                    if let urlError = error as? URLError, urlError.code == .badServerResponse {
+//                        if let responseData = try? JSONDecoder().decode(ServerError.self, from: Data(error.localizedDescription.utf8)) {
+//                            self.errorMessage = responseData.message
+//                        } else {
+//                            self.errorMessage = "An unknown error occurred."
+//                        }
+//                    } else {
+                        self.errorMessage = error.localizedDescription
+//                    }
                     print("Failed to sign up: \(self.errorMessage ?? "Unknown error")")
                 }
             }

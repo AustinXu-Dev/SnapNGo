@@ -10,4 +10,5 @@ import Foundation
 enum AppState: String{
     case signedIn = "signedIn"
     case notSignedIn = "notSignedIn"
+    case adminSignedIn = "adminSignedIn"
 }

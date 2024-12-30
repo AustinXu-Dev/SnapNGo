@@ -12,6 +12,7 @@ enum Screen: Identifiable, Hashable {
     case signIn
     case signUp
     case tab
+    case adminTab
     case teamMembers
     case historyDetail(named: HistoryData)
     case chapelDetail(named: HistoryData)

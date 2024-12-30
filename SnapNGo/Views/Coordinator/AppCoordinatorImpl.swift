@@ -52,6 +52,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             SignUpView()
         case .tab:
             TabScreenView()
+        case .adminTab:
+            AdminTabScreenView()
         case .tasks:
             ContentView()
 //        case .detailHabit(named: let habit):
