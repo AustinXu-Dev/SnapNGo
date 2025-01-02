@@ -22,10 +22,10 @@ class GetFacultyDataViewModel: ObservableObject{
                 DispatchQueue.main.async {
                     self?.isLoading = false
                     self?.faculties = response
-                    print(self?.faculties ?? "No faculty data found")
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.isLoading = false
+                self?.errorMessage = error.localizedDescription
             }
         }
     }

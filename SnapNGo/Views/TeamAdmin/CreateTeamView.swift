@@ -10,11 +10,12 @@ import SwiftUI
 struct CreateTeamView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
-
+    
     let maxSelections = 5
-    let locations = ["msme", "ca", "vmes"]
+    let locationMapping: [String: String] = Constants.LocationMapping.locationMapping
     
     @State private var selectedLocations: Set<String> = []
+    @State private var errorMessage: String? = nil
     @StateObject var createTeamVM = CreateTeamViewModel()
     @StateObject var quizVM = GetQuizViewModel()
     
@@ -47,7 +48,7 @@ struct CreateTeamView: View {
                         .heading2()
                     
                     VStack{
-                        ForEach(locations, id: \.self) { location in
+                        ForEach(locationMapping.keys.sorted(), id: \.self) { location in
                             HStack {
                                 Image(systemName: selectedLocations.contains(location) ? "largecircle.fill.circle" : "circle")
                                     .foregroundColor(selectedLocations.contains(location) ? .blue : .gray)
@@ -74,6 +75,11 @@ struct CreateTeamView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .keyboardType(.numberPad)
                     
+                    if let errorMessage = errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                    }
                     //MARK: - Create Team Button Here
                     Button {
                         createTeamButtonAction()
@@ -115,7 +121,33 @@ struct CreateTeamView: View {
     }
     
     private func createTeamButtonAction() {
-        quizVM.fetchQuiz(locations: Array(selectedLocations)) { error in
+        errorMessage = nil
+        
+        // Validation
+        guard !createTeamVM.teamName.isEmpty else {
+            errorMessage = "Team name cannot be empty."
+            return
+        }
+        
+        guard !createTeamVM.teamImageUrl.isEmpty else {
+            print("Please select a team image.")
+            return
+        }
+        
+        guard let maxMember = Int(createTeamVM.maxMember),
+              maxMember > 0, maxMember <= 30 else {
+            errorMessage = "Max members must be a number between 1 and 30."
+            return
+        }
+        
+        guard selectedLocations.count > 0 && selectedLocations.count <= maxSelections else {
+            errorMessage = "Please select at least 1 and no more than \(maxSelections) locations."
+            return
+        }
+        // Convert the selected display names their internal names
+        let internalLocations = selectedLocations.compactMap{ locationMapping[$0]}
+        
+        quizVM.fetchQuiz(locations: internalLocations) { error in
             guard error == nil else {
                 print("Error occurred: \(error!.localizedDescription)")
                 return
@@ -128,7 +160,7 @@ struct CreateTeamView: View {
                 AppCoordinator.push(.joinQRCode(named: joinLink))
                 return
             }
-
+            
             guard let userName = UserDefaults.standard.string(forKey: "userName") else {
                 print("No user name found.")
                 return
@@ -148,7 +180,7 @@ struct CreateTeamView: View {
             }
         }
     }
-
+    
 }
 
 #Preview {

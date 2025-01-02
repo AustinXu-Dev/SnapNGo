@@ -8,7 +8,7 @@
 import Foundation
 
 class JoinTeamUseCase: APIManager{
-    typealias ModelType = TeamResponse
+    typealias ModelType = JoinTeamResponse
     
     var teamId: String
     
@@ -17,6 +17,6 @@ class JoinTeamUseCase: APIManager{
     }
     
     var methodPath: String{
-        return "/join?teamId=\(teamId)"
+        return "/team/join?teamId=\(teamId)"
     }
 }

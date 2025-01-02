@@ -11,9 +11,10 @@ struct DropdownMenuDisclosureGroup: View {
     @State private var isExpanded: Bool = false
     @Binding var selectedOption: String
     let options = ["Image 1", "Image 2", "Image 3"]
+    let placeholder: String = "Please select an option"
     
     var body: some View {
-        DisclosureGroup(selectedOption, isExpanded: $isExpanded) {
+        DisclosureGroup(selectedOption.isEmpty ? placeholder : selectedOption, isExpanded: $isExpanded) {
             VStack {
                 ForEach(options, id: \.self) { option in
                     Text(option)
@@ -26,7 +27,6 @@ struct DropdownMenuDisclosureGroup: View {
                 }
             }
         }
-        .tint(Color.gray.opacity(0.5))
         .padding(Constants.LayoutPadding.small)
         .background(Color.white)
         .cornerRadius(8)

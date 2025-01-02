@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 struct Constants{
+    struct UserDefaultsKeys{
+        static let username = "userName"
+        static let userId = "userId"
+    }
+    
     struct MyTasks{
         static let title = "My Tasks"
         static let progressLabel = "Progress"
@@ -85,5 +90,19 @@ struct Constants{
         static let startLocation = "Start Location"
         static let endLocation = "End Location"
         static let showMeButtonText = "Show me the way"
+    }
+    
+    struct LocationMapping{
+        static let locationMapping: [String: String] = [
+            "MSME": "msme",
+            "Arts": "arts",
+            "Music": "music",
+            "Law": "law",
+            "Communication Arts (CA)": "ca",
+            "Architecture": "archi",
+            "Bio Technology": "biotech",
+            "Nursing": "nursing",
+            "VMES": "vmes"
+        ]
     }
 }

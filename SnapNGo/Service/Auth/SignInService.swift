@@ -12,6 +12,7 @@ class SignInService: ObservableObject{
     
     @Published var email: String
     @Published var password: String
+    @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     
@@ -21,6 +22,8 @@ class SignInService: ObservableObject{
     }
     
     func signIn(){
+        isLoading = true
+        
         let credential = SignInSchema(email: email, password: password)
         
         let signInManager = SignInUseCase()
@@ -29,9 +32,10 @@ class SignInService: ObservableObject{
             DispatchQueue.main.async {
                 switch result{
                 case .success(let response):
+                    self.isLoading = false
                     // Store the user name in user defaults
-                    UserDefaults.standard.set(response.user.name, forKey: "userName")
-
+                    UserDefaults.standard.set(response.user.name, forKey: Constants.UserDefaultsKeys.username)
+                    UserDefaults.standard.set(response.user.id, forKey: Constants.UserDefaultsKeys.userId)
                     if response.user.role == "admin"{
                         self.userAppState = AppState.adminSignedIn.rawValue
                     } else {
@@ -39,6 +43,7 @@ class SignInService: ObservableObject{
                     }
                     print(response.message)
                 case .failure(let error):
+                    self.isLoading = false
                     self.errorMessage = "Failed to sign in: \(error.localizedDescription)"
                     print(error.localizedDescription)
                 }

@@ -25,87 +25,93 @@ struct SignUpView: View {
     @FocusState var isFocused: Bool
     
     var body: some View {
-        VStack(alignment: .center, spacing: 5){
-            Image("logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
-            emailField
-            .padding(.top, 10)
-
-            nameField
-            .padding(.top, 10)
-
-            schoolField
-            .padding(.top, 10)
-
-            passwordField
-            .padding(.top, 10)
-            
-            confirmPasswordField
-            .padding(.top, 10)
-            
-            Button{
-                // Sign up
-                signUpButtonAction()
-            } label: {
-                Text(Constants.AuthenticationViewConstant.signUpText)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 8)
-                    .frame(height: 36)
-                    .background(Color.accentColor)
-                    .cornerRadius(8)
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.trailing, 8)
-            .padding(.top, 16)
-            
-            lineDivider
-            .padding(.vertical, 20)
-            
-            Button {
-                googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
-                    
-                }
-            } label: {
-                Image("continue_with_google")
+        ZStack{
+            if signUpVM.isLoading{
+                ProgressView("Signing Up...")
             }
             
-            HStack{
-                Text(Constants.AuthenticationViewConstant.haveAccountText)
-                    .font(.system(size: 12))
-                Button {
-                    print("Go back to sign in page.")
-                    appCoordinator.pop()
+            VStack(alignment: .center, spacing: 5){
+                Image("logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+                emailField
+                    .padding(.top, 10)
+                
+                nameField
+                    .padding(.top, 10)
+                
+                schoolField
+                    .padding(.top, 10)
+                
+                passwordField
+                    .padding(.top, 10)
+                
+                confirmPasswordField
+                    .padding(.top, 10)
+                
+                Button{
+                    // Sign up
+                    signUpButtonAction()
                 } label: {
-                    Text(Constants.AuthenticationViewConstant.signInText)
+                    Text(Constants.AuthenticationViewConstant.signUpText)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 8)
+                        .frame(height: 36)
+                        .background(Color.accentColor)
+                        .cornerRadius(8)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing, 8)
+                .padding(.top, 16)
+                
+                lineDivider
+                    .padding(.vertical, 20)
+                
+                Button {
+                    googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
+                        
+                    }
+                } label: {
+                    Image("continue_with_google")
+                }
+                
+                HStack{
+                    Text(Constants.AuthenticationViewConstant.haveAccountText)
                         .font(.system(size: 12))
-                        .underline()
+                    Button {
+                        print("Go back to sign in page.")
+                        appCoordinator.pop()
+                    } label: {
+                        Text(Constants.AuthenticationViewConstant.signInText)
+                            .font(.system(size: 12))
+                            .underline()
+                    }
                 }
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, 8)
-        .background(ColorConstants.background)
-        .onTapGesture {
-            isFocused = false
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text("Sign Up Error"),
-                message: Text(signUpVM.errorMessage ?? "An unknown error occurred."),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-        .alert(isPresented: $signUpVM.success) {
-            Alert(
-                title: Text("Register Successful"),
-                message: Text("Please Sign in again!"),
-                dismissButton: .default(Text("OK")){
-                    appCoordinator.pop()
-                }
-            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal, 8)
+            .background(ColorConstants.background)
+            .onTapGesture {
+                isFocused = false
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Sign Up Error"),
+                    message: Text(signUpVM.errorMessage ?? "An unknown error occurred."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .alert(isPresented: $signUpVM.success) {
+                Alert(
+                    title: Text("Register Successful"),
+                    message: Text("Please Sign in again!"),
+                    dismissButton: .default(Text("OK")){
+                        appCoordinator.pop()
+                    }
+                )
+            }
         }
     }
     

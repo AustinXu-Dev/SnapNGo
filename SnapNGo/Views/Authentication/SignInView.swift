@@ -19,64 +19,66 @@ struct SignInView: View {
     @FocusState var isFocused: Bool
     
     var body: some View {
-        VStack(alignment: .center, spacing: 5){
-            Image("logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
-            emailField
-            .padding(.top, 10)
-
-
-            passwordField
-            .padding(.top, 10)
-            
-            Button{
-                signInButtonAction()
-            } label: {
-                Text(Constants.AuthenticationViewConstant.signInText)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 8)
-                    .frame(height: 36)
-                    .background(Color.accentColor)
-                    .cornerRadius(8)
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.trailing, 8)
-            .padding(.top, 16)
-            
-            lineDivider
-            .padding(.vertical, 20)
-            
-            Button {
-                googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
+        ZStack{
+            VStack(alignment: .center, spacing: 5){
+                Image("logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+                emailField
+                    .padding(.top, 10)
+                
+                
+                passwordField
+                    .padding(.top, 10)
+                
+                Button{
+                    signInButtonAction()
+                } label: {
+                    Text(Constants.AuthenticationViewConstant.signInText)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 8)
+                        .frame(height: 36)
+                        .background(Color.accentColor)
+                        .cornerRadius(8)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing, 8)
+                .padding(.top, 16)
+                
+                lineDivider
+                    .padding(.vertical, 20)
+                
+                Button {
+                    googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
+                        
+                    }
+                } label: {
+                    Image("continue_with_google")
+                }
+                
+                HStack{
+                    Text(Constants.AuthenticationViewConstant.noAccountText)
+                        .font(.system(size: 12))
+                    Button {
+                        print("Go to sign up page")
+                        appCoordinator.push(.signUp)
+                    } label: {
+                        Text(Constants.AuthenticationViewConstant.signUpText)
+                            .font(.system(size: 12))
+                            .underline()
+                    }
                     
                 }
-            } label: {
-                Image("continue_with_google")
+                
             }
-
-            HStack{
-                Text(Constants.AuthenticationViewConstant.noAccountText)
-                    .font(.system(size: 12))
-                Button {
-                    print("Go to sign up page")
-                    appCoordinator.push(.signUp)
-                } label: {
-                    Text(Constants.AuthenticationViewConstant.signUpText)
-                        .font(.system(size: 12))
-                        .underline()
-                }
-
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal, 8)
+            .background(ColorConstants.background)
+            .onTapGesture {
+                isFocused = false
             }
-            
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, 8)
-        .background(ColorConstants.background)
-        .onTapGesture {
-            isFocused = false
         }
     }
     

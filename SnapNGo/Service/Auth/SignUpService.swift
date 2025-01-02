@@ -14,6 +14,7 @@ class SignUpService: ObservableObject{
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var school: String = ""
+    @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @Published var success: Bool = false
     @Published var signingInWithGoogle: Bool = false
@@ -28,6 +29,7 @@ class SignUpService: ObservableObject{
     }
 
     func signUp() {
+        isLoading = true
         let newUser = SignUpSchema(name: name, email: email, password: password, school: school)
         
         let signUpManager = SignUpUseCase()
@@ -36,10 +38,12 @@ class SignUpService: ObservableObject{
             DispatchQueue.main.async{
                 switch result{
                 case .success(let response):
+                    self.isLoading = false
                     print("Signup successful")
                     // Store the user name in user defaults
-                    UserDefaults.standard.set(response.user.name, forKey: "userName")
-                    
+                    UserDefaults.standard.set(response.user.name, forKey: Constants.UserDefaultsKeys.username)
+                    UserDefaults.standard.set(response.user.id, forKey: Constants.UserDefaultsKeys.userId)
+
                     self.success = true
                     if self.signingInWithGoogle{
                         if response.user.role == "admin"{
@@ -49,15 +53,8 @@ class SignUpService: ObservableObject{
                         }
                     }
                 case .failure(let error):
-//                    if let urlError = error as? URLError, urlError.code == .badServerResponse {
-//                        if let responseData = try? JSONDecoder().decode(ServerError.self, from: Data(error.localizedDescription.utf8)) {
-//                            self.errorMessage = responseData.message
-//                        } else {
-//                            self.errorMessage = "An unknown error occurred."
-//                        }
-//                    } else {
-                        self.errorMessage = error.localizedDescription
-//                    }
+                    self.isLoading = false
+                    self.errorMessage = error.localizedDescription
                     print("Failed to sign up: \(self.errorMessage ?? "Unknown error")")
                 }
             }
@@ -66,3 +63,13 @@ class SignUpService: ObservableObject{
     
     
 }
+
+//                    if let urlError = error as? URLError, urlError.code == .badServerResponse {
+//                        if let responseData = try? JSONDecoder().decode(ServerError.self, from: Data(error.localizedDescription.utf8)) {
+//                            self.errorMessage = responseData.message
+//                        } else {
+//                            self.errorMessage = "An unknown error occurred."
+//                        }
+//                    } else {
+//                        self.errorMessage = error.localizedDescription
+//                    }
