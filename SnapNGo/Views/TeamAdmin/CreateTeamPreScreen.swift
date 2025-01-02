@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CreateTeamPreScreen: View {
+    
+    @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+
     var body: some View {
         VStack(alignment: .center){
             Image(Constants.CreateTeamViewConstant.createTeamPreScreenImage)
@@ -27,7 +30,7 @@ struct CreateTeamPreScreen: View {
                 .body1()
                 .padding(.bottom, 8)
             Button {
-                //
+                AppCoordinator.push(.createTeam)
             } label: {
                 Text(Constants.CreateTeamViewConstant.createButtonText)
                     .heading2()

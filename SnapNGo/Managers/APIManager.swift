@@ -70,18 +70,21 @@ extension APIManager {
 //            if getMethod == "POST" || getMethod == "PUT" {
 //                return
 //            }
-            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(formatter)
             //MARK: - Get and Delete
             if let responseData = data {
                 do {
-                    let decodeData = try JSONDecoder().decode(ModelType.self, from: responseData)
+                    let decodeData = try decoder.decode(ModelType.self, from: responseData)
                     completion(.success(decodeData))
                 } catch {
                     completion(.failure(error))
                 }
             } else if getMethod == "DELETE" && (200...299).contains(httpResponse.statusCode) {
                 do {
-                    let decodeData = try JSONDecoder().decode(ModelType.self, from: Data())
+                    let decodeData = try decoder.decode(ModelType.self, from: Data())
                     completion(.success(decodeData))
                 } catch {
                     completion(.failure(error))

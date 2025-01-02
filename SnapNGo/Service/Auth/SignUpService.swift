@@ -37,9 +37,12 @@ class SignUpService: ObservableObject{
                 switch result{
                 case .success(let response):
                     print("Signup successful")
+                    // Store the user name in user defaults
+                    UserDefaults.standard.set(response.user.name, forKey: "userName")
+                    
                     self.success = true
                     if self.signingInWithGoogle{
-                        if response.user!.role == "admin"{
+                        if response.user.role == "admin"{
                             self.userAppState = AppState.adminSignedIn.rawValue
                         } else {
                             self.userAppState = AppState.signedIn.rawValue

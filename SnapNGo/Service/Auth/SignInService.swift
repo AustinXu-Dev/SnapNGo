@@ -29,6 +29,9 @@ class SignInService: ObservableObject{
             DispatchQueue.main.async {
                 switch result{
                 case .success(let response):
+                    // Store the user name in user defaults
+                    UserDefaults.standard.set(response.user.name, forKey: "userName")
+
                     if response.user.role == "admin"{
                         self.userAppState = AppState.adminSignedIn.rawValue
                     } else {

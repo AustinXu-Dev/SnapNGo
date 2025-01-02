@@ -10,7 +10,7 @@ import Foundation
 struct SignUpResponse: Codable {
     let message: String
     let token: String
-    let user: SignUpUser?
+    let user: SignUpUser
 }
 
 struct SignUpUser: Codable {

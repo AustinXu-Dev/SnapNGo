@@ -20,6 +20,8 @@ enum Screen: Identifiable, Hashable {
     case facultyDetail(named: FacultyData)
     case tasks
     case mapView
+    case createTeam
+    case joinQRCode(named: String)
     
     var id: Self { return self }
 }

@@ -70,6 +70,10 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             ContentView()
         case .mapView:
             MapDetailView()
+        case .createTeam:
+            CreateTeamView()
+        case .joinQRCode(named: let link):
+            JoinQRView(link: link)
         }
     }
     

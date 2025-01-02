@@ -8,7 +8,7 @@
 import Foundation
 
 class CreateTeamUseCase: APIManager{
-    typealias ModelType = TeamResponse
+    typealias ModelType = CreateTeamResponse
     var methodPath: String{
         return "/team"
     }

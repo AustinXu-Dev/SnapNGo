@@ -9,22 +9,27 @@ import Foundation
 
 class GetQuizViewModel: ObservableObject{
     @Published var quizzes: [QuizGroup] = []
+    @Published var quizzesId: [String] = []
     @Published var isLoading : Bool = false
     @Published var errorMessage : String? = nil
     
-    
-    func fetchQuiz(locations: [String]){
+    func fetchQuiz(locations: [String], completion: @escaping (Error?) -> Void){
         isLoading = true
         let getQuiz = GetQuiz(locations: locations)
         
         getQuiz.execute { result in
-            switch result {
-            case .success(let response):
-                self.isLoading = false
-                print(response)
-            case .failure(let error):
-                self.errorMessage = error.localizedDescription
-                print(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self.isLoading = false
+                    self.quizzesId = response.map { $0._id } // Collect all IDs in one step
+                    self.quizzes = response   
+                    completion(nil)
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    print(error.localizedDescription)
+                    completion(error)
+                }
             }
         }
         

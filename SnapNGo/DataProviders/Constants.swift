@@ -47,6 +47,7 @@ struct Constants{
         static let createButtonText = "Create Team"
         static let createTeamSubtitle = "Create a Team.\nShow the students the QR Code.\nLet them scan it\nStart the journey!"
         static let teamImageTitle = "Team Image"
+        static let teamNameTitle = "Team Name"
         static let chooseLocationsTitle = "Choose the locations (Maximum Location: 5)"
         static let createQrButtonText = "Create QR"
         static let scanQrText = "Scan QR code to Join the Team"

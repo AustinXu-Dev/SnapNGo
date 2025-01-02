@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DropdownMenuDisclosureGroup: View {
     @State private var isExpanded: Bool = false
-    @State private var selectedOption: String = "Choose image"
+    @Binding var selectedOption: String
     let options = ["Image 1", "Image 2", "Image 3"]
     
     var body: some View {
@@ -33,5 +33,5 @@ struct DropdownMenuDisclosureGroup: View {
     }
 }
 #Preview {
-    DropdownMenuDisclosureGroup()
+    DropdownMenuDisclosureGroup(selectedOption: .constant("Image 1"))
 }

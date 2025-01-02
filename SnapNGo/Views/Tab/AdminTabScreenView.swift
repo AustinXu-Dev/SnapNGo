@@ -14,7 +14,7 @@ struct AdminTabScreenView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            CreateTeamView()
+            CreateTeamPreScreen()
                 .tabItem {
                     Label("", image: selectedTab == .team ? "team-icon-click" : "team-icon")
                 }
