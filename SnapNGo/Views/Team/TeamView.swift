@@ -15,6 +15,7 @@ struct TeamView: View {
     @State private var alertMessage: String = ""
     
     @StateObject private var joinTeamVM = UserJoinTeamViewModel()
+    @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     
     var body: some View {
         ZStack{
@@ -89,6 +90,9 @@ struct TeamView: View {
                 if let error = error {
                     print("Error joining team: \(error.localizedDescription)")
                 } else {
+                    if joinTeamVM.joinTeamSuccess{
+                        AppCoordinator.push(.joinedTeamView)
+                    }
                     print("Successfully joined team!")
                 }
             }

@@ -18,20 +18,20 @@ struct User: Codable {
     let address: String
     let totalPoints: Int
     let totalTasks: Int
-    let tasks: [Tasks]
-    let completedTasks: [Tasks]
-    let inventory: [InventoryItem]? // Marked as optional
+    let tasks: [Tasks]?
+    let completedTasks: [Tasks]?
+    let inventory: [InventoryItem]?
     let role: String
-    let createdAt: String
-    let updatedAt: String
+    let teamIds: [String]
+    let createdAt: Date
+    let updatedAt: Date
+    let __v: Int
 }
 
 struct Tasks: Codable {
-    let id: String
-    let title: String
-    let description: String
-    let completed: Bool
-    let dueDate: Date?
+    let quizId: String
+    let status: String
+    let _id: String
 }
 
 struct InventoryItem: Codable {

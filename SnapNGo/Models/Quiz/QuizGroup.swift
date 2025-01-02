@@ -11,6 +11,7 @@ struct QuizGroup: Codable{
     let _id: String
     let location: String
     let quizzes: [Quiz]
+    let __v: Int
 }
 
 struct Quiz: Codable{

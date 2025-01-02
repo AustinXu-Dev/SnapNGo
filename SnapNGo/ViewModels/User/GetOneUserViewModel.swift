@@ -1,23 +1,23 @@
 //
-//  GetAllUsersViewModel.swift
+//  GetOneUserViewModel.swift
 //  SnapNGo
 //
-//  Created by Phyu Thandar Khin on 23/11/2567 BE.
+//  Created by Austin Xu on 2568/1/3.
 //
 
 import Foundation
 
-class GetAllUsersViewModel: ObservableObject {
+class GetOneUserViewModel: ObservableObject {
     
-    @Published var userData: [User]? = nil
+    @Published var userData: User? = nil
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
-    func getAllUsers() {
+    func getOneUser(userId: String) {
         isLoading = true
         errorMessage = nil
-        let getAllUsers = GetAllUsers()
-        getAllUsers.execute(getMethod: "GET", token: nil) { result in
+        let getOneUser = GetOneUser(userId: userId)
+        getOneUser.execute(getMethod: "GET", token: nil) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let userData):

@@ -22,6 +22,7 @@ enum Screen: Identifiable, Hashable {
     case mapView
     case createTeam
     case joinQRCode(named: String)
+    case joinedTeamView
     
     var id: Self { return self }
 }
