@@ -22,8 +22,8 @@ class GetOneTeamViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     self.isLoading = false
-                    print("Get all teams ", response.teams)
-                    self.teamData = response.teams
+                    print("Get all teams ", response.team)
+                    self.teamData = response.team
                 case .failure(let error):
                     self.isLoading = false
                     self.errorMessage = "Failed to get all teams: \(error.localizedDescription)"
