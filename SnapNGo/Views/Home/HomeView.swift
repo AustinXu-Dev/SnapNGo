@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var taskSectionVM: TaskSectionViewModel
     @StateObject var getHistoryVM: GetHistoryDataViewModel = GetHistoryDataViewModel()
     @StateObject var getFacultyVM: GetFacultyDataViewModel = GetFacultyDataViewModel()
     
@@ -25,7 +26,8 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack{
-                taskSectionView
+                TaskSectionView()
+                    .environmentObject(taskSectionVM)
                 
                 LineView()
                 
@@ -68,11 +70,11 @@ struct HomeView: View {
                 Text(Constants.MyTasks.title)
                     .font(.headline)
                     .foregroundColor(.accent)
-                Text("15 Tasks")
+                Text("\(taskSectionVM.completedTasks)")
                     .font(.subheadline)
-                ProgressView(value: 10, total: 15)
+                ProgressView(value: Float(taskSectionVM.completedTasks), total: Float(taskSectionVM.totalTasks))
                     .progressViewStyle(LinearProgressViewStyle(tint: .accent))
-                Text("\(Constants.MyTasks.progressLabel) 10/15")
+                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.completedTasks)/\(taskSectionVM.totalTasks)")
                     .font(.subheadline)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

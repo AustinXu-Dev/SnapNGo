@@ -21,7 +21,7 @@ struct AllTeamsModel: Codable{
     let totalTasks: Int
     let members: [String]?
     let maxMember: Int
-    let assignedQuizzes: [QuizGroup]?
+    let assignedQuizzes: [String]?
     let createdAt: Date
     let updatedAt: Date
     let __v: Int

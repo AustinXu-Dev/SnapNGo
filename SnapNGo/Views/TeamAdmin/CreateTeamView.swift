@@ -154,12 +154,12 @@ struct CreateTeamView: View {
             }
             
             // Check if the team already exists
-            if createTeamVM.teamIdResponse != nil {
-                // Team already created, navigate to the QR view
-                let joinLink = "https://snap-n-go.vercel.app/api/team/join?teamId=\(createTeamVM.teamIdResponse!)"
-                AppCoordinator.push(.joinQRCode(named: joinLink))
-                return
-            }
+//            if createTeamVM.teamIdResponse != nil {
+//                // Team already created, navigate to the QR view
+//                let joinLink = "https://snap-n-go.vercel.app/api/team/join?teamId=\(createTeamVM.teamIdResponse!)"
+//                AppCoordinator.push(.joinQRCode(named: joinLink))
+//                return
+//            }
             
             guard let userName = UserDefaults.standard.string(forKey: "userName") else {
                 print("No user name found.")

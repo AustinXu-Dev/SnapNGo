@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 struct CoordinatorView: View {
+    
     @StateObject var appCoordinator: AppCoordinatorImpl = AppCoordinatorImpl()
+    @StateObject var taskSectionVM: TaskSectionViewModel = TaskSectionViewModel()
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     
     //reterives from local app storage
@@ -46,5 +48,6 @@ struct CoordinatorView: View {
 //                }
         }
         .environmentObject(appCoordinator)
+        .environmentObject(taskSectionVM)
     }
 }
