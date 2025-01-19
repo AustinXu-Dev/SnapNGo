@@ -192,6 +192,7 @@ struct SignUpView: View {
             
             SecureField(Constants.AuthenticationViewConstant.passwordPlaceholder, text: $password)
                 .autocapitalization(.none)
+                
                 .padding()
                 .frame(width: 361, height: 41.49)
                 .background(Color.white)

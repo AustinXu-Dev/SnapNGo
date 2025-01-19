@@ -12,6 +12,7 @@ struct CoordinatorView: View {
     
     @StateObject var appCoordinator: AppCoordinatorImpl = AppCoordinatorImpl()
     @StateObject var taskSectionVM: TaskSectionViewModel = TaskSectionViewModel()
+    @StateObject var getOneUserVM: GetOneUserViewModel = GetOneUserViewModel()
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     
     //reterives from local app storage
@@ -49,5 +50,6 @@ struct CoordinatorView: View {
         }
         .environmentObject(appCoordinator)
         .environmentObject(taskSectionVM)
+        .environmentObject(getOneUserVM)
     }
 }

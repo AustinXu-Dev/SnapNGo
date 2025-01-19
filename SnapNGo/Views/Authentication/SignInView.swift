@@ -10,13 +10,14 @@ import SwiftUI
 struct SignInView: View {
     
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
+    @StateObject var signInVM: SignInService = SignInService()
+    @ObservedObject var googleVM = GoogleAuthViewModel()
+    
+    @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
+    @FocusState var isFocused: Bool
+    
     @State var email: String = ""
     @State var password: String = ""
-    @StateObject var signInVM = SignInService()
-    @ObservedObject var googleVM = GoogleAuthViewModel()
-    @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
-
-    @FocusState var isFocused: Bool
     
     var body: some View {
         ZStack{
@@ -146,7 +147,7 @@ struct SignInView: View {
     private func signInButtonAction() -> Void{
         signInVM.email = email
         signInVM.password = password
-        signInVM.signIn()
+        signInVM.signIn()        
     }
 }
 

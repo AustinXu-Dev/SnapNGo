@@ -17,7 +17,6 @@ struct JoinTeamModel: Codable{
     let teamName: String
     let adminUsername: String
     let teamImageUrl: String
-    let totalPoints: Int
     let totalTasks: Int
     let members: [String]?
     let maxMember: Int

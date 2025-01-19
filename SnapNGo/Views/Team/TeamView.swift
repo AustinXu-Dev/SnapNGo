@@ -13,44 +13,49 @@ struct TeamView: View {
     @State private var isShowingScanner = false
     @State private var isShowingAlert = false
     @State private var alertMessage: String = ""
+    @State private var showErrorAlert = false
     
     @StateObject private var joinTeamVM = UserJoinTeamViewModel()
+    @StateObject private var getOneTeamVM = GetOneTeamViewModel()
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     
     var body: some View {
         ZStack{
-            VStack(alignment: .center){
-                Image(Constants.TeamViewConstant.teamHomeImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.bottom, 8)
-                Text(Constants.TeamViewConstant.welcomeMessage)
-                    .fontWeight(.semibold)
-                    .padding(.bottom, 8)
-                    .frame(maxWidth: 300)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                Text(Constants.TeamViewConstant.description)
-                    .frame(width: 280)
-                    .font(.subheadline)
-                    .multilineTextAlignment(.center)
-                    .fontWeight(.light)
-                    .padding(.bottom, 8)
-                Button(action: scanQRcode) {
-                    Text(Constants.TeamViewConstant.joinButtonText)
-                        .frame(width: 300)
+            ScrollView{
+                if getOneTeamVM.isSuccess{
+                    membersView
+                } else {
+                    scanView
                 }
-                .buttonStyle(.borderedProminent)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(ColorConstants.background)
-            .sheet(isPresented: $isShowingScanner) {
-                CodeScannerView(codeTypes: [.qr], simulatedData: "https://www.google.com", completion: handleScan)
+
+            // Loading View
+            if joinTeamVM.isLoading {
+                loadingBoxView(message: "Joining Team...")
             }
             
-            if joinTeamVM.isLoading{
-                ProgressView("Joining Team...")
+            if getOneTeamVM.isLoading {
+                loadingBoxView(message: "Loading Team...")
             }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ColorConstants.background)
+        .safeAreaInset(edge: .top, content: {
+            Color.clear
+                .frame(height: 45)
+        })
+        .overlay {
+            topOverlayView
+        }
+        .onAppear(perform: {
+            if let teamId = getOneUserVM.teamId{
+                getOneTeamVM.getOneTeam(teamId: teamId)
+            }
+        })
+        .sheet(isPresented: $isShowingScanner) {
+            CodeScannerView(codeTypes: [.qr], simulatedData: "https://www.google.com", completion: handleScan)
         }
         .onReceive(joinTeamVM.$errorMessage) { errorMessage in
             if let message = errorMessage {
@@ -63,13 +68,19 @@ struct TeamView: View {
         } message: {
             Text(alertMessage)
         }
+        .refreshable {
+            if let teamId = getOneUserVM.teamId{
+                getOneTeamVM.getOneTeam(teamId: teamId)
+            }
+        }
     }
     
-    func scanQRcode() {
+    private func scanQRcode() {
         isShowingScanner = true
     }
     
-    func handleScan(result: Result<ScanResult, ScanError>) {
+    //MARK: - Scan Action
+    private func handleScan(result: Result<ScanResult, ScanError>) {
         isShowingScanner = false
         switch result {
         case .success(let result):
@@ -91,7 +102,8 @@ struct TeamView: View {
                     print("Error joining team: \(error.localizedDescription)")
                 } else {
                     if joinTeamVM.joinTeamSuccess{
-                        AppCoordinator.push(.joinedTeamView)
+                        let teamId = joinTeamVM.teamId
+                        getOneTeamVM.getOneTeam(teamId: teamId)
                     }
                     print("Successfully joined team!")
                 }
@@ -100,6 +112,112 @@ struct TeamView: View {
             print("Scanning failed: \(error.localizedDescription)")
         }
     }
+    
+    // MARK: - Components
+    private var scanView: some View{
+        VStack(alignment: .center){
+            Image(Constants.TeamViewConstant.teamHomeImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.bottom, 8)
+            Text(Constants.TeamViewConstant.welcomeMessage)
+                .fontWeight(.semibold)
+                .padding(.bottom, 8)
+                .frame(maxWidth: 300)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+            Text(Constants.TeamViewConstant.description)
+                .frame(width: 280)
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .fontWeight(.light)
+                .padding(.bottom, 8)
+            Button(action: scanQRcode) {
+                Text(Constants.TeamViewConstant.joinButtonText)
+                    .frame(width: 300)
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ColorConstants.background)
+    }
+    
+    private var membersView: some View{
+        VStack{
+            LineView()
+            HStack{
+                Image(Constants.TeamViewConstant.participantIcon)
+                Text("^[\(getOneTeamVM.members.count) Team member](inflect: true)")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            LazyVStack{
+                ForEach(getOneTeamVM.members, id: \._id) { member in
+                    MemberCardView(image: "sample", memberName: member.name, points: member.totalPoints)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, Constants.LayoutPadding.medium)
+        .onChange(of: getOneTeamVM.errorMessage) { _, error in
+            // Show an error alert when errorMessage changes
+            if error != nil {
+                showErrorAlert = true
+            }
+        }
+        .alert(isPresented: $showErrorAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(getOneTeamVM.errorMessage ?? "Unknown error"),
+                dismissButton: .default(Text("Retry")) {
+                    // Retry fetching data on dismiss
+                    guard let teamId = getOneUserVM.userData?.teamIds.first else { return }
+                    getOneTeamVM.getOneTeam(teamId: teamId)
+                }
+            )
+        }
+        
+    }
+    
+    private var topOverlayView: some View{
+        ZStack{
+            Color.clear
+                .frame(height: 100)
+                .background(.ultraThinMaterial)
+                .ignoresSafeArea(edges: .top)
+            HStack{
+                Spacer()
+                Text(getOneTeamVM.isSuccess ? getOneTeamVM.teamName : "Team")
+                    .heading1()
+                Spacer()
+            }
+            .offset(y: -30)
+            .padding(.horizontal)
+        }.frame(maxHeight: .infinity, alignment: .top)
+    }
+}
+
+func loadingBoxView(message: String) -> some View {
+    ZStack {
+        // Background blur and dim
+        Color.black.opacity(0.3)
+            .ignoresSafeArea()
+            .blur(radius: 5)
+
+        // Centered loading box
+        VStack(spacing: 16) {
+            ProgressView()
+                .scaleEffect(1.5) // Larger indicator
+            Text(message)
+                .foregroundColor(.gray)
+                .body1()
+        }
+        .frame(width: 180, height: 120) // Size of the loading box
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(radius: 10)
+    }
+    .zIndex(1)
 }
 
 #Preview {

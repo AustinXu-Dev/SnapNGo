@@ -17,7 +17,7 @@ struct CreateTeamView: View {
     @State private var selectedLocations: Set<String> = []
     @State private var errorMessage: String? = nil
     @StateObject var createTeamVM = CreateTeamViewModel()
-    @StateObject var quizVM = GetQuizViewModel()
+//    @StateObject var quizVM = GetQuizViewModel()
     
     var body: some View {
         ZStack{
@@ -147,37 +147,22 @@ struct CreateTeamView: View {
         // Convert the selected display names their internal names
         let internalLocations = selectedLocations.compactMap{ locationMapping[$0]}
         
-        quizVM.fetchQuiz(locations: internalLocations) { error in
+        guard let userName = UserDefaults.standard.string(forKey: "userName") else {
+            print("No user name found.")
+            return
+        }
+        
+        createTeamVM.adminUsername = userName
+        createTeamVM.assignedQuizzes = internalLocations
+        
+        createTeamVM.createTeam { error in
             guard error == nil else {
                 print("Error occurred: \(error!.localizedDescription)")
                 return
             }
             
-            // Check if the team already exists
-//            if createTeamVM.teamIdResponse != nil {
-//                // Team already created, navigate to the QR view
-//                let joinLink = "https://snap-n-go.vercel.app/api/team/join?teamId=\(createTeamVM.teamIdResponse!)"
-//                AppCoordinator.push(.joinQRCode(named: joinLink))
-//                return
-//            }
-            
-            guard let userName = UserDefaults.standard.string(forKey: "userName") else {
-                print("No user name found.")
-                return
-            }
-            
-            createTeamVM.adminUsername = userName
-            createTeamVM.assignedQuizzes = quizVM.quizzesId
-            
-            createTeamVM.createTeam { error in
-                guard error == nil else {
-                    print("Error occurred: \(error!.localizedDescription)")
-                    return
-                }
-                
-                let joinLink = "https://snap-n-go.vercel.app/api/team/join?teamId=\(createTeamVM.teamIdResponse!)"
-                AppCoordinator.push(.joinQRCode(named: joinLink))
-            }
+            let joinLink = "https://snap-n-go.vercel.app/api/team/join?teamId=\(createTeamVM.teamIdResponse!)"
+            AppCoordinator.push(.joinQRCode(named: joinLink))
         }
     }
     

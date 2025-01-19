@@ -10,6 +10,7 @@ import SwiftUI
 struct TabScreenView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @State var selectedTab: TabViewEnum = .home
     
     var body: some View {
@@ -37,6 +38,13 @@ struct TabScreenView: View {
         }
         .onAppear {
             UITabBar.appearance().backgroundColor = .white
+        }
+        .task {
+            guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                print("Error here")
+                return
+            }
+            getOneUserVM.getOneUser(userId: userId)
         }
 
     }

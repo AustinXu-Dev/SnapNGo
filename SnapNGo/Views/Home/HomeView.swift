@@ -11,6 +11,7 @@ struct HomeView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var taskSectionVM: TaskSectionViewModel
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @StateObject var getHistoryVM: GetHistoryDataViewModel = GetHistoryDataViewModel()
     @StateObject var getFacultyVM: GetFacultyDataViewModel = GetFacultyDataViewModel()
     
@@ -127,7 +128,7 @@ struct HomeView: View {
                     Image("profile")
                         .resizable()
                         .frame(width: 50, height: 50)
-                    Text("Jane Doe")
+                    Text(getOneUserVM.userData?.name ?? "User")
                         .fontWeight(.semibold)
                         .heading1()
                 }

@@ -17,11 +17,10 @@ struct OneTeamModel: Codable{
     let teamName: String
     let adminUsername: String
     let teamImageUrl: String
-    let totalPoints: Int
     let totalTasks: Int
     let members: [OneMemberModel]?
     let maxMember: Int
-    let assignedQuizzes: [QuizGroup]?
+    let assignedQuizzes: [String]?
     let createdAt: Date
     let updatedAt: Date
     let __v: Int
@@ -30,6 +29,9 @@ struct OneTeamModel: Codable{
 struct OneMemberModel: Codable{
     let _id: String
     let name: String
+    let email: String
     let profileImageUrl: String
+    let role: String
     let totalPoints: Int
+    let teamIds: [String]?
 }

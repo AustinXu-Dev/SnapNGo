@@ -10,8 +10,12 @@ import Foundation
 class GetOneTeamViewModel: ObservableObject {
     
     @Published var teamData: OneTeamModel? = nil
+    @Published var teamId: String = ""
+    @Published var teamName: String = ""
+    @Published var members: [OneMemberModel] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    @Published var isSuccess: Bool = false
     
     func getOneTeam(teamId: String) {
         isLoading = true
@@ -22,8 +26,14 @@ class GetOneTeamViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     self.isLoading = false
-                    print("Get all teams ", response.team)
+                    print("Get one team: ", response.team)
                     self.teamData = response.team
+                    self.members = response.team.members?.filter({ member in
+                        member.role == "user"
+                    }) ?? []
+                    self.teamId = response.team._id
+                    self.teamName = response.team.teamName
+                    self.isSuccess = true
                 case .failure(let error):
                     self.isLoading = false
                     self.errorMessage = "Failed to get all teams: \(error.localizedDescription)"
@@ -31,4 +41,5 @@ class GetOneTeamViewModel: ObservableObject {
             }
         }
     }
+
 }

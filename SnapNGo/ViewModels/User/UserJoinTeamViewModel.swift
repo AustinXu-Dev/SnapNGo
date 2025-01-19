@@ -10,7 +10,7 @@ import Foundation
 class UserJoinTeamViewModel: ObservableObject{
     
     @Published var userId: String = ""
-    
+    @Published var teamId: String = ""
     @Published var joinTeamSuccess: Bool = false
     @Published var isLoading : Bool = false
     @Published var errorMessage : String? = nil
@@ -28,6 +28,7 @@ class UserJoinTeamViewModel: ObservableObject{
                 case .success(let response):
                     self.isLoading = false
                     self.joinTeamSuccess = true
+                    self.teamId = response.team._id
                     print(response.message)
                     completion(nil)
                 case .failure(let error):

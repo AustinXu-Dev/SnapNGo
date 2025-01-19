@@ -15,7 +15,7 @@ class SignInService: ObservableObject{
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
-    
+            
     init(email: String = "", password: String = "") {
         self.email = email
         self.password = password
@@ -41,6 +41,7 @@ class SignInService: ObservableObject{
                     } else {
                         self.userAppState = AppState.signedIn.rawValue
                     }
+
                     print(response.message)
                 case .failure(let error):
                     self.isLoading = false
