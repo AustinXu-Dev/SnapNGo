@@ -9,6 +9,7 @@ import SwiftUI
 
 struct QuizCardView: View {
     
+    var quizQuestion: String
     var action:() -> Void
 
     var body: some View {
@@ -19,7 +20,7 @@ struct QuizCardView: View {
                 .frame(width: 60, height: 60)
                 .padding(.horizontal, 8)
             VStack(alignment: .leading) {
-                Text("Question1")
+                Text(quizQuestion)
                     .font(.headline)
                     .padding(.bottom, 5)
                 Text("hint: Answer can be found in \"About Us\" section.")
@@ -49,5 +50,5 @@ struct QuizCardView: View {
 }
 
 #Preview {
-    QuizCardView(action: {})
+    QuizCardView(quizQuestion: "", action: {})
 }

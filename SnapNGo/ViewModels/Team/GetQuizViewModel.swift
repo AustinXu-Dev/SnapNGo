@@ -8,30 +8,33 @@
 import Foundation
 
 class GetQuizViewModel: ObservableObject{
-    @Published var quizzes: [QuizGroup] = []
+    
+    @Published var teamId: String = ""
     @Published var quizzesId: [String] = []
+
+    @Published var quizzes: [Quiz] = []
     @Published var isLoading : Bool = false
     @Published var errorMessage : String? = nil
     
-    func fetchQuiz(locations: [String], completion: @escaping (Error?) -> Void){
+    func fetchQuiz(completion: @escaping (Error?) -> Void){
         isLoading = true
-        let getQuiz = GetQuiz(locations: locations)
+        let getQuizDTO = GetQuizDTO(teamId: teamId, quizzes: quizzesId)
+        let getBatchQuiz = GetBatchQuiz()
         
-        getQuiz.execute { result in
+        getBatchQuiz.execute(data: getQuizDTO, getMethod: "POST") { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
+                    self.quizzes = response.quizzes
                     self.isLoading = false
-                    self.quizzesId = response.map { $0._id } // Collect all IDs in one step
-                    self.quizzes = response   
-                    completion(nil)
                 case .failure(let error):
                     self.errorMessage = error.localizedDescription
                     print(error.localizedDescription)
-                    completion(error)
+                    self.isLoading = false
                 }
             }
         }
+        
         
     }
 }

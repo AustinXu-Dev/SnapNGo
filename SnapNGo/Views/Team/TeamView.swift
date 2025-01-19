@@ -16,7 +16,7 @@ struct TeamView: View {
     @State private var showErrorAlert = false
     
     @StateObject private var joinTeamVM = UserJoinTeamViewModel()
-    @StateObject private var getOneTeamVM = GetOneTeamViewModel()
+    @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     
@@ -49,11 +49,11 @@ struct TeamView: View {
         .overlay {
             topOverlayView
         }
-        .onAppear(perform: {
+        .onAppear{
             if let teamId = getOneUserVM.teamId{
                 getOneTeamVM.getOneTeam(teamId: teamId)
             }
-        })
+        }
         .sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr], simulatedData: "https://www.google.com", completion: handleScan)
         }

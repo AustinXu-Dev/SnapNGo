@@ -13,6 +13,8 @@ class GetOneTeamViewModel: ObservableObject {
     @Published var teamId: String = ""
     @Published var teamName: String = ""
     @Published var members: [OneMemberModel] = []
+    @Published var quizIds: [String] = []
+    
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @Published var isSuccess: Bool = false
@@ -28,11 +30,13 @@ class GetOneTeamViewModel: ObservableObject {
                     self.isLoading = false
                     print("Get one team: ", response.team)
                     self.teamData = response.team
+                    self.teamId = response.team._id
                     self.members = response.team.members?.filter({ member in
                         member.role == "user"
                     }) ?? []
-                    self.teamId = response.team._id
                     self.teamName = response.team.teamName
+                    self.quizIds = response.team.assignedQuizzes ?? []
+                    
                     self.isSuccess = true
                 case .failure(let error):
                     self.isLoading = false

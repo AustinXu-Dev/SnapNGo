@@ -11,7 +11,10 @@ struct TasksView: View {
     
     // For production
     @EnvironmentObject var taskSectionVM: TaskSectionViewModel
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
+    @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
 
+    @StateObject private var getQuizVM: GetQuizViewModel = GetQuizViewModel()
     // For Preview
 //    @StateObject var taskSectionVM: TaskSectionViewModel = TaskSectionViewModel()
     
@@ -40,8 +43,12 @@ struct TasksView: View {
                     .padding(.bottom, Constants.LayoutPadding.medium)
                     
                     if selectedSegment == 0{
-                        QuizCardView(){
-                            print("answer")
+                        LazyVStack{
+                            ForEach(getQuizVM.quizzes, id: \._id){ quiz in
+                                QuizCardView(quizQuestion: quiz.question){
+                                    print("answer")
+                                }
+                            }
                         }
                     } else {
                         SnapCardView {
@@ -56,6 +63,33 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+        .onAppear{
+            if getOneTeamVM.teamData != nil{
+                if let teamId = getOneUserVM.teamId{
+                    //TODO: - Add loading while fetching team data
+                    getOneTeamVM.getOneTeam(teamId: teamId)
+                    
+                    getQuizVM.teamId = teamId
+                    getQuizVM.quizzesId = getOneTeamVM.quizIds
+                    getQuizVM.fetchQuiz { error in
+                        guard error == nil else {
+                            print("Error occurred in tasks view: \(error!.localizedDescription)")
+                            return
+                        }
+                    }
+                }
+            } else {
+                getQuizVM.teamId = getOneTeamVM.teamId
+                getQuizVM.quizzesId = getOneTeamVM.quizIds
+                
+                getQuizVM.fetchQuiz { error in
+                    guard error == nil else {
+                        print("Error occurred in tasks view: \(error!.localizedDescription)")
+                        return
+                    }
+                }
+            }
+        }
         
     }
 }

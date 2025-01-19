@@ -7,11 +7,9 @@
 
 import Foundation
 
-struct QuizGroup: Codable{
-    let _id: String
-    let location: String
+struct QuizResponse: Codable{
+    let message: String
     let quizzes: [Quiz]
-    let __v: Int
 }
 
 struct Quiz: Codable{
