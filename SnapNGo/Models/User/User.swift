@@ -19,7 +19,6 @@ struct User: Codable {
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [Tasks]?
-    let completedTasks: [Tasks]?
     let inventory: [InventoryItem]?
     let role: String
     let teamIds: [String]

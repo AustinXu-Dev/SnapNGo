@@ -76,39 +76,6 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
-//        .onAppear{
-//            if let lastFetch = lastFetch, Date().timeIntervalSince(lastFetch) < 300{
-//                print("using cache data")
-//            } else {
-//                lastFetch = Date()
-//                if getOneTeamVM.teamData == nil{
-//                    if let teamId = getOneUserVM.teamId{
-//                        getOneTeamVM.getOneTeam(teamId: teamId) { _ in
-//                            getQuizVM.teamId = teamId
-//                            getQuizVM.quizzesId = getOneTeamVM.quizIds
-//                            getQuizVM.fetchQuiz { error in
-//                                guard error == nil else {
-//                                    print("Error occurred in tasks view: \(error!.localizedDescription)")
-//                                    return
-//                                }
-//                            }
-//                        }
-//                    } else {
-//                        //TODO: - No Team Found Screen
-//                    }
-//                } else {
-//                    getQuizVM.teamId = getOneTeamVM.teamId
-//                    getQuizVM.quizzesId = getOneTeamVM.quizIds
-//                    
-//                    getQuizVM.fetchQuiz { error in
-//                        guard error == nil else {
-//                            print("Error occurred in tasks view: \(error!.localizedDescription)")
-//                            return
-//                        }
-//                    }
-//                }
-//            }
-//        }
         .onAppear {
             guard Date().timeIntervalSince(lastFetch ?? Date.distantPast) >= 300 else {
                 print("Using cached data.")
@@ -133,10 +100,6 @@ struct TasksView: View {
                 updateQuizData(for: teamId)
             }
         }
-
-        // Helper to Update Quiz Data
-       
-
     }
     
     private func updateQuizData(for teamId: String) {
@@ -155,3 +118,37 @@ struct TasksView: View {
 #Preview {
     TasksView()
 }
+
+//        .onAppear{
+//            if let lastFetch = lastFetch, Date().timeIntervalSince(lastFetch) < 300{
+//                print("using cache data")
+//            } else {
+//                lastFetch = Date()
+//                if getOneTeamVM.teamData == nil{
+//                    if let teamId = getOneUserVM.teamId{
+//                        getOneTeamVM.getOneTeam(teamId: teamId) { _ in
+//                            getQuizVM.teamId = teamId
+//                            getQuizVM.quizzesId = getOneTeamVM.quizIds
+//                            getQuizVM.fetchQuiz { error in
+//                                guard error == nil else {
+//                                    print("Error occurred in tasks view: \(error!.localizedDescription)")
+//                                    return
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        //TODO: - No Team Found Screen
+//                    }
+//                } else {
+//                    getQuizVM.teamId = getOneTeamVM.teamId
+//                    getQuizVM.quizzesId = getOneTeamVM.quizIds
+//
+//                    getQuizVM.fetchQuiz { error in
+//                        guard error == nil else {
+//                            print("Error occurred in tasks view: \(error!.localizedDescription)")
+//                            return
+//                        }
+//                    }
+//                }
+//            }
+//        }

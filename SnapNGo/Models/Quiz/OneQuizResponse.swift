@@ -1,15 +1,15 @@
 //
-//  QuizGroup.swift
+//  OneQuizResponse.swift
 //  SnapNGo
 //
-//  Created by Austin Xu on 2567/12/30.
+//  Created by Austin Xu on 2568/1/20.
 //
 
 import Foundation
 
-struct QuizResponse: Codable{
+struct OneQuizResponse: Codable{
     let message: String
-    let quizzes: [Quiz]
+    let question: Quiz
 }
 
 struct Quiz: Codable{

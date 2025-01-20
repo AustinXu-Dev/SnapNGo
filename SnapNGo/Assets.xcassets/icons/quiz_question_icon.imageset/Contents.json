@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "quiz_question_icon.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

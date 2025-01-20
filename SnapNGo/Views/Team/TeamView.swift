@@ -124,6 +124,8 @@ struct TeamView: View {
     // MARK: - Components
     private var scanView: some View{
         VStack(alignment: .center){
+            Spacer()
+                .frame(height: 40)
             Image(Constants.TeamViewConstant.teamHomeImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
