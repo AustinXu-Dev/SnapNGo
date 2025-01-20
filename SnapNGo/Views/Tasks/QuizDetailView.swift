@@ -11,6 +11,8 @@ struct QuizDetailView: View {
     
     @State private var vStackHeight: CGFloat = 0
     
+    @StateObject private var quizCompletionVM = QuizCompletionViewModel()
+    
     var body: some View {
         ZStack{
             ScrollView {

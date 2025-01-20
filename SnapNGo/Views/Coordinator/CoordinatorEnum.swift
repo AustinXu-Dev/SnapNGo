@@ -19,6 +19,7 @@ enum Screen: Identifiable, Hashable {
     case campusDetail(named: HistoryData)
     case facultyDetail(named: FacultyData)
     case tasks
+    case quizDetail
     case mapView
     case createTeam
     case joinQRCode(named: String)
