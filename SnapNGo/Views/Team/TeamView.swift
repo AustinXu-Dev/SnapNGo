@@ -14,6 +14,7 @@ struct TeamView: View {
     @State private var isShowingAlert = false
     @State private var alertMessage: String = ""
     @State private var showErrorAlert = false
+    @State private var lastFetch: Date?
     
     @StateObject private var joinTeamVM = UserJoinTeamViewModel()
     @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
@@ -50,8 +51,15 @@ struct TeamView: View {
             topOverlayView
         }
         .onAppear{
-            if let teamId = getOneUserVM.teamId{
-                getOneTeamVM.getOneTeam(teamId: teamId)
+            if let lastFetch = lastFetch, Date().timeIntervalSince(lastFetch) < 300{
+                print("using cache data")
+            } else {
+                lastFetch = Date()
+                if let teamId = getOneUserVM.teamId{
+                    getOneTeamVM.getOneTeam(teamId: teamId) {_ in
+                        
+                    }
+                }
             }
         }
         .sheet(isPresented: $isShowingScanner) {
@@ -70,7 +78,7 @@ struct TeamView: View {
         }
         .refreshable {
             if let teamId = getOneUserVM.teamId{
-                getOneTeamVM.getOneTeam(teamId: teamId)
+                getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
             }
         }
     }
@@ -103,7 +111,7 @@ struct TeamView: View {
                 } else {
                     if joinTeamVM.joinTeamSuccess{
                         let teamId = joinTeamVM.teamId
-                        getOneTeamVM.getOneTeam(teamId: teamId)
+                        getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
                     }
                     print("Successfully joined team!")
                 }
@@ -172,7 +180,7 @@ struct TeamView: View {
                 dismissButton: .default(Text("Retry")) {
                     // Retry fetching data on dismiss
                     guard let teamId = getOneUserVM.userData?.teamIds.first else { return }
-                    getOneTeamVM.getOneTeam(teamId: teamId)
+                    getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
                 }
             )
         }
@@ -195,29 +203,6 @@ struct TeamView: View {
             .padding(.horizontal)
         }.frame(maxHeight: .infinity, alignment: .top)
     }
-}
-
-func loadingBoxView(message: String) -> some View {
-    ZStack {
-        // Background blur and dim
-        Color.black.opacity(0.3)
-            .ignoresSafeArea()
-            .blur(radius: 5)
-
-        // Centered loading box
-        VStack(spacing: 16) {
-            ProgressView()
-                .scaleEffect(1.5) // Larger indicator
-            Text(message)
-                .foregroundColor(.gray)
-                .body1()
-        }
-        .frame(width: 180, height: 120) // Size of the loading box
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 10)
-    }
-    .zIndex(1)
 }
 
 #Preview {

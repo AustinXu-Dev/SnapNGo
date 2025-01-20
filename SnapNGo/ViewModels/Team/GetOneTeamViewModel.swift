@@ -19,7 +19,7 @@ class GetOneTeamViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     @Published var isSuccess: Bool = false
     
-    func getOneTeam(teamId: String) {
+    func getOneTeam(teamId: String, completion: @escaping (Error?) -> Void) {
         isLoading = true
         errorMessage = nil
         let getOneTeam = GetOneTeamUseCase(teamId: teamId)
@@ -38,9 +38,11 @@ class GetOneTeamViewModel: ObservableObject {
                     self.quizIds = response.team.assignedQuizzes ?? []
                     
                     self.isSuccess = true
+                    completion(nil)
                 case .failure(let error):
                     self.isLoading = false
                     self.errorMessage = "Failed to get all teams: \(error.localizedDescription)"
+                    completion(error)
                 }
             }
         }
