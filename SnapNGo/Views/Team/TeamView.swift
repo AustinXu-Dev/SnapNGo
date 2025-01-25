@@ -112,8 +112,13 @@ struct TeamView: View {
                     if joinTeamVM.joinTeamSuccess{
                         let teamId = joinTeamVM.teamId
                         getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
+                        
+                        // Refresh the background user state
+                        // User will be updated with new team data & tasks
+                        getOneUserVM.getOneUser(userId: userId)
                     }
                     print("Successfully joined team!")
+                    
                 }
             }
         case .failure(let error):

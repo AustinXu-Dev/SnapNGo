@@ -31,6 +31,7 @@ struct Tasks: Codable {
     let quizId: String
     let status: String
     let _id: String
+    let quizDetails: Quiz
 }
 
 struct InventoryItem: Codable {

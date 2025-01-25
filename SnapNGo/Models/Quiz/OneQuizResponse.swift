@@ -12,7 +12,7 @@ struct OneQuizResponse: Codable{
     let question: Quiz
 }
 
-struct Quiz: Codable{
+struct Quiz: Codable, Hashable{
     let question: String
     let options: [String]
     let answer: Int

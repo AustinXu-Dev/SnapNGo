@@ -34,7 +34,7 @@ struct TaskSectionView: View {
             .background(Color.white)
         }
         .background(RoundedRectangle(cornerRadius: 10).fill(.white))
-        .frame(minWidth: 300, minHeight: 125)
+        .frame(maxWidth: .infinity, maxHeight: 125)
     }
 }
 

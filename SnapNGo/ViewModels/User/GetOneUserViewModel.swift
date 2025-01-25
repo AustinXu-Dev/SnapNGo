@@ -10,6 +10,8 @@ import Foundation
 class GetOneUserViewModel: ObservableObject {
     
     @Published var userData: User? = nil
+    @Published var tasks: [Tasks] = []
+    @Published var quizzes: [Quiz] = []
     @Published var teamId: String? = nil
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
@@ -22,12 +24,16 @@ class GetOneUserViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let userData):
-                    self.isLoading = false
                     print("Get one user ", userData)
                     self.userData = userData
                     if !userData.teamIds.isEmpty{
                         self.teamId = userData.teamIds[0]
                     }
+                    self.tasks = userData.tasks!
+                    self.quizzes = userData.tasks!.map({ quiz in
+                        quiz.quizDetails
+                    })
+                    self.isLoading = false
                 case .failure(let error):
                     self.isLoading = false
                     self.errorMessage = "Failed to get user detail by id: \(error.localizedDescription)"

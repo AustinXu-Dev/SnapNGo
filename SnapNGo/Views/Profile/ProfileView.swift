@@ -27,6 +27,11 @@ struct ProfileView: View {
             Button("Cancel", role: .destructive) {}
             Button("Ok", role: .cancel) {
                 googleVM.signOutWithGoogle()
+                
+                // Delete username and userId fro UserDefaults
+                UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.username)
+                UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.userId)
+
             }
         }
 

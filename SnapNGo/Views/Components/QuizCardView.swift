@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct QuizCardView: View {
+struct QuizCardView<ButtonContent: View>: View {
     
     var quizQuestion: String
-    var action:() -> Void
-
+    var buttonContent: () -> ButtonContent
+    
     var body: some View {
         HStack(spacing: 5) {
             Image("quiz_icon")
@@ -31,14 +31,8 @@ struct QuizCardView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .padding(.leading, 5)
             
-            Button {
-                action()
-            } label: {
-                Text("Answer")
-                    .font(.footnote)
-            }
-            .buttonStyle(.borderedProminent)
-            .padding(.trailing, 8)
+            buttonContent()
+                .padding(.trailing, 8)
 
         }
         .frame(maxWidth: .infinity, maxHeight: 90)
@@ -50,5 +44,13 @@ struct QuizCardView: View {
 }
 
 #Preview {
-    QuizCardView(quizQuestion: "", action: {})
+    QuizCardView(quizQuestion: "What is SnapNGo?") {
+        Button {
+            print("Answer tapped")
+        } label: {
+            Text("Answer")
+                .font(.footnote)
+        }
+        .buttonStyle(.borderedProminent)
+    }
 }
