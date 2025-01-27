@@ -56,8 +56,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             AdminTabScreenView()
         case .tasks:
             ContentView()
-        case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData):
-            QuizDetailView(taskId: taskId, questionNo: questionNo, quizData: quizData)
+        case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData, status: let statusData):
+            QuizDetailView(taskId: taskId, questionNo: questionNo, quizData: quizData, statusData: statusData)
         case .historyDetail(named: let historyData):
             HistoryDetailView(historyData: historyData)
         case .chapelDetail(named: let chapelData):

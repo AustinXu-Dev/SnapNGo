@@ -34,7 +34,7 @@ struct Tasks: Codable {
     let quizDetails: Quiz
 }
 
-struct StatusModel: Codable{
+struct StatusModel: Codable, Hashable{
     let type: String
     let isFinished: Bool
     let isAnswerCorrect: Bool

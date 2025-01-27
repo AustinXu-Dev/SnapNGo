@@ -12,6 +12,7 @@ struct QuizDetailView: View {
     var taskId: String
     var questionNo: Int
     var quizData: Quiz
+    var statusData: StatusModel
     @State private var vStackHeight: CGFloat = 0
     @State private var selectedOption: Int? = nil
     @State private var showResult: Bool = false
@@ -50,6 +51,12 @@ struct QuizDetailView: View {
         .navigationTitle("Quiz Time")
         .onAppear{
             print(quizData)
+            if let answer = statusData.userAnswerNumber{
+                selectedOption = answer
+                showResult = true
+            } else {
+                selectedOption = nil
+            }
         }
     }
     
@@ -173,7 +180,7 @@ struct QuizDetailView: View {
 
 #Preview {
     TabView{
-        QuizDetailView(taskId: "", questionNo: 1, quizData: Quiz(question: "", options: [], answer: 1, rewardPoints: 10, _id: ""))
+        QuizDetailView(taskId: "", questionNo: 1, quizData: Quiz(question: "", options: [], answer: 1, rewardPoints: 10, _id: ""), statusData: StatusModel(type: "", isFinished: false, isAnswerCorrect: false, userAnswerNumber: 1))
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }

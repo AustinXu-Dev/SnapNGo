@@ -74,7 +74,7 @@ struct TasksView: View {
                             QuizCardView(quizQuestion: "Question \(index + 1)") {
                                 Button {
                                     // MARK: Navigate to Quiz Detail
-                                    AppCoordinator.push(.quizDetail(taskId: task._id, questionNo: index+1, named: task.quizDetails))
+                                    AppCoordinator.push(.quizDetail(taskId: task._id, questionNo: index+1, named: task.quizDetails, status: task.status))
                                 } label: {
                                     if task.status.isFinished{
                                         showQuizCompletionText(task: task)
