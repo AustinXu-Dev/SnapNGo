@@ -9,12 +9,15 @@ import SwiftUI
 
 struct QuizDetailView: View {
     
+    var taskId: String
+    var questionNo: Int
     var quizData: Quiz
     @State private var vStackHeight: CGFloat = 0
-    @State private var selectedOption: Int? = nil // Tracks the selected option
-    @State private var showResult: Bool = false // Show the feedback
+    @State private var selectedOption: Int? = nil
+    @State private var showResult: Bool = false
     
     @StateObject private var quizCompletionVM = QuizCompletionViewModel()
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     
     var body: some View {
         ZStack{
@@ -80,7 +83,7 @@ struct QuizDetailView: View {
             VStack(alignment: .center, spacing: 8){
                 Spacer()
                     .frame(height: 40)
-                Text("Question1")
+                Text("Question \(questionNo)")
                     .heading1()
                 Text(quizData.question)
                     .multilineTextAlignment(.center)
@@ -118,6 +121,10 @@ struct QuizDetailView: View {
             Button(action: {
                 selectedOption = index
                 showResult = true
+                
+                //MARK: - Submit Answer to API
+                submitAnswer(selectedAnswer: index)
+                
             }) {
                 Text(quizData.options[index])
                     .foregroundColor(.blue)
@@ -136,6 +143,7 @@ struct QuizDetailView: View {
             .disabled(showResult) // Disable the button after an option is selected
         }
     }
+    
     private func borderColor(for index: Int) -> Color {
         if showResult {
             if index == quizData.answer {
@@ -146,11 +154,26 @@ struct QuizDetailView: View {
         }
         return Color.clear // Default color for unselected options
     }
+    
+    private func submitAnswer(selectedAnswer: Int){
+        guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+            print("Error here")
+            return
+        }
+        
+        quizCompletionVM.checkQuizAnswer(forUserId: userId, forTaskId: taskId, withAnswer: selectedAnswer) { error in
+            if error != nil{
+                print(error?.localizedDescription as Any)
+            }
+        }
+        self.getOneUserVM.userData = quizCompletionVM.userData
+
+    }
 }
 
 #Preview {
     TabView{
-        QuizDetailView(quizData: Quiz(question: "", options: [], answer: 1, rewardPoints: 10, _id: ""))
+        QuizDetailView(taskId: "", questionNo: 1, quizData: Quiz(question: "", options: [], answer: 1, rewardPoints: 10, _id: ""))
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }

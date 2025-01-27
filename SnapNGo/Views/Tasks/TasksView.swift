@@ -29,7 +29,7 @@ struct TasksView: View {
                 LineView()
                 
                 HStack{
-                    Image("tasks_icon")
+                    Image("tasks_count_icon")
                     Text("Total ( \(taskSectionVM.totalTasks) ) tasks")
                         .heading2()
                 }
@@ -48,14 +48,14 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
-        .onAppear {
-            if let lastFetch = lastFetch, Date().timeIntervalSince(lastFetch) < 300{
-                print("Using cache data in tasks view.")
-            } else {
-                // Update last fetch time
-                lastFetch = Date()
-            }
-        }
+//        .onAppear {
+//            if let lastFetch = lastFetch, Date().timeIntervalSince(lastFetch) < 300{
+//                print("Using cache data in tasks view.")
+//            } else {
+//                // Update last fetch time
+//                lastFetch = Date()
+//            }
+//        }
     }
     
     private var quizSegmentView: some View{
@@ -70,16 +70,21 @@ struct TasksView: View {
             if selectedSegment == 0{
                 ScrollView{
                     LazyVStack{
-                        ForEach(getOneUserVM.quizzes, id: \._id){ quiz in
-                            QuizCardView(quizQuestion: quiz.question) {
+                        ForEach(Array(getOneUserVM.tasks.enumerated()), id: \.element._id) { index, task in
+                            QuizCardView(quizQuestion: "Question \(index + 1)") {
                                 Button {
-                                    //MARK: Navigate to Quiz Detail
-                                    AppCoordinator.push(.quizDetail(named: quiz))
+                                    // MARK: Navigate to Quiz Detail
+                                    AppCoordinator.push(.quizDetail(taskId: task._id, questionNo: index+1, named: task.quizDetails))
                                 } label: {
-                                    Text("Answer")
-                                        .font(.footnote)
+                                    if task.status.isFinished{
+                                        showQuizCompletionText(task: task)
+                                    } else {
+                                        Text("Answer")
+                                            .font(.footnote)
+                                    }
                                 }
                                 .buttonStyle(.borderedProminent)
+
                             }
                         }
                     }
@@ -99,9 +104,14 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity)
     }
+    
+    private func showQuizCompletionText(task: Tasks) -> some View{
+        Image(systemName: task.status.isAnswerCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+            .foregroundStyle(.white)
+            .font(.footnote)
+    }
 }
 
 #Preview {
     TasksView()
 }
-

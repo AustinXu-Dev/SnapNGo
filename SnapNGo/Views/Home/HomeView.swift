@@ -57,6 +57,13 @@ struct HomeView: View {
                 getFacultyVM.fetchFaculties()
             }
         }
+        .refreshable {
+            guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                print("Error here")
+                return
+            }
+            getOneUserVM.getOneUser(userId: userId)
+        }
     }
     
     //MARK: - Task Section

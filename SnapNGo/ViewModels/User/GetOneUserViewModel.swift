@@ -10,6 +10,7 @@ import Foundation
 class GetOneUserViewModel: ObservableObject {
     
     @Published var userData: User? = nil
+    @Published var userId: String = ""
     @Published var tasks: [Tasks] = []
     @Published var quizzes: [Quiz] = []
     @Published var teamId: String? = nil
@@ -26,6 +27,7 @@ class GetOneUserViewModel: ObservableObject {
                 case .success(let userData):
                     print("Get one user ", userData)
                     self.userData = userData
+                    self.userId = userData._id
                     if !userData.teamIds.isEmpty{
                         self.teamId = userData.teamIds[0]
                     }

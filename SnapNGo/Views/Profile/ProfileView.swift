@@ -31,7 +31,6 @@ struct ProfileView: View {
                 // Delete username and userId fro UserDefaults
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.username)
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.userId)
-
             }
         }
 

@@ -77,8 +77,14 @@ struct TeamView: View {
             Text(alertMessage)
         }
         .refreshable {
+            guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                print("Error here")
+                return
+            }
             if let teamId = getOneUserVM.teamId{
                 getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
+            } else {
+                getOneUserVM.getOneUser(userId: userId)
             }
         }
     }

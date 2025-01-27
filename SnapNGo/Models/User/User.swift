@@ -29,9 +29,16 @@ struct User: Codable {
 
 struct Tasks: Codable {
     let quizId: String
-    let status: String
+    let status: StatusModel
     let _id: String
     let quizDetails: Quiz
+}
+
+struct StatusModel: Codable{
+    let type: String
+    let isFinished: Bool
+    let isAnswerCorrect: Bool
+    let userAnswerNumber: Int?
 }
 
 struct InventoryItem: Codable {

@@ -11,5 +11,6 @@ struct QuizCompleteResponse: Codable{
     let message: String
     let user: User
     let isAnswerCorrect: Bool
-    let progress: String
+    let completedTaskCount: Int
+    let totalTaskCount: Int
 }

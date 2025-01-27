@@ -48,8 +48,7 @@ struct TabScreenView: View {
                 if getOneUserVM.userData == nil {
                     getOneUserVM.getOneUser(userId: userId)
                 }
-            }
-            
+            }            
             if getOneUserVM.isLoading {
                 loadingBoxView(message: "loading")
             }
