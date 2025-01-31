@@ -21,7 +21,4 @@ struct AllTeamsModel: Codable{
     let members: [String]?
     let maxMember: Int
     let assignedQuizzes: [String]?
-    let createdAt: Date
-    let updatedAt: Date
-    let __v: Int
 }
