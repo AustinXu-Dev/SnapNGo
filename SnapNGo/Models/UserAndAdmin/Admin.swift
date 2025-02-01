@@ -21,7 +21,7 @@ struct Admin: Codable{
     let completedTasks: [Tasks]?
     let inventory: [InventoryItem]?
     let role: String
-    let teamIds: [String]?
+    let teamIds: [String]
     let createdAt: Date
     let updatedAt: Date
     let __v: Int

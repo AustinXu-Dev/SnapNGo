@@ -8,5 +8,5 @@
 import Foundation
 
 enum TabViewEnum{
-    case team, home, task, profile
+    case team, adminHome,home, task, profile
 }

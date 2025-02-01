@@ -10,30 +10,51 @@ import SwiftUI
 struct AdminTabScreenView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
-    @State var selectedTab: TabViewEnum = .home
+    @EnvironmentObject var getOneAdminVM: GetOneAdminViewModel
+    @EnvironmentObject var getCreatedTeamsVM: GetAllCreatedTeamsViewModel
+    
+    @State var selectedTab: TabViewEnum = .adminHome
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            CreateTeamPreScreen()
-                .tabItem {
-                    Label("", image: selectedTab == .team ? "team-icon-click" : "team-icon")
+        ZStack{
+            TabView(selection: $selectedTab) {
+                CreateTeamPreScreen()
+                    .tabItem {
+                        Label("", image: selectedTab == .team ? "team-icon-click" : "team-icon")
+                    }
+                    .tag(TabViewEnum.team)
+                AdminHomeView()
+                    .tabItem {
+                        Label("", image: selectedTab == .adminHome ? "home-icon-click" : "home-icon")
+                    }
+                    .tag(TabViewEnum.adminHome)
+                ProfileView()
+                    .tabItem {
+                        Label("", image: selectedTab == .profile ? "profile-icon-click" : "profile-icon")
+                    }
+                    .tag(TabViewEnum.profile)
+            }
+            .onAppear {
+                UITabBar.appearance().backgroundColor = .white
+            }
+            .task {
+                guard let adminId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                    print("Error here")
+                    return
                 }
-                .tag(TabViewEnum.team)
-            HomeView()
-                .tabItem {
-                    Label("", image: selectedTab == .home ? "home-icon-click" : "home-icon")
+                if getOneAdminVM.adminData == nil {
+                    getOneAdminVM.getOneAdmin(adminId: adminId){ _ in
+                        getCreatedTeamsVM.getAllCreatedTeams(adminEmail: getOneAdminVM.adminEmail)
+                    }
                 }
-                .tag(TabViewEnum.home)
-            ProfileView()
-                .tabItem {
-                    Label("", image: selectedTab == .profile ? "profile-icon-click" : "profile-icon")
-                }
-                .tag(TabViewEnum.profile)
+            }
+            if getOneAdminVM.isLoading {
+                loadingBoxView(message: "loading")
+            }
+            if getCreatedTeamsVM.isLoading{
+                loadingBoxView(message: "loading teams")
+            }
         }
-        .onAppear {
-            UITabBar.appearance().backgroundColor = .white
-        }
-
     }
 }
 
