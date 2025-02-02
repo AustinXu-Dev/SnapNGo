@@ -20,7 +20,23 @@
 		B36E34BD2CD7CA040081FB4E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34BC2CD7CA040081FB4E /* GoogleSignIn */; };
 		B36E34BF2CD7CA040081FB4E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34BE2CD7CA040081FB4E /* GoogleSignInSwift */; };
 		B36E34C22CD7CA3D0081FB4E /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34C12CD7CA3D0081FB4E /* KeychainSwift */; };
+		BCA1DC5C2D4F5E1E003DF657 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */; };
+		BCA1DC5D2D4F5E3E003DF657 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BCF926E82D4F5DB80089C7A4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BCA1DC5D2D4F5E3E003DF657 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BC2172552CC69ACD00C042EA /* SnapNGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapNGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +70,7 @@
 			files = (
 				B36E34B22CD7C9B40081FB4E /* FirebaseAppCheck in Frameworks */,
 				B36E34B62CD7C9B40081FB4E /* FirebaseAuth in Frameworks */,
+				BCA1DC5C2D4F5E1E003DF657 /* RealmSwift in Frameworks */,
 				B36E34AC2CD7C9B40081FB4E /* FirebaseAnalytics in Frameworks */,
 				B344000C2CE4FF6B005D9515 /* ExpandableText in Frameworks */,
 				B36E34B42CD7C9B40081FB4E /* FirebaseAppDistribution-Beta in Frameworks */,
@@ -105,6 +122,7 @@
 				BC2172512CC69ACD00C042EA /* Sources */,
 				BC2172522CC69ACD00C042EA /* Frameworks */,
 				BC2172532CC69ACD00C042EA /* Resources */,
+				BCF926E82D4F5DB80089C7A4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -128,6 +146,7 @@
 				B36E34C12CD7CA3D0081FB4E /* KeychainSwift */,
 				B344000B2CE4FF6B005D9515 /* ExpandableText */,
 				B34400242CE7A675005D9515 /* CodeScanner */,
+				BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */,
 			);
 			productName = SnapNGo;
 			productReference = BC2172552CC69ACD00C042EA /* SnapNGo.app */;
@@ -163,6 +182,7 @@
 				B36E34C02CD7CA3D0081FB4E /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */,
 				B34400232CE7A675005D9515 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				BCA1DC582D4F5E1E003DF657 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BC2172562CC69ACD00C042EA /* Products */;
@@ -446,6 +466,14 @@
 				minimumVersion = 24.0.0;
 			};
 		};
+		BCA1DC582D4F5E1E003DF657 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -513,6 +541,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B36E34C02CD7CA3D0081FB4E /* XCRemoteSwiftPackageReference "keychain-swift" */;
 			productName = KeychainSwift;
+		};
+		BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BCA1DC582D4F5E1E003DF657 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

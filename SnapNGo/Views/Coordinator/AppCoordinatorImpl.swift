@@ -74,8 +74,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             CreateTeamView()
         case .createdTeamMember(named: let createdTeamData):
             CreatedTeamMemberView(teamData: createdTeamData)
-        case .joinQRCode(named: let link):
-            JoinQRView(link: link)
+        case .joinQRCode(named: let teamId):
+            JoinQRView(teamId: teamId)
         case .joinedTeamView:
             TeamMemberView()
         }

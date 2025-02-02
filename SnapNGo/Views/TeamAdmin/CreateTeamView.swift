@@ -160,8 +160,7 @@ struct CreateTeamView: View {
                 return
             }
             
-            let joinLink = "https://snap-n-go.vercel.app/api/team/join?teamId=\(createTeamVM.teamIdResponse!)"
-            AppCoordinator.push(.joinQRCode(named: joinLink))
+            AppCoordinator.push(.joinQRCode(named: createTeamVM.teamIdResponse!))
         }
     }
     

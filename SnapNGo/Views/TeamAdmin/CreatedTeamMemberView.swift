@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CreatedTeamMemberView: View {
     
+    @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+
     var teamData: CreatedTeam
     
     var body: some View {
@@ -33,5 +35,15 @@ struct CreatedTeamMemberView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(teamData.teamName)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    AppCoordinator.push(.joinQRCode(named: teamData._id))
+                } label: {
+                    Image(systemName: "qrcode")
+                }
+
+            }
+        }
     }
 }

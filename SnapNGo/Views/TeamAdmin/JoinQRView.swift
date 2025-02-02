@@ -9,7 +9,7 @@ import SwiftUI
 
 struct JoinQRView: View {
     
-    var link: String
+    var teamId: String
     
     var body: some View {
         VStack {
@@ -17,7 +17,7 @@ struct JoinQRView: View {
                 .font(.title)
                 .bold()
             
-            CreateQRCodeView(joinLink: link)
+            CreateQRCodeView(teamId: teamId)
             
             Text("Scan the code above to vist my website.")
         }
@@ -25,5 +25,5 @@ struct JoinQRView: View {
 }
 
 #Preview {
-    JoinQRView(link: "https://www.google.com")
+    JoinQRView(teamId: "https://www.google.com")
 }
