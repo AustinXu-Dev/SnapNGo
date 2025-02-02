@@ -115,7 +115,7 @@ struct TeamView: View {
                 if let error = error {
                     print("Error joining team: \(error.localizedDescription)")
                 } else {
-                    if joinTeamVM.joinTeamSuccess{
+                    if joinTeamVM.joinTeamSuccess{ 
                         let teamId = joinTeamVM.teamId
                         getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
                         

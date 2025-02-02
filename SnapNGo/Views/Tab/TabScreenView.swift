@@ -25,7 +25,7 @@ struct TabScreenView: View {
                     .tabItem {
                         Label("", image: selectedTab == .home ? "home-icon-click" : "home-icon")
                     }
-                    .tag(TabViewEnum.adminHome)
+                    .tag(TabViewEnum.home)
                 TasksView()
                     .tabItem {
                         Label("", image: selectedTab == .task ? "tasks-icon-click" : "tasks-icon")

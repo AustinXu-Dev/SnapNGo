@@ -22,6 +22,7 @@ enum Screen: Identifiable, Hashable {
     case quizDetail(taskId: String, questionNo: Int, named: Quiz, status: StatusModel)
     case mapView
     case createTeam
+    case createdTeamMember(named: CreatedTeam)
     case joinQRCode(named: String)
     case joinedTeamView
     

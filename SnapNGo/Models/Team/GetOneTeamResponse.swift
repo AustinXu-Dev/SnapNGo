@@ -15,15 +15,13 @@ struct GetOneTeamResponse: Codable{
 struct OneTeamModel: Codable{
     let _id: String
     let teamName: String
-    let adminUsername: String
+    let adminId: String
+    let adminEmail: String
     let teamImageUrl: String
     let totalTasks: Int
     let members: [OneMemberModel]?
     let maxMember: Int
     let assignedQuizzes: [String]?
-    let createdAt: Date
-    let updatedAt: Date
-    let __v: Int
 }
 
 struct OneMemberModel: Codable{

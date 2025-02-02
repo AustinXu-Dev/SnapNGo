@@ -15,10 +15,11 @@ struct GetAllTeamsResponse: Codable{
 struct AllTeamsModel: Codable{
     let _id: String
     let teamName: String
-    let adminUsername: String
     let teamImageUrl: String
     let totalTasks: Int
     let members: [String]?
     let maxMember: Int
     let assignedQuizzes: [String]?
+    let adminId: String
+    let adminEmail: String
 }

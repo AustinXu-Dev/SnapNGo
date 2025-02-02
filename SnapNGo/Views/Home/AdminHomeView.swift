@@ -18,6 +18,7 @@ struct AdminHomeView: View {
     @StateObject var getFacultyVM: GetFacultyDataViewModel = GetFacultyDataViewModel()
     
     @State private var selectedSegment = 0
+    @State private var showAllTeams = false
     
     let aboutUsItems = [
         ("sample", "History & Background", "Founded in 1969, Assumption University is a leading Thai institution, known for its Catholic heritage, academic excellence, and global diversity.", "history"),
@@ -29,9 +30,33 @@ struct AdminHomeView: View {
     var body: some View {
         ScrollView {
             VStack{
-                TaskSectionView()
-                    .environmentObject(taskSectionVM)
                 
+                if getOneAdminVM.createdTeamIds.isEmpty {
+                    noTeamView
+                } else {
+                    ForEach(showAllTeams ? getCreatedTeamsVM.teamsData : Array(getCreatedTeamsVM.teamsData.prefix(2)), id: \._id) { team in
+                        TeamSectionView(team: team) {
+                            print("team section tapped")
+                        }
+                    }
+                    
+                    if getCreatedTeamsVM.teamsData.count > 2 {
+                        Button(action: {
+                            showAllTeams.toggle()
+                        }) {
+                            HStack{
+                                Text(showAllTeams ? "See Less" : "See More")
+                                    .heading3()
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 5)
+                                Image(systemName: showAllTeams ? "chevron.up" : "chevron.down")
+                                    .font(.body)
+                                    .foregroundColor(.blue)
+                                
+                            }
+                        }
+                    }
+                }
                 LineView()
                 
                 mapSectionView
@@ -69,43 +94,15 @@ struct AdminHomeView: View {
         }
     }
     
-    //MARK: - Task Section
-    private var taskSectionView: some View{
-        HStack {
-            Image("sample")
-                .resizable()
-                .frame(width: 125, height: 125) // Set specific dimensions
-                .scaledToFill()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            VStack(alignment: .leading) {
-                Text(Constants.MyTasks.title)
-                    .font(.headline)
-                    .foregroundColor(.accent)
-                Text("\(taskSectionVM.completedTasks)")
-                    .font(.subheadline)
-                ProgressView(value: Float(taskSectionVM.completedTasks), total: Float(taskSectionVM.totalTasks))
-                    .progressViewStyle(LinearProgressViewStyle(tint: .accent))
-                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.completedTasks)/\(taskSectionVM.totalTasks)")
-                    .font(.subheadline)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 10)
-            .background(Color.white)
-        }
-        .background(RoundedRectangle(cornerRadius: 10).fill(.white))
-        .frame(minWidth: 300, minHeight: 125)
-
-    }
-    
     //MARK: - No team View
     private var noTeamView: some View{
         HStack{
             VStack(alignment: .leading){
-                Text(Constants.MyTasks.teamEmptyTitle)
+                Text("Your Team is Empty.")
                     .font(.system(size: 20))
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.accentColor)
-                Text(Constants.MyTasks.teamEmptyDesc)
+                Text("Form the team and let them enjoy")
                     .font(.system(size: 12))
                     .fontWeight(.semibold)
             }
@@ -113,8 +110,8 @@ struct AdminHomeView: View {
             .padding(.leading, Constants.LayoutPadding.medium)
             Spacer(minLength: 20)
                 
-            Button(action: scanQRCode) {
-                Text(Constants.MyTasks.scanButtonText)
+            Button(action: createTeam) {
+                Text("Create")
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical, Constants.LayoutPadding.medium)
@@ -232,8 +229,8 @@ struct AdminHomeView: View {
     
     
     
-    // MARK: - Scan QR code function
-    func scanQRCode(){
+    // MARK: - Create Team function
+    func createTeam(){
         
     }
 }

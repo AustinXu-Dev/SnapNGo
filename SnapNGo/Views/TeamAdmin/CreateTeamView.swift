@@ -17,7 +17,6 @@ struct CreateTeamView: View {
     @State private var selectedLocations: Set<String> = []
     @State private var errorMessage: String? = nil
     @StateObject var createTeamVM = CreateTeamViewModel()
-//    @StateObject var quizVM = GetQuizViewModel()
     
     var body: some View {
         ZStack{

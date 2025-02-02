@@ -14,13 +14,13 @@ struct LinkBoxView: View {
         VStack{
             Text(text)
                 .body2()
-                .lineLimit(2)
+                .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .frame(alignment: .center)
             Link(url, destination: URL(string: url)!)
                 .heading3()
         }
-        .frame(width: 370, height: 44)
+        .frame(minWidth: 370, minHeight: 44)
         .background(RoundedRectangle(cornerRadius: 8).fill(.white))
     }
 }

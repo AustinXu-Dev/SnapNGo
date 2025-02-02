@@ -51,9 +51,9 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         case .signUp:
             SignUpView()
         case .tab:
-            TabScreenView()
+            TabScreenView(selectedTab: .home)
         case .adminTab:
-            AdminTabScreenView()
+            AdminTabScreenView(selectedTab: .adminHome)
         case .tasks:
             ContentView()
         case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData, status: let statusData):
@@ -72,6 +72,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             MapDetailView()
         case .createTeam:
             CreateTeamView()
+        case .createdTeamMember(named: let createdTeamData):
+            CreatedTeamMemberView(teamData: createdTeamData)
         case .joinQRCode(named: let link):
             JoinQRView(link: link)
         case .joinedTeamView:

@@ -12,10 +12,11 @@ struct AdminGetTeamsResponse: Codable{
     let teams: [CreatedTeam]
 }
 
-struct CreatedTeam: Codable{
+struct CreatedTeam: Codable, Hashable{
     let _id: String
     let teamName: String
     let adminId: String
+    let adminEmail: String
     let teamImageUrl: String
     let totalTasks: Int
     let members: [String]
@@ -24,5 +25,4 @@ struct CreatedTeam: Codable{
     let createdAt: Date
     let updatedAt: Date
     let __v: Int
-    let adminEmail: String
 }
