@@ -140,11 +140,11 @@ struct QuizDetailView: View {
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .padding()
-                    .background(Color.white)
+                    .background(borderColor(for: index))
                     .cornerRadius(12)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(borderColor(for: index), lineWidth: 3)
+//                            .stroke(borderColor(for: index), lineWidth: 3)
                     )
             }
             .disabled(showResult) // Disable the button after an option is selected

@@ -92,6 +92,7 @@ struct AdminHomeView: View {
             }
             getOneAdminVM.getOneAdmin(adminId: adminId){_ in}
         }
+        .navigationBarBackButtonHidden()
     }
     
     //MARK: - No team View

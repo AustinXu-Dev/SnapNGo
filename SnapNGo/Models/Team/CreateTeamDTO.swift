@@ -9,9 +9,8 @@ import Foundation
 
 struct CreateTeamDTO: Codable{
     let teamName: String
-    let adminUsername: String
+    let adminEmail: String
     let teamImageUrl: String
-    let totalTasks: Int
     let maxMember: Int
     let assignedQuizzes: [String]?
 }

@@ -41,6 +41,7 @@ struct CreateTeamPreScreen: View {
         .refreshable {
             getCreatedTeamsVM.getAllCreatedTeams(adminEmail: getOneAdminVM.adminEmail)
         }
+        .navigationBarBackButtonHidden()
     }
     
     private var createTeamPreScreen: some View{

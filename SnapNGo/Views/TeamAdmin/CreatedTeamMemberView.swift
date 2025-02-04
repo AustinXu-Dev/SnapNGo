@@ -38,7 +38,8 @@ struct CreatedTeamMemberView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    AppCoordinator.push(.joinQRCode(named: teamData._id))
+//                    AppCoordinator.push(.joinQRCode(named: teamData._id))
+                    AppCoordinator.presentSheet(.joinQRCode(named: teamData._id))
                 } label: {
                     Image(systemName: "qrcode")
                 }

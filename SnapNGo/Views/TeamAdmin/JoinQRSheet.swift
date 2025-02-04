@@ -1,14 +1,13 @@
 //
-//  JoinQRView.swift
+//  JoinQRSheet.swift
 //  SnapNGo
 //
-//  Created by Austin Xu on 2568/1/2.
+//  Created by Austin Xu on 2568/2/4.
 //
 
 import SwiftUI
 
-struct JoinQRView: View {
-    
+struct JoinQRSheet: View {
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var getOneAdminVM: GetOneAdminViewModel
     @EnvironmentObject var getCreatedTeamsVM: GetAllCreatedTeamsViewModel
@@ -25,8 +24,7 @@ struct JoinQRView: View {
             Text("Scan the code above to join the team.")
             
             Button {
-                AppCoordinator.popToRoot()
-                getCreatedTeamsVM.getAllCreatedTeams(adminEmail: getOneAdminVM.adminEmail)
+                AppCoordinator.dismissSheet()
             } label: {
                 Text("Go back")
                     .heading2()
@@ -36,8 +34,4 @@ struct JoinQRView: View {
             .padding(.horizontal, Constants.LayoutPadding.large)
         }
     }
-}
-
-#Preview {
-    JoinQRView(teamId: "https://www.google.com")
 }

@@ -10,7 +10,9 @@ import SwiftUI
 struct CreateTeamView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
-    
+    @EnvironmentObject var getOneAdminVM: GetOneAdminViewModel
+    @EnvironmentObject var getCreatedTeamsVM: GetAllCreatedTeamsViewModel
+
     let maxSelections = 5
     let locationMapping: [String: String] = Constants.LocationMapping.locationMapping
     
@@ -146,12 +148,7 @@ struct CreateTeamView: View {
         // Convert the selected display names their internal names
         let internalLocations = selectedLocations.compactMap{ locationMapping[$0]}
         
-        guard let userName = UserDefaults.standard.string(forKey: "userName") else {
-            print("No user name found.")
-            return
-        }
-        
-        createTeamVM.adminUsername = userName
+        createTeamVM.adminEmail = getOneAdminVM.adminEmail
         createTeamVM.assignedQuizzes = internalLocations
         
         createTeamVM.createTeam { error in

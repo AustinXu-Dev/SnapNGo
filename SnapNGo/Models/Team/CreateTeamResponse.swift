@@ -14,7 +14,8 @@ struct CreateTeamResponse: Codable{
 
 struct CreateTeamModel: Codable{
     let teamName: String
-    let adminUsername: String
+    let adminId: String
+    let adminEmail: String
     let teamImageUrl: String
     let totalTasks: Int
     let members: [String]?

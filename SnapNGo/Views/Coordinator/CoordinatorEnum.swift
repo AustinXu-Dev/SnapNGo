@@ -29,10 +29,12 @@ enum Screen: Identifiable, Hashable {
     var id: Self { return self }
 }
 
-//enum Sheet: Identifiable, Hashable {
-//    
-//    var id: Self { return self }
-//}
+enum Sheet: Identifiable, Hashable {
+    
+    case joinQRCode(named: String)
+    var id: Self { return self }
+    
+}
 
 //enum FullScreenCover: Identifiable, Hashable {
 //    case addHabit(onSaveButtonTap: ((Habit) -> Void))

@@ -10,7 +10,7 @@ import SwiftUI
 
 class AppCoordinatorImpl: AppCoordinatorProtocol {
     @Published var path: NavigationPath = NavigationPath()
-//    @Published var sheet: Sheet?
+    @Published var sheet: Sheet?
 //    @Published var fullScreenCover: FullScreenCover?
     
     // MARK: - Navigation Functions
@@ -18,9 +18,9 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         path.append(screen)
     }
     
-//    func presentSheet(_ sheet: Sheet) {
-//        self.sheet = sheet
-//    }
+    func presentSheet(_ sheet: Sheet) {
+        self.sheet = sheet
+    }
     
 //    func presentFullScreenCover(_ fullScreenCover: FullScreenCover) {
 //        self.fullScreenCover = fullScreenCover
@@ -34,10 +34,10 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         path.removeLast(path.count)
     }
     
-//    func dismissSheet() {
-//        self.sheet = nil
-//    }
-//    
+    func dismissSheet() {
+        self.sheet = nil
+    }
+    
 //    func dismissFullScreenOver() {
 //        self.fullScreenCover = nil
 //    }
@@ -81,14 +81,14 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         }
     }
     
-//    @ViewBuilder
-//    func build(_ sheet: Sheet) -> some View {
-//        switch sheet {
-//        case .detailTask(named: let task):
-//            DetailTaskView(task: task)
-//        }
-//    }
-//    
+    @ViewBuilder
+    func build(_ sheet: Sheet) -> some View {
+        switch sheet {
+        case .joinQRCode(named: let teamId):
+            JoinQRSheet(teamId: teamId)
+        }
+    }
+    
 //    @ViewBuilder
 //    func build(_ fullScreenCover: FullScreenCover) -> some View {
 //        switch fullScreenCover {

@@ -11,7 +11,7 @@ class CreateTeamViewModel: ObservableObject{
     @Published var teamIdResponse: String?
     
     @Published var teamName: String = ""
-    @Published var adminUsername: String = ""
+    @Published var adminEmail: String = ""
     @Published var teamImageUrl: String = ""
     @Published var totalTasks: Int = 0
     @Published var maxMember: String = ""
@@ -23,7 +23,7 @@ class CreateTeamViewModel: ObservableObject{
     func createTeam(completion: @escaping (Error?) -> Void) {
         isLoading = true
         
-        let createTeamBody = CreateTeamDTO(teamName: teamName, adminUsername: adminUsername, teamImageUrl: teamImageUrl, totalTasks: 10, maxMember: Int(maxMember) ?? 10, assignedQuizzes: assignedQuizzes)
+        let createTeamBody = CreateTeamDTO(teamName: teamName, adminEmail: adminEmail, teamImageUrl: teamImageUrl, maxMember: Int(maxMember) ?? 10, assignedQuizzes: assignedQuizzes)
         
         let createTeamManager = CreateTeamUseCase()
         
