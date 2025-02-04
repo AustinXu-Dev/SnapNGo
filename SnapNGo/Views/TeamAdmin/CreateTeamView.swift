@@ -48,27 +48,7 @@ struct CreateTeamView: View {
                     Text(Constants.CreateTeamViewConstant.chooseLocationsTitle)
                         .heading2()
                     
-                    VStack{
-                        ForEach(locationMapping.keys.sorted(), id: \.self) { location in
-                            HStack {
-                                Image(systemName: selectedLocations.contains(location) ? "largecircle.fill.circle" : "circle")
-                                    .foregroundColor(selectedLocations.contains(location) ? .blue : .gray)
-                                
-                                Text(location)
-                                    .foregroundColor(.primary)
-                                
-                                Spacer()
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                toggleSelection(location: location)
-                            }
-                            .padding(.horizontal, Constants.LayoutPadding.medium)
-                            .padding(.vertical, Constants.LayoutPadding.small)
-                        }
-                    }
-                    .background(Color.white)
-                    .cornerRadius(8)
+                    locationSelectionView
                     
                     Text("Max Members")
                         .heading2()
@@ -90,6 +70,7 @@ struct CreateTeamView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .padding(.vertical, Constants.LayoutPadding.large)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, Constants.LayoutPadding.medium)
@@ -161,6 +142,29 @@ struct CreateTeamView: View {
         }
     }
     
+    private var locationSelectionView: some View{
+        VStack{
+            ForEach(locationMapping.keys.sorted(), id: \.self) { location in
+                HStack {
+                    Image(systemName: selectedLocations.contains(location) ? "largecircle.fill.circle" : "circle")
+                        .foregroundColor(selectedLocations.contains(location) ? .blue : .gray)
+                    
+                    Text(location)
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    toggleSelection(location: location)
+                }
+                .padding(.horizontal, Constants.LayoutPadding.medium)
+                .padding(.vertical, Constants.LayoutPadding.small)
+            }
+        }
+        .background(Color.white)
+        .cornerRadius(8)
+    }
 }
 
 #Preview {

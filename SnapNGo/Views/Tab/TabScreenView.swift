@@ -11,6 +11,9 @@ struct TabScreenView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
+    @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
+    @EnvironmentObject var taskSectionVM: TaskSectionViewModel
+
     @State var selectedTab: TabViewEnum = .home
     
     var body: some View {
@@ -26,6 +29,7 @@ struct TabScreenView: View {
                         Label("", image: selectedTab == .home ? "home-icon-click" : "home-icon")
                     }
                     .tag(TabViewEnum.home)
+                    .environmentObject(taskSectionVM)
                 TasksView()
                     .tabItem {
                         Label("", image: selectedTab == .task ? "tasks-icon-click" : "tasks-icon")
@@ -48,7 +52,18 @@ struct TabScreenView: View {
                 if getOneUserVM.userData == nil {
                     getOneUserVM.getOneUser(userId: userId)
                 }
-            }            
+            }
+            .onReceive(getOneUserVM.$teamId) { newTeamId in
+                if let teamId = newTeamId {
+                    getOneTeamVM.getOneTeam(teamId: teamId) { _ in
+                        taskSectionVM.teamName = getOneTeamVM.teamName
+                    }
+                }
+            }
+            .onReceive(getOneUserVM.$tasks) { tasks in
+                taskSectionVM.totalTasks = tasks.count
+                taskSectionVM.completedTasks = tasks.filter { $0.status.isFinished }.count
+            }
             if getOneUserVM.isLoading {
                 loadingBoxView(message: "loading")
             }

@@ -35,6 +35,7 @@ struct JoinQRView: View {
             .buttonStyle(.borderedProminent)
             .padding(.horizontal, Constants.LayoutPadding.large)
         }
+        .navigationBarBackButtonHidden()
     }
 }
 

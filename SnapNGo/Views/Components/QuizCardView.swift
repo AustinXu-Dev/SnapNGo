@@ -13,7 +13,7 @@ struct QuizCardView<ButtonContent: View>: View {
     var buttonContent: () -> ButtonContent
     
     var body: some View {
-        HStack(spacing: 5) {
+        HStack() {
             Image("quiz_icon")
                 .resizable()
                 .scaledToFill()
@@ -32,8 +32,6 @@ struct QuizCardView<ButtonContent: View>: View {
             .padding(.leading, 5)
             
             buttonContent()
-                .padding(.trailing, 8)
-
         }
         .frame(maxWidth: .infinity, maxHeight: 90)
         .padding(.horizontal, 5)
@@ -45,6 +43,18 @@ struct QuizCardView<ButtonContent: View>: View {
 
 #Preview {
     QuizCardView(quizQuestion: "What is SnapNGo?") {
+        
+        Button {
+            print("Answer tapped")
+        } label: {
+            Image("quiz_correct_icon")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+        }
+        .frame(width: 95, height: 95)
+    }
+    QuizCardView(quizQuestion: "What is SnapNGo?") {
         Button {
             print("Answer tapped")
         } label: {
@@ -52,5 +62,7 @@ struct QuizCardView<ButtonContent: View>: View {
                 .font(.footnote)
         }
         .buttonStyle(.borderedProminent)
+        .frame(width: 95, height: 80)
+
     }
 }

@@ -19,10 +19,10 @@ struct TaskSectionView: View {
                 .scaledToFill()
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading) {
-                Text(Constants.MyTasks.title)
+                Text(taskSectionVM.teamName)
                     .font(.headline)
                     .foregroundColor(.accent)
-                Text("\(taskSectionVM.completedTasks)")
+                Text("\(taskSectionVM.totalTasks)")
                     .font(.subheadline)
                 ProgressView(value: Float(taskSectionVM.completedTasks), total: Float(taskSectionVM.totalTasks))
                     .progressViewStyle(LinearProgressViewStyle(tint: .accent))

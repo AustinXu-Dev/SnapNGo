@@ -134,7 +134,7 @@ struct QuizDetailView: View {
                 
             }) {
                 Text(quizData.options[index])
-                    .foregroundColor(.blue)
+                    .foregroundColor(.accent)
                     .heading2()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
@@ -142,10 +142,6 @@ struct QuizDetailView: View {
                     .padding()
                     .background(borderColor(for: index))
                     .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-//                            .stroke(borderColor(for: index), lineWidth: 3)
-                    )
             }
             .disabled(showResult) // Disable the button after an option is selected
         }
@@ -154,12 +150,12 @@ struct QuizDetailView: View {
     private func borderColor(for index: Int) -> Color {
         if showResult {
             if index == quizData.answer {
-                return .green // Highlight correct answer
+                return Color("quiz_correct_bg") // Highlight correct answer
             } else if index == selectedOption {
-                return .red // Highlight wrong answer
+                return Color("quiz_wrong_bg") // Highlight wrong answer
             }
         }
-        return Color.clear // Default color for unselected options
+        return Color.white // Default color for unselected options
     }
     
     private func submitAnswer(selectedAnswer: Int){

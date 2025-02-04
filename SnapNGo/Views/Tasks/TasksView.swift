@@ -23,7 +23,7 @@ struct TasksView: View {
         ZStack{
             VStack{
                 Spacer()
-                    .frame(height: 15)
+                    .frame(height: 10)
                 TaskSectionView()
                     .environmentObject(taskSectionVM)
                 LineView()
@@ -39,7 +39,7 @@ struct TasksView: View {
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 8)
             
             
             if getOneTeamVM.isLoading{
@@ -48,14 +48,13 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
-//        .onAppear {
-//            if let lastFetch = lastFetch, Date().timeIntervalSince(lastFetch) < 300{
-//                print("Using cache data in tasks view.")
-//            } else {
-//                // Update last fetch time
-//                lastFetch = Date()
-//            }
-//        }
+        .safeAreaInset(edge: .top, content: {
+            Color.clear
+                .frame(height: 45)
+        })
+        .overlay {
+            topOverlayView
+        }
     }
     
     private var quizSegmentView: some View{
@@ -72,23 +71,12 @@ struct TasksView: View {
                     LazyVStack{
                         ForEach(Array(getOneUserVM.tasks.enumerated()), id: \.element._id) { index, task in
                             QuizCardView(quizQuestion: "Question \(index + 1)") {
-                                Button {
-                                    // MARK: Navigate to Quiz Detail
-                                    AppCoordinator.push(.quizDetail(taskId: task._id, questionNo: index+1, named: task.quizDetails, status: task.status))
-                                } label: {
-                                    if task.status.isFinished{
-                                        showQuizCompletionText(task: task)
-                                    } else {
-                                        Text("Answer")
-                                            .font(.footnote)
-                                    }
-                                }
-                                .buttonStyle(.borderedProminent)
-
+                                quizButton(for: task, index: index)
                             }
                         }
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .refreshable {
                     guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
                         print("Error here")
@@ -105,10 +93,48 @@ struct TasksView: View {
         .frame(maxWidth: .infinity)
     }
     
-    private func showQuizCompletionText(task: Tasks) -> some View{
-        Image(systemName: task.status.isAnswerCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
-            .foregroundStyle(.white)
-            .font(.footnote)
+    private func quizButton(for task: Tasks, index: Int) -> some View {
+        if task.status.isFinished {
+            return AnyView(
+                Button {
+                    AppCoordinator.push(.quizDetail(taskId: task._id, questionNo: index+1, named: task.quizDetails, status: task.status))
+                } label: {
+                    Image(task.status.isAnswerCorrect ? "quiz_correct_icon" : "quiz_wrong_icon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                }
+                .frame(width: 95, height: 95)
+            )
+        } else {
+            return AnyView(
+                Button {
+                    AppCoordinator.push(.quizDetail(taskId: task._id, questionNo: index+1, named: task.quizDetails, status: task.status))
+                } label: {
+                    Text("Answer")
+                        .heading3()
+                }
+                .buttonStyle(.borderedProminent)
+                .frame(width: 80, height: 80)
+            )
+        }
+    }
+
+    private var topOverlayView: some View{
+        ZStack{
+            Color.clear
+                .frame(height: 100)
+                .background(.ultraThinMaterial)
+                .ignoresSafeArea(edges: .top)
+            HStack{
+                Spacer()
+                Text("Tasks")
+                    .heading1()
+                Spacer()
+            }
+            .offset(y: -30)
+            .padding(.horizontal)
+        }.frame(maxHeight: .infinity, alignment: .top)
     }
 }
 

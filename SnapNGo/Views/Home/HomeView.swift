@@ -12,6 +12,8 @@ struct HomeView: View {
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var taskSectionVM: TaskSectionViewModel
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
+    @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
+    
     @StateObject var getHistoryVM: GetHistoryDataViewModel = GetHistoryDataViewModel()
     @StateObject var getFacultyVM: GetFacultyDataViewModel = GetFacultyDataViewModel()
     
@@ -27,8 +29,11 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack{
-                TaskSectionView()
-                    .environmentObject(taskSectionVM)
+                if getOneUserVM.teamId == nil{
+                    noTeamView
+                } else {
+                    TaskSectionView()
+                }
                 
                 LineView()
                 
