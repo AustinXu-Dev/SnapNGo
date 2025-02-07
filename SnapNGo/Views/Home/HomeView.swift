@@ -236,7 +236,7 @@ struct HomeView: View {
     
     // MARK: - Scan QR code function
     func scanQRCode(){
-        
+        AppCoordinator.selectedTabIndex = .team
     }
 }
 

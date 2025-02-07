@@ -22,6 +22,8 @@ func loadingBoxView(message: String) -> some View {
             Text(message)
                 .foregroundColor(.gray)
                 .body1()
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
         }
         .frame(width: 180, height: 120) // Size of the loading box
         .background(Color.white)

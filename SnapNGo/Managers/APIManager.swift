@@ -54,6 +54,7 @@ extension APIManager {
             if let error = error {
                 completion(.failure(error))
                 print(error)
+                print("In API manager: ", error.localizedDescription)
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse else {

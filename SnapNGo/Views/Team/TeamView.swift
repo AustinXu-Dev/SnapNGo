@@ -12,11 +12,14 @@ struct TeamView: View {
     
     @State private var isShowingScanner = false
     @State private var isShowingAlert = false
+    @State private var isLeavingTeam = false
+    @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
     @State private var showErrorAlert = false
     @State private var lastFetch: Date?
     
     @StateObject private var joinTeamVM = UserJoinTeamViewModel()
+    @StateObject private var leaveTeamVM = LeaveTeamViewModel()
     @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
@@ -39,6 +42,10 @@ struct TeamView: View {
             
             if getOneTeamVM.isLoading {
                 loadingBoxView(message: "Loading Team...")
+            }
+            
+            if leaveTeamVM.isLoading{
+                loadingBoxView(message: "Leaving Team...")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -68,14 +75,30 @@ struct TeamView: View {
         .onReceive(joinTeamVM.$errorMessage) { errorMessage in
             if let message = errorMessage {
                 alertMessage = message
+                alertTitle = "Error joining team."
                 isShowingAlert = true
             }
         }
-        .alert("Error joining team.", isPresented: $isShowingAlert) {
+        .onReceive(leaveTeamVM.$isSuccess, perform: { success in
+            if success ?? false{
+                getOneTeamVM.isSuccess = false
+            }
+        })
+        .alert(alertTitle, isPresented: $isShowingAlert) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(alertMessage)
         }
+        .alert(alertTitle, isPresented: $isLeavingTeam) {
+            Button("Cancel", role: .cancel) {}
+            Button("Leave", role: .destructive) {
+                leaveTeamVM.leaveTeam(userId: getOneUserVM.userId, teamId: getOneTeamVM.teamId)
+            }
+        } message: {
+            Text(alertMessage)
+        }
+
+        
         .refreshable {
             guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
                 print("Error here")
@@ -207,11 +230,35 @@ struct TeamView: View {
                 .background(.ultraThinMaterial)
                 .ignoresSafeArea(edges: .top)
             HStack{
-                Spacer()
-                Text(getOneTeamVM.isSuccess ? getOneTeamVM.teamName : "Team")
-                    .heading1()
-                Spacer()
+                if getOneTeamVM.isSuccess{
+                    Button {
+                        print("hello")
+                    } label: {
+                        Image(systemName: "calendar.badge.plus")
+                            .opacity(0)
+                    }
+                    Spacer()
+                    Text(getOneTeamVM.isSuccess ? getOneTeamVM.teamName : "Team")
+                        .heading1()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Spacer()
+                    Button {
+                        isLeavingTeam = true
+                        alertTitle = "Leave Team Warning"
+                        alertMessage = "Are you sure you want to leave the team?"
+                    } label: {
+                        Image(systemName: "rectangle.portrait.and.arrow.right.fill")
+                    }
+                } else {
+                    Spacer()
+                    Text(getOneTeamVM.isSuccess ? getOneTeamVM.teamName : "Team")
+                        .heading1()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Spacer()
+                }
+                
             }
+            .frame(maxWidth: .infinity)
             .offset(y: -30)
             .padding(.horizontal)
         }.frame(maxHeight: .infinity, alignment: .top)

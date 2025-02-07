@@ -13,31 +13,29 @@ struct TabScreenView: View {
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
     @EnvironmentObject var taskSectionVM: TaskSectionViewModel
-
-    @State var selectedTab: TabViewEnum = .home
     
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $AppCoordinator.selectedTabIndex) {
                 TeamView()
                     .tabItem {
-                        Label("", image: selectedTab == .team ? "team-icon-click" : "team-icon")
+                        Label("", image: AppCoordinator.selectedTabIndex == .team ? "team-icon-click" : "team-icon")
                     }
                     .tag(TabViewEnum.team)
                 HomeView()
                     .tabItem {
-                        Label("", image: selectedTab == .home ? "home-icon-click" : "home-icon")
+                        Label("", image: AppCoordinator.selectedTabIndex == .home ? "home-icon-click" : "home-icon")
                     }
                     .tag(TabViewEnum.home)
                     .environmentObject(taskSectionVM)
                 TasksView()
                     .tabItem {
-                        Label("", image: selectedTab == .task ? "tasks-icon-click" : "tasks-icon")
+                        Label("", image: AppCoordinator.selectedTabIndex == .task ? "tasks-icon-click" : "tasks-icon")
                     }
                     .tag(TabViewEnum.task)
                 ProfileView()
                     .tabItem {
-                        Label("", image: selectedTab == .profile ? "profile-icon-click" : "profile-icon")
+                        Label("", image: AppCoordinator.selectedTabIndex == .profile ? "profile-icon-click" : "profile-icon")
                     }
                     .tag(TabViewEnum.profile)
             }
@@ -68,6 +66,8 @@ struct TabScreenView: View {
                 loadingBoxView(message: "loading")
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
     }
     
     private var loadingOverlay: some View {

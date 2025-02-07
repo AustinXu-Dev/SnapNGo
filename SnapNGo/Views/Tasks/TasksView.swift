@@ -21,27 +21,14 @@ struct TasksView: View {
     
     var body: some View {
         ZStack{
-            VStack{
-                Spacer()
-                    .frame(height: 10)
-                TaskSectionView()
-                    .environmentObject(taskSectionVM)
-                LineView()
-                
-                HStack{
-                    Image("tasks_count_icon")
-                    Text("Total ( \(taskSectionVM.totalTasks) ) tasks")
-                        .heading2()
+            ScrollView{
+                if getOneTeamVM.isSuccess{
+                    taskView
+                } else{
+                    noTaskView
                 }
-                .frame(maxWidth: .infinity,alignment: .leading)
-                
-                quizSegmentView
-                
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .padding(.horizontal, 8)
-            
-            
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             if getOneTeamVM.isLoading{
                 loadingBoxView(message: "Loading team")
             }
@@ -55,6 +42,28 @@ struct TasksView: View {
         .overlay {
             topOverlayView
         }
+    }
+    
+    private var taskView: some View{
+        VStack{
+            Spacer()
+                .frame(height: 10)
+            TaskSectionView()
+                .environmentObject(taskSectionVM)
+            LineView()
+            
+            HStack{
+                Image("tasks_count_icon")
+                Text("Total ( \(taskSectionVM.totalTasks) ) tasks")
+                    .heading2()
+            }
+            .frame(maxWidth: .infinity,alignment: .leading)
+            
+            quizSegmentView
+            
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal, 8)
     }
     
     private var quizSegmentView: some View{
@@ -135,6 +144,39 @@ struct TasksView: View {
             .offset(y: -30)
             .padding(.horizontal)
         }.frame(maxHeight: .infinity, alignment: .top)
+    }
+    
+    private var noTaskView: some View{
+        VStack(alignment: .center){
+            Spacer()
+                .frame(height: 40)
+            Image(Constants.TeamViewConstant.teamHomeImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.bottom, 8)
+            Text(Constants.TeamViewConstant.welcomeMessage)
+                .fontWeight(.semibold)
+                .padding(.bottom, 8)
+                .frame(maxWidth: 300)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+            Text("Join a team to enjoy the fun!")
+                .frame(width: 280)
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .fontWeight(.light)
+                .padding(.bottom, 8)
+            Button {
+                AppCoordinator.selectedTabIndex = .team
+            } label: {
+                Text("Join Team")
+                    .frame(width: 300)
+            }
+            .buttonStyle(.borderedProminent)
+
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ColorConstants.background)
     }
 }
 

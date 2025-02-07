@@ -11,6 +11,7 @@ import SwiftUI
 class AppCoordinatorImpl: AppCoordinatorProtocol {
     @Published var path: NavigationPath = NavigationPath()
     @Published var sheet: Sheet?
+    @Published var selectedTabIndex: TabViewEnum = .home
 //    @Published var fullScreenCover: FullScreenCover?
     
     // MARK: - Navigation Functions
@@ -38,6 +39,11 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         self.sheet = nil
     }
     
+    func setSelectedTab(index: TabViewEnum) {
+      print("Select tab index \(selectedTabIndex)")
+      selectedTabIndex = index
+    }
+    
 //    func dismissFullScreenOver() {
 //        self.fullScreenCover = nil
 //    }
@@ -51,9 +57,9 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         case .signUp:
             SignUpView()
         case .tab:
-            TabScreenView(selectedTab: .home)
+            TabScreenView()
         case .adminTab:
-            AdminTabScreenView(selectedTab: .adminHome)
+            AdminTabScreenView()
         case .tasks:
             ContentView()
         case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData, status: let statusData):

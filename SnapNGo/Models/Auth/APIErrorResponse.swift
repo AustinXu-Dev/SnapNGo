@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ServerError: Codable {
+struct APIErrorResponse: Codable, Error{
     let message: String
 }

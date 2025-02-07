@@ -81,6 +81,13 @@ struct SignInView: View {
                 isFocused = false
             }
         }
+        .alert(isPresented: $signInVM.isFailure) {
+            Alert(
+                title: Text("Sign In Error"),
+                message: Text(signInVM.errorMessage ?? "An unknown error occurred."),
+                dismissButton: .default(Text("Try Again"))
+            )
+        }
     }
     
     // MARK: - Email
@@ -147,7 +154,7 @@ struct SignInView: View {
     private func signInButtonAction() -> Void{
         signInVM.email = email
         signInVM.password = password
-        signInVM.signIn()        
+        signInVM.signIn()
     }
 }
 

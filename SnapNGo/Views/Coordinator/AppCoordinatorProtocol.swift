@@ -19,5 +19,7 @@ protocol AppCoordinatorProtocol: ObservableObject {
     func pop()
     func popToRoot()
     func dismissSheet()
+    func setSelectedTab(index: TabViewEnum)
+
 //    func dismissFullScreenOver()
 }

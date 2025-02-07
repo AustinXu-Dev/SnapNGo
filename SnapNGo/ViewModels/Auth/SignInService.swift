@@ -14,6 +14,9 @@ class SignInService: ObservableObject{
     @Published var password: String
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    @Published var isSuccess: Bool = false
+    @Published var isFailure: Bool = false
+    
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
             
     init(email: String = "", password: String = "") {
@@ -33,6 +36,8 @@ class SignInService: ObservableObject{
                 switch result{
                 case .success(let response):
                     self.isLoading = false
+                    self.isSuccess = true
+
                     // Store the user name in user defaults
                     UserDefaults.standard.set(response.user.name, forKey: Constants.UserDefaultsKeys.username)
                     UserDefaults.standard.set(response.user.id, forKey: Constants.UserDefaultsKeys.userId)
@@ -41,12 +46,13 @@ class SignInService: ObservableObject{
                     } else {
                         self.userAppState = AppState.signedIn.rawValue
                     }
-
                     print(response.message)
                 case .failure(let error):
                     self.isLoading = false
-                    self.errorMessage = "Failed to sign in: \(error.localizedDescription)"
+                    self.isFailure = true
+                    self.errorMessage = error.localizedDescription
                     print(error.localizedDescription)
+
                 }
             }
         }
