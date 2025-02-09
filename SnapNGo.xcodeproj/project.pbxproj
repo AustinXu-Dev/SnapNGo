@@ -22,6 +22,7 @@
 		B36E34C22CD7CA3D0081FB4E /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B36E34C12CD7CA3D0081FB4E /* KeychainSwift */; };
 		BCA1DC5C2D4F5E1E003DF657 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */; };
 		BCA1DC5D2D4F5E3E003DF657 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		BCABDD8C2D56406000608751 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BCABDD8B2D56406000608751 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -77,6 +78,7 @@
 				B36E34B02CD7C9B40081FB4E /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				B36E34BF2CD7CA040081FB4E /* GoogleSignInSwift in Frameworks */,
 				B36E34C22CD7CA3D0081FB4E /* KeychainSwift in Frameworks */,
+				BCABDD8C2D56406000608751 /* Kingfisher in Frameworks */,
 				B36E34BA2CD7C9B40081FB4E /* FirebaseStorage in Frameworks */,
 				B36E34AE2CD7C9B40081FB4E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				B36E34B82CD7C9B40081FB4E /* FirebaseFirestore in Frameworks */,
@@ -147,6 +149,7 @@
 				B344000B2CE4FF6B005D9515 /* ExpandableText */,
 				B34400242CE7A675005D9515 /* CodeScanner */,
 				BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */,
+				BCABDD8B2D56406000608751 /* Kingfisher */,
 			);
 			productName = SnapNGo;
 			productReference = BC2172552CC69ACD00C042EA /* SnapNGo.app */;
@@ -183,6 +186,7 @@
 				B344000A2CE4FF6B005D9515 /* XCRemoteSwiftPackageReference "ExpandableText" */,
 				B34400232CE7A675005D9515 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				BCA1DC582D4F5E1E003DF657 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				BCABDD8A2D56406000608751 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BC2172562CC69ACD00C042EA /* Products */;
@@ -474,6 +478,14 @@
 				kind = branch;
 			};
 		};
+		BCABDD8A2D56406000608751 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -546,6 +558,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BCA1DC582D4F5E1E003DF657 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		BCABDD8B2D56406000608751 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BCABDD8A2D56406000608751 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

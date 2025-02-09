@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, Hashable {
     let _id: String
     let name: String
     let email: String
@@ -27,7 +27,7 @@ struct User: Codable {
     let __v: Int
 }
 
-struct Tasks: Codable {
+struct Tasks: Codable, Hashable {
     let quizId: String
     let status: StatusModel
     let _id: String
@@ -41,9 +41,10 @@ struct StatusModel: Codable, Hashable{
     let userAnswerNumber: Int?
 }
 
-struct InventoryItem: Codable {
-    let id: String
-    let name: String
-    let description: String
+struct InventoryItem: Codable, Hashable {
+    let _id: String
     let quantity: Int
+    let isEquipped: Bool
+    let itemId: String
+    
 }
