@@ -33,7 +33,7 @@ extension APIManager {
         }
         
         //MARK: - Post and Put
-        if let data = data, getMethod == "POST" || getMethod == "PUT" {
+        if let data = data, getMethod == "POST" || getMethod == "PUT" || getMethod == "PATCH" {
             do{
                 let jsonData = try JSONEncoder().encode(data)
                 request.httpBody = jsonData

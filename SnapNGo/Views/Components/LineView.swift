@@ -18,7 +18,6 @@ struct LineView: View {
         Rectangle()
             .frame(height: height)
             .foregroundColor(color)
-            .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
     }
 }

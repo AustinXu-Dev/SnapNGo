@@ -6,21 +6,30 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct AboutUsLongCardView: View {
     
-    var image: String // Image URL or name
+    var image: String? // Image URL or name
     var title: String
     var description: String
     var action:() -> Void
     
     var body: some View {
         HStack(spacing: 5) {
-            Image(image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 116, height: 136)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            if let imageUrl = image{
+                KFImage(URL(string: imageUrl))
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 116, height: 136)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            } else {
+                Image(image ?? "sample")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 116, height: 136)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
             VStack(alignment: .leading) {
                 Text(title)
                     .font(.headline)

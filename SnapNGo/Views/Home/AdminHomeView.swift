@@ -166,7 +166,7 @@ struct AdminHomeView: View {
                 Text(Constants.HomeView.mapTitle)
                     .fontWeight(.semibold)
                 
-                Image("sample")
+                Image("abac_map")
                     .resizable()
                     .frame(maxWidth: .infinity, maxHeight: 300)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -201,7 +201,7 @@ struct AdminHomeView: View {
             if selectedSegment == 0 {
                 LazyVStack(spacing: 8){
                     ForEach(getHistoryVM.history, id: \._id) { item in
-                        AboutUsLongCardView(image: "sample", title: item.title, description: item.description) {
+                        AboutUsLongCardView(image: item.images?.first, title: item.title, description: item.description) {
                             switch item.type{
                             case "history":
                                 AppCoordinator.push(.historyDetail(named: item))
@@ -218,7 +218,7 @@ struct AdminHomeView: View {
             } else {
                 LazyVStack(spacing: 8){
                     ForEach(getFacultyVM.faculties, id: \.self) { faculty in
-                        AboutUsLongCardView(image: "sample", title: faculty.abbreviation, description: faculty.shortDescription) {
+                        AboutUsLongCardView(image: faculty.images?.first, title: faculty.abbreviation, description: faculty.shortDescription) {
                             AppCoordinator.push(.facultyDetail(named: faculty))
                         }
                     }

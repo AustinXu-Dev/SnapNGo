@@ -84,6 +84,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             JoinQRView(teamId: teamId)
         case .joinedTeamView:
             TeamMemberView()
+        case .editProfile(named: let userData):
+            EditProfileView(userData: userData)
         }
     }
     
