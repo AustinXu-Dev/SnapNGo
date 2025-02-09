@@ -80,6 +80,9 @@ struct SignInView: View {
             .onTapGesture {
                 isFocused = false
             }
+            if signInVM.isLoading{
+                loadingBoxView(message: "Signing in...")
+            }
         }
         .alert(isPresented: $signInVM.isFailure) {
             Alert(
