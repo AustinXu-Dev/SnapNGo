@@ -28,9 +28,7 @@ struct ProfileView: View {
         ZStack{
             ScrollView{
                 VStack{
-                    Circle()
-                        .foregroundStyle(.accent)
-                        .frame(maxWidth: .infinity, maxHeight: 300)
+                    profilePic
                     
                     LineView()
                     
@@ -81,6 +79,9 @@ struct ProfileView: View {
                 AppCoordinator.selectedTabIndex = .home
             }
         }
+        .onAppear {
+            print(getOneUserVM.getProfileImage())
+        }
     }
     
     private var topOverlayView: some View{
@@ -103,7 +104,7 @@ struct ProfileView: View {
                 Spacer()
                 Button {
                     //MARK: Navigate to shop
-                    
+                    AppCoordinator.push(.shopView(userId: getOneUserVM.userId, userPoints: getOneUserVM.totalPoints))
                 } label: {
                     Image("basket_icon")
                 }
@@ -112,6 +113,20 @@ struct ProfileView: View {
             .offset(y: -30)
             .padding(.horizontal)
         }.frame(maxHeight: .infinity, alignment: .top)
+    }
+    
+    private var profilePic: some View{
+        VStack{
+            ZStack{
+                Circle()
+                    .foregroundStyle(.shopCardBackground)
+                Image("boy_hat")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(maxWidth: .infinity, maxHeight: 220)
+        }
+        .frame(maxWidth: .infinity, maxHeight: 300)
     }
     
     private var profileDetail: some View{
@@ -188,6 +203,7 @@ struct ProfileView: View {
         }
         getOneUserVM.getOneUser(userId: userId)
     }
+    
 }
 
 #Preview {

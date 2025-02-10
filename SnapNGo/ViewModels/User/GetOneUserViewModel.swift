@@ -11,12 +11,16 @@ class GetOneUserViewModel: ObservableObject {
     
     @Published var userData: User? = nil
     @Published var userId: String = ""
+    @Published var userGender: String = ""
     @Published var tasks: [Tasks] = []
     @Published var quizzes: [Quiz] = []
     @Published var inventoryItems: [InventoryItem] = []
     @Published var teamId: String? = nil
+    @Published var totalPoints: Int = 0
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    
+    @Published var userItems: [ShopItem] = []
     
     func getOneUser(userId: String) {
         isLoading = true
@@ -29,6 +33,7 @@ class GetOneUserViewModel: ObservableObject {
                     print("Get one user ", userData)
                     self.userData = userData
                     self.userId = userData._id
+                    self.userGender = userData.gender
                     if !userData.teamIds.isEmpty{
                         self.teamId = userData.teamIds[0]
                     }
@@ -37,6 +42,7 @@ class GetOneUserViewModel: ObservableObject {
                         quiz.quizDetails
                     })
                     self.inventoryItems = userData.inventory ?? []
+                    self.totalPoints = userData.totalPoints
                     self.isLoading = false
                 case .failure(let error):
                     self.isLoading = false
@@ -44,5 +50,23 @@ class GetOneUserViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func getProfileImage() -> String{
+        let equippedItems = inventoryItems.filter{ $0.isEquipped }
+        
+        let equippedItemNames = equippedItems.compactMap { equippedItem in
+            userItems.first { $0._id == equippedItem.itemId }?.name
+        }
+        
+        var result = equippedItemNames.joined(separator: "_").lowercased()
+        
+        if userGender == "male"{
+            result = "boy_" + result
+        } else{
+            result = "girl_" + result
+        }
+        
+        return result
     }
 }

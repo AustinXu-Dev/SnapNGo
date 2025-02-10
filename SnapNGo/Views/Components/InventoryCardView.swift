@@ -9,15 +9,24 @@ import SwiftUI
 
 struct InventoryCardView: View {
     let itemId: String
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @StateObject private var viewModel = GetOneItemViewModel()
 
     var body: some View {
         VStack(spacing: 0){
             ZStack{
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.accent)
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundStyle(Color.shopCardBackground)
                     .frame(maxWidth: .infinity, minHeight: 80)
                     .padding(Constants.LayoutPadding.small)
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if let item = viewModel.item{
+                    Image(item.name.lowercased())
+                        .resizable()
+                        .frame(height: 100)
+                        .scaledToFit()
+                }
             }
             if viewModel.isLoading {
                 ProgressView()
@@ -33,9 +42,11 @@ struct InventoryCardView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, minHeight: 124)
-        .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 5))
         .onAppear {
-            viewModel.getOneItem(itemId: itemId)
+            viewModel.getOneItem(itemId: itemId){ item in
+                getOneUserVM.userItems.append(item!)
+            }
         }
         .onTapGesture {
             print("Equip: \(itemId)")

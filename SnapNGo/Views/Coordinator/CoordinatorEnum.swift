@@ -26,6 +26,7 @@ enum Screen: Identifiable, Hashable {
     case joinQRCode(named: String)
     case joinedTeamView
     case editProfile(named: User)
+    case shopView(userId: String, userPoints: Int)
     
     var id: Self { return self }
 }

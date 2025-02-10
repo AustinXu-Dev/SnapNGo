@@ -151,7 +151,7 @@ struct HomeView: View {
                     .frame(width: 110, height: 50)
                     .aspectRatio(contentMode: .fill)
                     .overlay {
-                        Text("1000")
+                        Text("\(getOneUserVM.totalPoints)")
                             .font(.footnote)
                             .foregroundStyle(.white)
                             .offset(x: 14, y: -3)

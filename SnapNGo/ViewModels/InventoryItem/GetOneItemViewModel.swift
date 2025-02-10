@@ -13,7 +13,7 @@ class GetOneItemViewModel: ObservableObject{
     @Published var isLoading : Bool = false
     @Published var errorMessage : String? = nil
     
-    func getOneItem(itemId: String){
+    func getOneItem(itemId: String, completion: @escaping (ShopItem?) -> Void){
         if item != nil { return }
         isLoading = true
         
@@ -25,9 +25,11 @@ class GetOneItemViewModel: ObservableObject{
                 switch result {
                 case .success(let response):
                     self.item = response
+                    completion(response)
                 case .failure(let error):
                     self.errorMessage = error.localizedDescription
                     print("Error in get one item: ", error.localizedDescription)
+                    completion(nil)
                 }
             }
         }
