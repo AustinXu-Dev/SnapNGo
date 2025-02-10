@@ -157,21 +157,26 @@ struct ProfileView: View {
         VStack(alignment: .leading) {
             Text("Inventory")
                 .heading2()
+            
             LazyVGrid(columns: columns, spacing: 15) {
-                ForEach(showAll ? items : Array(items.prefix(4)), id: \.self) { item in
-                    InventoryCardView(number: item)
+                ForEach(showAll ? getOneUserVM.inventoryItems : Array(getOneUserVM.inventoryItems.prefix(4)), id: \.self) { item in
+                    //MARK: - Showing the inventory items
+                    InventoryCardView(itemId: item.itemId)
                 }
             }
             
-            Button(action: {
-               withAnimation {
-                   showAll.toggle()
-               }
-           }) {
-               Text(showAll ? "See Less" : "See More")
-                   .font(.headline)
-                   .foregroundColor(.blue)
-           }
+            if getOneUserVM.inventoryItems.count > 4 {
+                Button(action: {
+                    withAnimation {
+                        showAll.toggle()
+                    }
+                }) {
+                    Text(showAll ? "See Less" : "See More")
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                }
+                
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

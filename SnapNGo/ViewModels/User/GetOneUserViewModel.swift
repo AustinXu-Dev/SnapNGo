@@ -13,6 +13,7 @@ class GetOneUserViewModel: ObservableObject {
     @Published var userId: String = ""
     @Published var tasks: [Tasks] = []
     @Published var quizzes: [Quiz] = []
+    @Published var inventoryItems: [InventoryItem] = []
     @Published var teamId: String? = nil
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
@@ -35,6 +36,7 @@ class GetOneUserViewModel: ObservableObject {
                     self.quizzes = userData.tasks!.map({ quiz in
                         quiz.quizDetails
                     })
+                    self.inventoryItems = userData.inventory ?? []
                     self.isLoading = false
                 case .failure(let error):
                     self.isLoading = false

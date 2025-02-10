@@ -19,6 +19,7 @@ struct User: Codable, Hashable {
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [Tasks]?
+    let gender: String
     let inventory: [InventoryItem]?
     let role: String
     let teamIds: [String]
