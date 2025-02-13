@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Admin: Codable{
+struct Admin: Codable, Hashable{
     let _id: String
     let name: String
     let email: String
@@ -15,6 +15,8 @@ struct Admin: Codable{
     let profileImageUrl: String
     let dob: Date?
     let address: String
+    let gender: String
+    let teamPoints: Int
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [Tasks]?

@@ -41,6 +41,37 @@ struct QuizCardView<ButtonContent: View>: View {
     }
 }
 
+struct AdminQuizCardView<ButtonContent: View>: View {
+    
+    var quizQuestion: String
+    var buttonContent: () -> ButtonContent
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            Image("quiz_icon")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 60, height: 60)
+                .padding(.horizontal, 8)
+            VStack(alignment: .leading) {
+                Text(quizQuestion)
+                    .font(.headline)
+                    .padding(.bottom, 5)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .padding(.leading, 5)
+            
+            buttonContent()
+        }
+        .frame(maxWidth: .infinity, maxHeight: 90)
+        .padding(.horizontal, 5)
+        .padding(.vertical, 8)
+        .background(Color.white)
+        .cornerRadius(12)
+    }
+}
+
+
 #Preview {
     QuizCardView(quizQuestion: "What is SnapNGo?") {
         

@@ -88,6 +88,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             EditProfileView(userData: userData)
         case .shopView(userId: let userId, userPoints: let userPoints):
             ShopView(userId: userId, userPoints: userPoints)
+        case .teamTaskView(named: let createdTeamData):
+            TeamTaskView(teamData: createdTeamData)
         }
     }
     

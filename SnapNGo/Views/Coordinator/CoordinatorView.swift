@@ -52,6 +52,7 @@ struct CoordinatorView: View {
 //                    appCoordinator.build(fullScreenCover)
 //                }
         }
+        .navigationBarBackButtonHidden()
         .environmentObject(appCoordinator)
         .environmentObject(taskSectionVM)
         .environmentObject(getOneUserVM)

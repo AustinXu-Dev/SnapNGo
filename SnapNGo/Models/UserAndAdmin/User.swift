@@ -16,6 +16,7 @@ struct User: Codable, Hashable {
     let dob: Date?
     let school: String
     let address: String
+    let teamPoints: Int
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [Tasks]?
@@ -43,9 +44,9 @@ struct StatusModel: Codable, Hashable{
 }
 
 struct InventoryItem: Codable, Hashable {
-    let _id: String
+    let itemId: String
     let quantity: Int
     let isEquipped: Bool
-    let itemId: String
-    
+    let _id: String
+    let itemInfo: ShopItem
 }

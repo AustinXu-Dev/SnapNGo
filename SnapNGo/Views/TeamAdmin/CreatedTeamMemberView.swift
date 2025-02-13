@@ -44,6 +44,14 @@ struct CreatedTeamMemberView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+        .navigationBarBackButtonHidden()
+        .safeAreaInset(edge: .top, content: {
+            Color.clear
+                .frame(height: 45)
+        })
+        .overlay {
+            topOverlayView
+        }
         .onAppear(perform: {
             getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in
                 teamMembers = getOneCreatedTeamVM.membersData
@@ -54,16 +62,34 @@ struct CreatedTeamMemberView: View {
                 teamMembers = getOneCreatedTeamVM.membersData
             }
         }
-        .navigationTitle(teamData.teamName)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+    }
+    
+    private var topOverlayView: some View{
+        ZStack{
+            Color.clear
+                .frame(height: 100)
+                .background(.ultraThinMaterial)
+                .ignoresSafeArea(edges: .top)
+            HStack{
                 Button {
+                    AppCoordinator.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                Spacer()
+                Text("Team Members")
+                    .heading1()
+                Spacer()
+                Button {
+                    print("qr")
+                    //MARK: show qr code view
                     AppCoordinator.presentSheet(.joinQRCode(named: teamData._id))
                 } label: {
                     Image(systemName: "qrcode")
                 }
-
             }
-        }
+            .offset(y: -30)
+            .padding(.horizontal)
+        }.frame(maxHeight: .infinity, alignment: .top)
     }
 }

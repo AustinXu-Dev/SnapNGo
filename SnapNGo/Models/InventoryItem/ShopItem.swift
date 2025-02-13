@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShopItem: Codable{
+struct ShopItem: Codable, Hashable{
     let _id: String
     let name: String
     let category: String

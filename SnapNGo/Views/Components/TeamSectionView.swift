@@ -13,27 +13,35 @@ struct TeamSectionView: View {
     var action: () -> Void
     
     var body: some View {
-        HStack {
-            Image("sample")
+        HStack(alignment: .center){
+            Image("team_image_1")
                 .resizable()
-                .frame(width: 125, height: 125) // Set specific dimensions
+                .frame(maxWidth: 64, maxHeight: 64) 
                 .scaledToFill()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(RoundedRectangle(cornerRadius: 5))
+                .padding(.all, 5)
             VStack(alignment: .leading) {
                 Text(team.teamName)
                     .font(.headline)
                     .foregroundColor(.accent)
                 Text("\(team.totalTasks) Tasks")
                     .font(.subheadline)
-                Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-            .padding(.horizontal, 10)
-            .background(Color.white)
+            
+            Circle()
+                .frame(width: 30, height: 30)
+                .overlay {
+                    Image("members_icon")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .scaledToFit()
+                }
+                .foregroundStyle(.clear)
+
         }
-        .frame(maxWidth: .infinity, maxHeight: 125)
-        .background(RoundedRectangle(cornerRadius: 10).fill(.white))
-        .padding(.vertical, 3)
+        .frame(maxWidth: .infinity, maxHeight: 72)
+        .background(RoundedRectangle(cornerRadius: 5).fill(.white))
         .onTapGesture {
             action()
         }

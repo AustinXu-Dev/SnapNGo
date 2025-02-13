@@ -19,17 +19,13 @@ struct CreateTeamPreScreen: View {
                 if getOneAdminVM.createdTeamIds.isEmpty{
                     createTeamPreScreen
                 } else {
-                    ForEach(getCreatedTeamsVM.teamsData, id: \._id) { team in
-                        TeamSectionView(team: team){
-                            AppCoordinator.push(.createdTeamMember(named: team))
-                        }
-                        .padding(.horizontal, Constants.LayoutPadding.medium)
-                    }
+                    teamListView
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationBarBackButtonHidden()
         .safeAreaInset(edge: .top, content: {
             Color.clear
                 .frame(height: 45)
@@ -41,7 +37,6 @@ struct CreateTeamPreScreen: View {
         .refreshable {
             getCreatedTeamsVM.getAllCreatedTeams(adminEmail: getOneAdminVM.adminEmail)
         }
-        .navigationBarBackButtonHidden()
     }
     
     private var createTeamPreScreen: some View{
@@ -96,13 +91,34 @@ struct CreateTeamPreScreen: View {
                 Button {
                     AppCoordinator.push(.createTeam)
                 } label: {
-                    Image(systemName: "calendar.badge.plus")
+                    Image("create_team_icon")
                 }
             }
             .frame(maxWidth: .infinity)
             .offset(y: -30)
             .padding(.horizontal)
         }.frame(maxHeight: .infinity, alignment: .top)
+    }
+    
+    private var teamListView: some View{
+        VStack{
+            LineView()
+            HStack{
+                Image(Constants.TeamViewConstant.participantIcon)
+                Text("^[\(getCreatedTeamsVM.teamsData.count) Team](inflect: true)")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            ForEach(getCreatedTeamsVM.teamsData, id: \._id) { team in
+                TeamCardView(image: "team_image_1", teamName: team.teamName, membersCount: team.members.count-1){
+                    AppCoordinator.push(.createdTeamMember(named: team))
+                    // Team Task View
+                    AppCoordinator.push(.teamTaskView(named: team))
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, Constants.LayoutPadding.medium)
     }
 }
 

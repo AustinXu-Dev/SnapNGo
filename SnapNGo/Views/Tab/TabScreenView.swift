@@ -68,6 +68,7 @@ struct TabScreenView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+        .navigationBarBackButtonHidden()
     }
     
     private var loadingOverlay: some View {

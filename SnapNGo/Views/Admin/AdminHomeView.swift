@@ -69,6 +69,7 @@ struct AdminHomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+        .navigationBarBackButtonHidden()
         .safeAreaInset(edge: .top, content: {
             Color.clear
                 .frame(height: 70)
@@ -92,7 +93,6 @@ struct AdminHomeView: View {
             }
             getOneAdminVM.getOneAdmin(adminId: adminId){_ in}
         }
-        .navigationBarBackButtonHidden()
     }
     
     //MARK: - No team View

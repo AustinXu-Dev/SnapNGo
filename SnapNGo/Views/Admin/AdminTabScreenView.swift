@@ -32,6 +32,9 @@ struct AdminTabScreenView: View {
                     }
                     .tag(TabViewEnum.profile)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
+            .navigationBarBackButtonHidden()
             .onAppear {
                 UITabBar.appearance().backgroundColor = .white
             }
