@@ -11,6 +11,6 @@ class EquipItemUseCase: APIManager{
     typealias ModelType = EquipItemResponse
     
     var methodPath: String{
-        return "/equip"
+        return "/item/equip"
     }
 }

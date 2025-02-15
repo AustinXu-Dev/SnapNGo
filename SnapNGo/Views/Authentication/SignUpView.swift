@@ -12,6 +12,7 @@ struct SignUpView: View {
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
 
     @State var name: String = ""
+    @State var gender: String = "Male"
     @State var email: String = ""
     @State var school: String = ""
     @State var password: String = ""
@@ -26,72 +27,80 @@ struct SignUpView: View {
     
     var body: some View {
         ZStack{
-            if signUpVM.isLoading{
-                ProgressView("Signing Up...")
-            }
             
-            VStack(alignment: .center, spacing: 5){
-                Image("logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                
-                emailField
-                    .padding(.top, 10)
-                
-                nameField
-                    .padding(.top, 10)
-                
-                schoolField
-                    .padding(.top, 10)
-                
-                passwordField
-                    .padding(.top, 10)
-                
-                confirmPasswordField
-                    .padding(.top, 10)
-                
-                Button{
-                    // Sign up
-                    signUpButtonAction()
-                } label: {
-                    Text(Constants.AuthenticationViewConstant.signUpText)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 8)
-                        .frame(height: 36)
-                        .background(Color.accentColor)
-                        .cornerRadius(8)
-                }
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.trailing, 8)
-                .padding(.top, 16)
-                
-                lineDivider
-                    .padding(.vertical, 20)
-                
-                Button {
-                    googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
-                        
-                    }
-                } label: {
-                    Image("continue_with_google")
-                }
-                
-                HStack{
-                    Text(Constants.AuthenticationViewConstant.haveAccountText)
-                        .font(.system(size: 12))
-                    Button {
-                        print("Go back to sign in page.")
-                        appCoordinator.pop()
+            ScrollView{
+                VStack(alignment: .center, spacing: 5){
+                    Image("logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    
+                    emailField
+                        .padding(.top, 10)
+                    
+                    nameField
+                        .padding(.top, 10)
+                    
+                    genderField
+                        .padding(.top, 10)
+                    
+                    schoolField
+                        .padding(.top, 10)
+                    
+                    passwordField
+                        .padding(.top, 10)
+                    
+                    confirmPasswordField
+                        .padding(.top, 10)
+                    
+                    Button{
+                        // Sign up
+                        signUpButtonAction()
                     } label: {
-                        Text(Constants.AuthenticationViewConstant.signInText)
+                        Text(Constants.AuthenticationViewConstant.signUpText)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .frame(height: 36)
+                            .background(Color.accentColor)
+                            .cornerRadius(8)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing, 8)
+                    .padding(.top, 16)
+                    
+                    lineDivider
+                        .padding(.vertical, 20)
+                    
+                    Button {
+                        googleVM.signInWithGoogle(presenting: Application_utility.rootViewController) { error, isNewUser in
+                            
+                        }
+                    } label: {
+                        Image("continue_with_google")
+                    }
+                    
+                    HStack{
+                        Text(Constants.AuthenticationViewConstant.haveAccountText)
                             .font(.system(size: 12))
-                            .underline()
+                        Button {
+                            print("Go back to sign in page.")
+                            appCoordinator.pop()
+                        } label: {
+                            Text(Constants.AuthenticationViewConstant.signInText)
+                                .font(.system(size: 12))
+                                .underline()
+                        }
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, 8)
+                
+                if signUpVM.isLoading{
+                    loadingBoxView(message: "Signing up")
+                }
+
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 8)
             .background(ColorConstants.background)
             .onTapGesture {
                 isFocused = false
@@ -159,6 +168,26 @@ struct SignUpView: View {
                 )
         }
 
+    }
+    
+    private var genderField: some View{
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Gender")
+                .font(.headline)
+            
+            Picker("Select Gender", selection: $gender) {
+                Text("Male").tag("Male")
+                Text("Female").tag("Female")
+            }
+            .pickerStyle(MenuPickerStyle())
+            .frame(width: 361, height: 41.49)
+            .background(Color.white)
+            .cornerRadius(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(ColorConstants.textfield_stroke_color, lineWidth: 1)
+            )
+        }
     }
     
     private var schoolField: some View{
@@ -262,6 +291,7 @@ struct SignUpView: View {
     private func signUpButtonAction() -> Void{
         print("in signup button action")
         signUpVM.name = name
+        signUpVM.gender = gender.lowercased()
         signUpVM.email = email
         signUpVM.password = confirmPassword
         signUpVM.school = school

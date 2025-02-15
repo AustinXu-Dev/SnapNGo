@@ -139,7 +139,7 @@ struct HomeView: View {
                 HStack{
                     Image("profile")
                         .resizable()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 43, height: 43)
                     Text(getOneUserVM.userData?.name ?? "User")
                         .fontWeight(.semibold)
                         .heading1()
@@ -156,7 +156,6 @@ struct HomeView: View {
                             .foregroundStyle(.white)
                             .offset(x: 14, y: -3)
                     }
-                    .padding(.bottom, 10)
             }
             .offset(y: -30)
             .padding(.horizontal)

@@ -11,6 +11,7 @@ import SwiftUI
 class SignUpService: ObservableObject{
     
     @Published var name: String = ""
+    @Published var gender: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var school: String = ""
@@ -30,7 +31,7 @@ class SignUpService: ObservableObject{
 
     func signUp() {
         isLoading = true
-        let newUser = SignUpSchema(name: name, email: email, password: password, school: school)
+        let newUser = SignUpSchema(name: name, email: email, password: password, gender: gender, school: school)
         
         let signUpManager = SignUpUseCase()
         

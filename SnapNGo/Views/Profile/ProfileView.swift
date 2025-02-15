@@ -13,16 +13,19 @@ struct ProfileView: View {
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     @ObservedObject var googleVM = GoogleAuthViewModel()
+    @StateObject var equipItemVM = EquipItemViewModel()
     
     @State var showAlert: Bool = false
     @State private var showAll = false
+    @State private var selectedFaceID: String? = nil
+    @State private var selectedHairID: String? = nil
     
     let items = Array(1...10)
     let columns = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
     ]
-
+    
     var body: some View {
         
         ZStack{
@@ -41,7 +44,7 @@ struct ProfileView: View {
                     LineView()
                     
                     editProfile
-                            
+                    
                     
                     Button {
                         showAlert = true
@@ -55,6 +58,9 @@ struct ProfileView: View {
                 .padding(.horizontal, Constants.LayoutPadding.medium)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if equipItemVM.isLoading{
+                loadingBoxView(message: "Equipping item(s)")
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
@@ -81,6 +87,15 @@ struct ProfileView: View {
         }
         .onAppear {
             print(getOneUserVM.getProfileImage())
+        }
+        .onReceive(equipItemVM.$isSuccess) { output in
+            if output{
+                guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                    print("Error here")
+                    return
+                }
+                getOneUserVM.getOneUser(userId: userId)
+            }
         }
     }
     
@@ -120,7 +135,7 @@ struct ProfileView: View {
             ZStack{
                 Circle()
                     .foregroundStyle(.shopCardBackground)
-                Image("boy_hat")
+                Image(getOneUserVM.getProfileImage())
                     .resizable()
                     .scaledToFit()
             }
@@ -133,9 +148,9 @@ struct ProfileView: View {
         VStack(alignment: .leading) {
             Text(getOneUserVM.userData?.name ?? "John Doe")
                 .heading1()
-            Text(getOneUserVM.teamId ?? "")
-                .body1()
-                .foregroundStyle(.accent)
+            //            Text(getOneUserVM.teamId ?? "")
+            //                .body1()
+            //                .foregroundStyle(.accent)
             HStack{
                 Image("tabler_school")
                 Text(getOneUserVM.userData?.school ?? "Assumption University of Thailand")
@@ -170,30 +185,67 @@ struct ProfileView: View {
     
     private var inventorySection: some View{
         VStack(alignment: .leading) {
-            Text("Inventory")
-                .heading2()
+            HStack{
+                Text("Inventory")
+                    .heading2()
+                
+                Spacer()
+                
+                Button {
+                    let selectedIDs = [selectedHairID, selectedFaceID].compactMap { $0 }
+                    equipItemVM.equipItem(userId: getOneUserVM.userId, itemIds: selectedIDs)
+                } label: {
+                    Text("Equip")
+                }
+
+
+            }
             
             LazyVGrid(columns: columns, spacing: 15) {
                 ForEach(showAll ? getOneUserVM.inventoryItems : Array(getOneUserVM.inventoryItems.prefix(4)), id: \.self) { item in
                     //MARK: - Showing the inventory items
-                    InventoryCardView(itemId: item.itemId)
+                    let isSelected = (item.itemInfo.category == "Face" && selectedFaceID == item.itemId) ||
+                    (item.itemInfo.category == "Hair" && selectedHairID == item.itemId)
+                    
+                    InventoryCardView(itemName: item.itemInfo.name)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+                        )
+                        .onTapGesture {
+                            onTapItem(category: item.itemInfo.category, itemId: item.itemId)
+                        }
                 }
             }
             
             if getOneUserVM.inventoryItems.count > 4 {
-                Button(action: {
-                    withAnimation {
-                        showAll.toggle()
-                    }
-                }) {
-                    Text(showAll ? "See Less" : "See More")
-                        .font(.headline)
-                        .foregroundColor(.blue)
-                }
-                
+                showAllButton
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private func onTapItem(category: String, itemId: String){
+        switch category{
+        case "Face":
+            selectedFaceID = (selectedFaceID == itemId) ? nil : itemId
+        case "Hair":
+            selectedHairID = (selectedHairID == itemId) ? nil : itemId
+        default:
+            break
+        }
+    }
+    
+    private var showAllButton: some View{
+        Button(action: {
+            withAnimation {
+                showAll.toggle()
+            }
+        }) {
+            Text(showAll ? "See Less" : "See More")
+                .font(.headline)
+                .foregroundColor(.blue)
+        }
     }
     
     private func userDataAPICall(){

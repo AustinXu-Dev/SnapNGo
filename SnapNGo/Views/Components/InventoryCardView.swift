@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InventoryCardView: View {
-    let itemId: String
+    let itemName: String
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @StateObject private var viewModel = GetOneItemViewModel()
 
@@ -21,8 +21,8 @@ struct InventoryCardView: View {
                     .padding(Constants.LayoutPadding.small)
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let item = viewModel.item{
-                    Image(item.name.lowercased())
+                } else {
+                    Image(itemName.lowercased())
                         .resizable()
                         .frame(height: 100)
                         .scaledToFit()
@@ -30,26 +30,16 @@ struct InventoryCardView: View {
             }
             if viewModel.isLoading {
                 ProgressView()
-            } else if let item = viewModel.item {
-                Text(item.name)
+            } else {
+                Text(itemName)
                     .font(.body)
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                Text("Failed to load item")
-                    .foregroundColor(.red)
             }
             Spacer()
         }
         .frame(maxWidth: .infinity, minHeight: 124)
         .background(Color.white, in: RoundedRectangle(cornerRadius: 5))
-        .onAppear {
-            viewModel.getOneItem(itemId: itemId){ item in
-                getOneUserVM.userItems.append(item!)
-            }
-        }
-        .onTapGesture {
-            print("Equip: \(itemId)")
-        }
+
     }
 }

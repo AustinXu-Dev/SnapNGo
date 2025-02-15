@@ -55,18 +55,21 @@ class GetOneUserViewModel: ObservableObject {
     func getProfileImage() -> String{
         let equippedItems = inventoryItems.filter{ $0.isEquipped }
         
-        let equippedItemNames = equippedItems.compactMap { equippedItem in
-            userItems.first { $0._id == equippedItem.itemId }?.name
+        var itemsArray: [String] = []
+        equippedItems.forEach { item in
+            itemsArray.append(item.itemInfo.name)
         }
         
-        var result = equippedItemNames.joined(separator: "_").lowercased()
+        var result = itemsArray.joined(separator: "_").lowercased()
         
         if userGender == "male"{
-            result = "boy_" + result
+            result = "male_" + result
         } else{
-            result = "girl_" + result
+            result = "female_" + result
         }
         
         return result
     }
+    
+    
 }
