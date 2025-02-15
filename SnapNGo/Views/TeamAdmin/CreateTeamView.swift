@@ -12,22 +12,27 @@ struct CreateTeamView: View {
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var getOneAdminVM: GetOneAdminViewModel
     @EnvironmentObject var getCreatedTeamsVM: GetAllCreatedTeamsViewModel
+    @StateObject var createTeamVM = CreateTeamViewModel()
 
     let maxSelections = 5
     let locationMapping: [String: String] = Constants.LocationMapping.locationMapping
     
     @State private var selectedLocations: Set<String> = []
     @State private var errorMessage: String? = nil
-    @StateObject var createTeamVM = CreateTeamViewModel()
     
     var body: some View {
         ZStack{
             ScrollView{
                 
-                Image(Constants.CreateTeamViewConstant.createTeamImage)
+                DropdownMenuDisclosureGroup(selectedOption: $createTeamVM.teamImageUrl)
+                
+                Image(createTeamVM.teamImageUrl.isEmpty ? "image_placeholder" : createTeamVM.teamImageUrl)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: .infinity, maxHeight: 200)
+                    .frame(width: 115, height: 115)
+                    .scaledToFit()
+                    .cornerRadius(8)
+                
+
                 Text(Constants.CreateTeamViewConstant.createTeamSubtitle)
                     .body1()
                     .multilineTextAlignment(.center)
@@ -40,10 +45,6 @@ struct CreateTeamView: View {
                     TextField("Pleae enter a team name", text: $createTeamVM.teamName)
                         .body1()
                         .textFieldStyle(.roundedBorder)
-                    
-                    Text(Constants.CreateTeamViewConstant.teamImageTitle)
-                        .heading2()
-                    DropdownMenuDisclosureGroup(selectedOption: $createTeamVM.teamImageUrl)
                     
                     Text(Constants.CreateTeamViewConstant.chooseLocationsTitle)
                         .heading2()
@@ -146,7 +147,7 @@ struct CreateTeamView: View {
         VStack{
             ForEach(locationMapping.keys.sorted(), id: \.self) { location in
                 HStack {
-                    Image(systemName: selectedLocations.contains(location) ? "largecircle.fill.circle" : "circle")
+                    Image(systemName: selectedLocations.contains(location) ? "checkmark.square.fill" : "square")
                         .foregroundColor(selectedLocations.contains(location) ? .blue : .gray)
                     
                     Text(location)

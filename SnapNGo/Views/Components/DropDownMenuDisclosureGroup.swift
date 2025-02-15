@@ -10,31 +10,32 @@ import SwiftUI
 struct DropdownMenuDisclosureGroup: View {
     @State private var isExpanded: Bool = false
     @Binding var selectedOption: String
-    let options = ["team_image_1", "team_image_2", "team_image_3", "team_image_4"]
-    let placeholder: String = "Please select an option"
+    let options = ["team_image_1", "team_image_2", "team_image_3", "team_image_4", "team_image_5", "team_image_6"]
+    let placeholder: String = "Choose Team Image"
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
-        DisclosureGroup(selectedOption.isEmpty ? placeholder : selectedOption, isExpanded: $isExpanded) {
+        DisclosureGroup(selectedOption.isEmpty ? placeholder : placeholder, isExpanded: $isExpanded) {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(options, id: \.self) { option in
                     Image(option)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
+                        .frame(width: 80, height: 80)
                         .cornerRadius(8)
                         .onTapGesture {
-                            selectedOption = option
-                            isExpanded = false
+                            withAnimation {
+                                selectedOption = option
+                                isExpanded = false
+                            }
                         }
                 }
             }
-            .padding()
-            
         }
-        .padding(Constants.LayoutPadding.small)
-        .background(Color.white)
+        .frame(width: 197)
+        .padding(Constants.LayoutPadding.xsmall)
+        .background(Color("choose_image_bg"))
         .cornerRadius(8)
     }
 }

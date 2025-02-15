@@ -14,7 +14,7 @@ struct TeamSectionView: View {
     
     var body: some View {
         HStack(alignment: .center){
-            Image("team_image_1")
+            Image(team.teamImageUrl.isEmpty ? "team_image_1" : team.teamImageUrl)
                 .resizable()
                 .frame(maxWidth: 64, maxHeight: 64) 
                 .scaledToFill()

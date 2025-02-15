@@ -84,7 +84,7 @@ struct TeamTaskView: View {
                     LazyVStack{
                         ForEach(Array(getQuizVM.quizzes.enumerated()), id: \.element._id) { index, quiz in
                             AdminQuizCardView(quizQuestion: "Question \(index + 1)") {
-                                Image(systemName: "chevron.right")
+                                AppCoordinator.push(.adminQuizDetail(named: quiz, questionNo: index+1))
                             }
                         }
                     }

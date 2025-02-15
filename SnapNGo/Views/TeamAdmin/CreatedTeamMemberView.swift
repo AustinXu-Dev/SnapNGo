@@ -22,14 +22,13 @@ struct CreatedTeamMemberView: View {
                     LineView()
                     HStack{
                         Image(Constants.TeamViewConstant.participantIcon)
-                        Text("^[\(teamData.members.count) Team member](inflect: true)")
+                        Text("^[\(teamData.members.count-1) Team member](inflect: true)")
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     LazyVStack{
                         ForEach(teamMembers, id: \._id) { member in
                             MemberCardView(image: "sample", memberName: member.name, points: member.totalPoints)
-                            //                        Text(member)
                         }
                     }
                 }

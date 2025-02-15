@@ -26,7 +26,7 @@ struct AdminTabScreenView: View {
                         Label("", image: AppCoordinator.selectedTabIndex == .home ? "home-icon-click" : "home-icon")
                     }
                     .tag(TabViewEnum.home)
-                ProfileView()
+                AdminProfileView()
                     .tabItem {
                         Label("", image: AppCoordinator.selectedTabIndex == .profile ? "profile-icon-click" : "profile-icon")
                     }

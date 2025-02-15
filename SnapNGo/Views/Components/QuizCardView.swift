@@ -41,10 +41,10 @@ struct QuizCardView<ButtonContent: View>: View {
     }
 }
 
-struct AdminQuizCardView<ButtonContent: View>: View {
+struct AdminQuizCardView: View {
     
     var quizQuestion: String
-    var buttonContent: () -> ButtonContent
+    var action: () -> Void
     
     var body: some View {
         HStack(alignment: .center) {
@@ -60,14 +60,18 @@ struct AdminQuizCardView<ButtonContent: View>: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .padding(.leading, 5)
-            
-            buttonContent()
+
+            Image(systemName: "chevron.right")
+                .padding(.trailing, 10)
         }
         .frame(maxWidth: .infinity, maxHeight: 90)
         .padding(.horizontal, 5)
         .padding(.vertical, 8)
         .background(Color.white)
         .cornerRadius(12)
+        .onTapGesture {
+            action()
+        }
     }
 }
 

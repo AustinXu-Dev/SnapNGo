@@ -16,7 +16,7 @@ struct TeamCardView: View{
     
     var body: some View{
         HStack{
-            Image(image)
+            Image(image.isEmpty ? "team_image_1" : image)
                 .resizable()
                 .frame(width: 66, height: 66)
                 .scaledToFit()

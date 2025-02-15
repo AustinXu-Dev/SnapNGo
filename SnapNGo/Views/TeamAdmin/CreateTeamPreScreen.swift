@@ -84,7 +84,7 @@ struct CreateTeamPreScreen: View {
                         .opacity(0)
                 }
                 Spacer()
-                Text("Created Team")
+                Text(getOneAdminVM.createdTeamIds.isEmpty ? "Create Team" : "Team List")
                     .heading1()
                     .frame(maxWidth: .infinity, alignment: .center)
                 Spacer()
@@ -110,7 +110,7 @@ struct CreateTeamPreScreen: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             ForEach(getCreatedTeamsVM.teamsData, id: \._id) { team in
-                TeamCardView(image: "team_image_1", teamName: team.teamName, membersCount: team.members.count-1){
+                TeamCardView(image: team.teamImageUrl, teamName: team.teamName, membersCount: team.members.count-1){
                     AppCoordinator.push(.createdTeamMember(named: team))
                     // Team Task View
                     AppCoordinator.push(.teamTaskView(named: team))

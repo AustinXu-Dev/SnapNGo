@@ -90,6 +90,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             ShopView(userId: userId, userPoints: userPoints)
         case .teamTaskView(named: let createdTeamData):
             TeamTaskView(teamData: createdTeamData)
+        case .adminQuizDetail(named: let quizData, questionNo: let questionNo):
+            AdminQuizDetailView(quizData: quizData, questionNo: questionNo)
         }
     }
     

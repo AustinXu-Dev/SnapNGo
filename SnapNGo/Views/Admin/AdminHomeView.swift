@@ -132,27 +132,14 @@ struct AdminHomeView: View {
                 .blur(radius: 1)
                 .ignoresSafeArea(edges: .top)
             HStack{
-                HStack{
-                    Image("profile")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                    Text(getOneAdminVM.adminData?.name ?? "Admin")
-                        .fontWeight(.semibold)
-                        .heading1()
-                }
-                .padding(.bottom, 10)
-                Spacer()
-                Image("currency")
+                Image(getOneAdminVM.adminData?.gender == "male" ? "boy" : "girl")
                     .resizable()
-                    .frame(width: 110, height: 50)
-                    .aspectRatio(contentMode: .fill)
-                    .overlay {
-                        Text("1000")
-                            .font(.footnote)
-                            .foregroundStyle(.white)
-                            .offset(x: 14, y: -3)
-                    }
-                    .padding(.bottom, 10)
+                    .frame(width: 43, height: 43)
+                    .scaledToFit()
+                Text(getOneAdminVM.adminData?.name ?? "Admin")
+                    .fontWeight(.semibold)
+                    .heading1()
+                Spacer()
             }
             .offset(y: -30)
             .padding(.horizontal)
