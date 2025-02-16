@@ -49,7 +49,7 @@ struct TasksView: View {
             Spacer()
                 .frame(height: 10)
             TaskSectionView()
-                .environmentObject(taskSectionVM)
+
             LineView()
             
             HStack{
@@ -94,8 +94,13 @@ struct TasksView: View {
                     getOneUserVM.getOneUser(userId: userId)
                 }
             } else {
-                SnapCardView {
-                    print("snap")
+                SnapCardView(snapQuestion: "") {
+                    Button {
+                        print("Snap")
+                    } label: {
+                        Text("Snap")
+                    }
+
                 }
             }
         }

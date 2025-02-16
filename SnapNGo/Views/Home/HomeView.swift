@@ -43,7 +43,7 @@ struct HomeView: View {
                 
                 aboutUsSectionView
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Constants.LayoutPadding.small)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)

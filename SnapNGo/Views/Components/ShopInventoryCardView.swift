@@ -12,6 +12,7 @@ struct ShopInventoryCardView: View {
     
     let userId: String
     let itemId: String
+    @Binding var isLoading: Bool
     
     @StateObject private var viewModel = GetOneItemViewModel()
     @StateObject var purchaseItemVM = PurchaseItemViewModel()
@@ -66,7 +67,9 @@ struct ShopInventoryCardView: View {
         .alert("Confirm Purchase", isPresented: $showConfirmationAlert) {
             Button("Cancel", role: .cancel) {} // ❌ Cancel button
             Button("Confirm") { // ✅ Confirm purchase
-                purchaseItemVM.purchaseItem(userId: userId, itemId: itemId, quantity: 1)
+                purchaseItemVM.purchaseItem(userId: userId, itemId: itemId, quantity: 1){
+                    isLoading = true
+                }
             }
         } message: {
             Text("Are you sure you want to purchase this item?")
@@ -75,12 +78,15 @@ struct ShopInventoryCardView: View {
             if success {
                 getOneUserVM.getOneUser(userId: userId)
                 alertMessage = "Purchase successful!"
+                isLoading = false
                 showResultAlert = true
+                
             }
         }
         .onReceive(purchaseItemVM.$purchaseFailed) { failed in
             if failed {
                 alertMessage = "Purchase failed. Please try again."
+                isLoading = false
                 showResultAlert = true
             }
         }

@@ -10,14 +10,14 @@ import SwiftUI
 
 struct LineView: View {
     var color: Color = .accentColor
-    var height: CGFloat = 2
+    var height: CGFloat = 1
     var horizontalPadding: CGFloat = 8
     var verticalPadding: CGFloat = 8
 
     var body: some View {
         Rectangle()
             .frame(height: height)
-            .foregroundColor(color)
+            .foregroundColor(color.opacity(0.5))
             .padding(.vertical, verticalPadding)
     }
 }

@@ -82,6 +82,7 @@ struct TeamView: View {
         .onReceive(leaveTeamVM.$isSuccess, perform: { success in
             if success ?? false{
                 getOneTeamVM.isSuccess = false
+                getOneUserVM.teamId = nil
             }
         })
         .alert(alertTitle, isPresented: $isShowingAlert) {

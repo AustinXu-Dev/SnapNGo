@@ -106,8 +106,13 @@ struct TeamTaskView: View {
                     }
                 }
             } else {
-                SnapCardView {
-                    print("snap")
+                SnapCardView(snapQuestion: "") {
+                    Button {
+                        print("Snap")
+                    } label: {
+                        Text("Snap")
+                    }
+
                 }
             }
         }

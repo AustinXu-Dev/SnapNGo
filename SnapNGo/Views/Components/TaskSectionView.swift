@@ -13,7 +13,7 @@ struct TaskSectionView: View {
     
     var body: some View {
         HStack {
-            Image("sample")
+            Image(taskSectionVM.teamImage.isEmpty ? "team_image_1" : taskSectionVM.teamImage)
                 .resizable()
                 .frame(width: 125, height: 125) // Set specific dimensions
                 .scaledToFill()

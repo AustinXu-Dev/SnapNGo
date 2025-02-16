@@ -93,7 +93,7 @@ struct AdminProfileView: View {
             ZStack{
                 Circle()
                     .foregroundStyle(.shopCardBackground)
-                Image("boy")
+                Image("male")
                     .resizable()
                     .scaledToFit()
             }

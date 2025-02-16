@@ -7,20 +7,28 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct AboutUsCardView: View {
-    var image: String
+    var image: String?
     var title: String
     var description: String
 
     var body: some View {
         VStack(alignment: .center) {
-            Image(image) // Replace with AsyncImage if loading from a URL
-                .resizable()
-                .scaledToFit()
-                .frame(height: 100)
-                .cornerRadius(8)
-            
+            if let imageUrl = image{
+                KFImage(URL(string: imageUrl))
+                    .resizable()
+                    .frame(height: 100)
+                    .scaledToFit()
+                    .cornerRadius(8)
+            } else {
+                Image("history_and_bg")
+                    .resizable()
+                    .frame(height: 100)
+                    .scaledToFit()
+                    .cornerRadius(8)
+            }
             Text(title)
                 .heading2()
                 .multilineTextAlignment(.center)

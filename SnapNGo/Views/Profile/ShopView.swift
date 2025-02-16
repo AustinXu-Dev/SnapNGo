@@ -13,6 +13,8 @@ struct ShopView: View {
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @StateObject var getAllItems = GetAllItemsViewModel()
     
+    @State var isLoading: Bool = false
+    
     var userId: String
     var userPoints: Int
     
@@ -22,29 +24,37 @@ struct ShopView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            VStack{
-                Text("Hair Accessories")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                LazyVGrid(columns: columns, spacing: 15) {
-                    ForEach(getAllItems.hairItems, id: \._id) { item in
-                        ShopInventoryCardView(userId: userId, itemId: item._id)
+        ZStack{
+            ScrollView {
+                VStack{
+                    Text("Hair Accessories")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    LazyVGrid(columns: columns, spacing: 15) {
+                        ForEach(getAllItems.hairItems, id: \._id) { item in
+                            ShopInventoryCardView(userId: userId, itemId: item._id, isLoading: $isLoading)
+                        }
+                    }
+                    
+                    LineView()
+                    
+                    Text("Face Accessories")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    LazyVGrid(columns: columns, spacing: 15) {
+                        ForEach(getAllItems.faceItems, id: \._id) { item in
+                            ShopInventoryCardView(userId: userId, itemId: item._id, isLoading: $isLoading)
+                        }
                     }
                 }
-                
-                LineView()
-                
-                Text("Face Accessories")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                LazyVGrid(columns: columns, spacing: 15) {
-                    ForEach(getAllItems.faceItems, id: \._id) { item in
-                        ShopInventoryCardView(userId: userId, itemId: item._id)
-                    }
-                }
+                .padding(.all, Constants.LayoutPadding.medium)
             }
-            .padding(.all, Constants.LayoutPadding.medium)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            if isLoading{
+                loadingBoxView(message: "Purchasing item")
+            }
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
@@ -99,7 +109,6 @@ struct ShopView: View {
                             .foregroundStyle(.white)
                             .offset(x: 14, y: -3)
                     }
-                    .padding(.bottom, 10)
             }
             .offset(y: -30)
             .padding(.horizontal)

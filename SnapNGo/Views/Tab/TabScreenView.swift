@@ -54,6 +54,7 @@ struct TabScreenView: View {
             .onReceive(getOneUserVM.$teamId) { newTeamId in
                 if let teamId = newTeamId {
                     getOneTeamVM.getOneTeam(teamId: teamId) { _ in
+                        taskSectionVM.teamImage = getOneTeamVM.teamImage
                         taskSectionVM.teamName = getOneTeamVM.teamName
                     }
                 }

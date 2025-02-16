@@ -15,7 +15,7 @@ struct CampusDetailView: View {
         ScrollView{
             VStack{
                 ForEach(campusData.campuses ?? [], id: \.self) { campus in
-                    DetailCardView(image: "sample", title: campus.name, location: campus.location ?? "", description: campus.description)
+                    DetailCardView(image: campus.images?.first, title: campus.name, location: campus.location ?? "", description: campus.description)
                     LineView(horizontalPadding: 0)
                 }
             }

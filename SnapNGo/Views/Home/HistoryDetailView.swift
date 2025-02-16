@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ExpandableText
+import Kingfisher
 
 struct HistoryDetailView: View {
     
@@ -21,11 +22,12 @@ struct HistoryDetailView: View {
             VStack{
                 VStack{
                     HStack(spacing: 0){
-                        Image("sample")
+                        
+                        Image("huamak_campus")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 125)
-                        Image("sample")
+                        Image("history_and_bg")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 125)
@@ -45,7 +47,7 @@ struct HistoryDetailView: View {
 
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(historyData.campuses ?? [], id: \.self){ item in
-                        AboutUsCardView(image: "sample", title: item.name, description: item.description)
+                        AboutUsCardView(image: item.images?.first, title: item.name, description: item.description)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

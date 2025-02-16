@@ -24,7 +24,7 @@ struct AboutUsLongCardView: View {
                     .frame(width: 116, height: 136)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             } else {
-                Image(image ?? "sample")
+                Image("sample")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 116, height: 136)
@@ -50,7 +50,7 @@ struct AboutUsLongCardView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, 5)
         }
-        .frame(width: 370, height: 130)
+        .frame(maxWidth: .infinity, maxHeight: 130)
         .padding(.horizontal, 5)
         .padding(.vertical, 8)
         .background(Color.white)

@@ -34,10 +34,10 @@ struct SignUpView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     
-                    emailField
+                    nameField
                         .padding(.top, 10)
                     
-                    nameField
+                    emailField
                         .padding(.top, 10)
                     
                     genderField

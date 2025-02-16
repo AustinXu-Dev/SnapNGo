@@ -9,6 +9,7 @@ import Foundation
 
 class TaskSectionViewModel: ObservableObject {
     @Published var teamName: String = ""
+    @Published var teamImage: String = ""
     @Published var totalTasks: Int = 0
     @Published var completedTasks: Int = 0
         

@@ -14,7 +14,7 @@ class PurchaseItemViewModel: ObservableObject{
     @Published var isLoading : Bool = false
     @Published var errorMessage : String? = nil
     
-    func purchaseItem(userId: String, itemId: String, quantity: Int){
+    func purchaseItem(userId: String, itemId: String, quantity: Int, completion: @escaping () -> Void){
         isLoading = true
         
         let purchaseItemDTO = PurchaseItemDTO(userId: userId, itemId: itemId, quantity: quantity)
@@ -26,11 +26,12 @@ class PurchaseItemViewModel: ObservableObject{
                 switch result {
                 case .success(_):
                     self.isSuccess = true
+                    completion()
                 case .failure(let failure):
-                    self.isSuccess = false
                     self.purchaseFailed = true
                     self.errorMessage = failure.localizedDescription
                     print("Error in purchase item: \(failure.localizedDescription)")
+                    completion()
                 }
             }
         }

@@ -32,23 +32,12 @@ struct FacultyDetailView: View {
     
     // MARK: - Image Section
     private var imageSection: some View{
-        HStack(spacing: 16) {
-            Image("sample")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 120, height: 120)
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-            Spacer()
-            Image("sample")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 210, height: 120)
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-//        .frame(maxWidth: .infinity, alignment: .leading)
+        Image("sample")
+            .resizable()
+            .frame(maxWidth: .infinity, maxHeight: 120)
+            .aspectRatio(contentMode: .fill)
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
     }
     
     private var bodySection: some View{

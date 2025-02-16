@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct SnapCardView: View {
+struct SnapCardView<ButtonContent: View>: View {
     
-    var action:() -> Void
-
+    var snapQuestion: String
+    var buttonContent: () -> ButtonContent
+    
     var body: some View {
-        HStack(spacing: 5) {
-            Image("snap_icon")
+        HStack() {
+            Image("quiz_icon")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 60, height: 60)
@@ -22,7 +23,7 @@ struct SnapCardView: View {
                 Text("Find an object")
                     .font(.headline)
                     .padding(.bottom, 5)
-                Text("hint: It's located near somewhere")
+                Text("hint: It's located near somewhere.")
                     .font(.system(size: 12))
                     .foregroundColor(.black)
                     .lineLimit(5)
@@ -30,15 +31,7 @@ struct SnapCardView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .padding(.leading, 5)
             
-            Button {
-                action()
-            } label: {
-                Text("Snap")
-                    .font(.footnote)
-            }
-            .buttonStyle(.borderedProminent)
-            .padding(.trailing, 8)
-
+            buttonContent()
         }
         .frame(maxWidth: .infinity, maxHeight: 90)
         .padding(.horizontal, 5)
@@ -46,7 +39,4 @@ struct SnapCardView: View {
         .background(Color.white)
         .cornerRadius(12)
     }
-}
-#Preview {
-    SnapCardView(action: {})
 }

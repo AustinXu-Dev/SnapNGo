@@ -7,18 +7,25 @@
 
 import SwiftUI
 import ExpandableText
+import Kingfisher
 
 struct DetailCardView: View {
-    var image: String
+    var image: String?
     var title: String
     var location: String
     var description: String
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
             HStack(spacing: 0){
-                Image(image)
-                    .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: 125)
+                if let imageUrl = image{
+                    KFImage(URL(string: imageUrl))
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: 125)
+                } else {
+                    Image("huamak_chapel")
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: 125)
+                }
             }
             
             Text(title)

@@ -12,6 +12,7 @@ class GetOneTeamViewModel: ObservableObject {
     @Published var teamData: OneTeamModel? = nil
     @Published var teamId: String = ""
     @Published var teamName: String = ""
+    @Published var teamImage: String = ""
     @Published var members: [OneMemberModel] = []
     @Published var quizIds: [String] = []
     
@@ -35,6 +36,7 @@ class GetOneTeamViewModel: ObservableObject {
                         member.role == "user"
                     }) ?? []
                     self.teamName = response.team.teamName
+                    self.teamImage = response.team.teamImageUrl
                     self.quizIds = response.team.assignedQuizzes ?? []
                     
                     self.isSuccess = true

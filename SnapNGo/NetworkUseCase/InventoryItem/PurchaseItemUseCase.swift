@@ -8,7 +8,7 @@
 import Foundation
 
 class PurchaseItemUseCase: APIManager{
-    typealias ModelType = User
+    typealias ModelType = PurchaseItemResponse
     
     var methodPath: String{
         return "/purchase"
