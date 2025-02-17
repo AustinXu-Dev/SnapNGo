@@ -64,6 +64,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             ContentView()
         case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData, status: let statusData):
             QuizDetailView(taskId: taskId, questionNo: questionNo, quizData: quizData, statusData: statusData)
+        case .snapQuizDetail:
+            SnapQuizView()
         case .historyDetail(named: let historyData):
             HistoryDetailView(historyData: historyData)
         case .chapelDetail(named: let chapelData):
@@ -86,6 +88,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             TeamMemberView()
         case .editProfile(named: let userData):
             EditProfileView(userData: userData)
+        case .editProfilePic(named: let profileImageString):
+            EditProfilePicView(profileImage: profileImageString)
         case .shopView(userId: let userId, userPoints: let userPoints):
             ShopView(userId: userId, userPoints: userPoints)
         case .teamTaskView(named: let createdTeamData):

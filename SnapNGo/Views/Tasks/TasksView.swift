@@ -76,6 +76,17 @@ struct TasksView: View {
             .padding(.bottom, Constants.LayoutPadding.medium)
             
             if selectedSegment == 0{
+                SnapCardView(snapQuestion: "") {
+                    Button {
+                        AppCoordinator.push(.snapQuizDetail)
+                    } label: {
+                        Text("Snap")
+                            .heading3()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .frame(width: 80, height: 80)
+                }
+            } else {
                 ScrollView{
                     LazyVStack{
                         ForEach(Array(getOneUserVM.tasks.enumerated()), id: \.element._id) { index, task in
@@ -92,15 +103,6 @@ struct TasksView: View {
                         return
                     }
                     getOneUserVM.getOneUser(userId: userId)
-                }
-            } else {
-                SnapCardView(snapQuestion: "") {
-                    Button {
-                        print("Snap")
-                    } label: {
-                        Text("Snap")
-                    }
-
                 }
             }
         }

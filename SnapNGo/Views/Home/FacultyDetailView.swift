@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ExpandableText
+import Kingfisher
 
 struct FacultyDetailView: View {
     
@@ -32,12 +33,25 @@ struct FacultyDetailView: View {
     
     // MARK: - Image Section
     private var imageSection: some View{
-        Image("sample")
-            .resizable()
-            .frame(maxWidth: .infinity, maxHeight: 120)
-            .aspectRatio(contentMode: .fill)
-            .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+        HStack{
+            if let imageUrl = facultyData.images?.first{
+                KFImage(URL(string: imageUrl))
+                    .resizable()
+                    .frame(maxWidth: 120, maxHeight: 120)
+                    .aspectRatio(contentMode: .fill)
+                    .background(Color(.systemGray6))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            } else {
+                Image("image_placeholder")
+                    .resizable()
+                    .frame(maxWidth: 120, maxHeight: 120)
+                    .aspectRatio(contentMode: .fill)
+                    .background(Color(.systemGray6))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: 120)
     }
     
     private var bodySection: some View{

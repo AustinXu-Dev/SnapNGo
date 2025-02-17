@@ -16,11 +16,7 @@ struct ProfileView: View {
     @StateObject var equipItemVM = EquipItemViewModel()
     
     @State var showAlert: Bool = false
-    @State private var showAll = false
-    @State private var selectedFaceID: String? = nil
-    @State private var selectedHairID: String? = nil
     
-    let items = Array(1...10)
     let columns = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
@@ -32,6 +28,8 @@ struct ProfileView: View {
             ScrollView{
                 VStack{
                     profilePic
+                    
+                    updateProfilePic
                     
                     LineView()
                     
@@ -144,6 +142,18 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity, maxHeight: 300)
     }
     
+    private var updateProfilePic: some View{
+        Button {
+            AppCoordinator.push(.editProfilePic(named: getOneUserVM.getProfileImage()))
+        } label: {
+            Text("Update profile image >>")
+                .underline()
+                .heading3()
+        }
+        .padding(.vertical, Constants.LayoutPadding.small)
+        
+    }
+    
     private var profileDetail: some View{
         VStack(alignment: .leading) {
             Text(getOneUserVM.userData?.name ?? "John Doe")
@@ -190,62 +200,19 @@ struct ProfileView: View {
                     .heading2()
                 
                 Spacer()
-                
-                Button {
-                    let selectedIDs = [selectedHairID, selectedFaceID].compactMap { $0 }
-                    equipItemVM.equipItem(userId: getOneUserVM.userId, itemIds: selectedIDs)
-                } label: {
-                    Text("Equip")
-                }
-
-
             }
-            
-            LazyVGrid(columns: columns, spacing: 15) {
-                ForEach(showAll ? getOneUserVM.inventoryItems : Array(getOneUserVM.inventoryItems.prefix(4)), id: \.self) { item in
-                    //MARK: - Showing the inventory items
-                    let isSelected = (item.itemInfo.category == "Face" && selectedFaceID == item.itemId) ||
-                    (item.itemInfo.category == "Hair" && selectedHairID == item.itemId)
-                    
-                    InventoryCardView(itemName: item.itemInfo.name)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
-                        )
-                        .onTapGesture {
-                            onTapItem(category: item.itemInfo.category, itemId: item.itemId)
-                        }
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: Array(repeating: GridItem(.flexible(), spacing: 10), count: 2), spacing: 15) {
+                    ForEach(getOneUserVM.inventoryItems, id: \.self) { item in
+                        InventoryCardView(itemName: item.itemInfo.name)
+                            .frame(width: 168)
+                    }
                 }
             }
-            
-            if getOneUserVM.inventoryItems.count > 4 {
-                showAllButton
-            }
+            .frame(minHeight: 130)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    private func onTapItem(category: String, itemId: String){
-        switch category{
-        case "Face":
-            selectedFaceID = (selectedFaceID == itemId) ? nil : itemId
-        case "Hair":
-            selectedHairID = (selectedHairID == itemId) ? nil : itemId
-        default:
-            break
-        }
-    }
-    
-    private var showAllButton: some View{
-        Button(action: {
-            withAnimation {
-                showAll.toggle()
-            }
-        }) {
-            Text(showAll ? "See Less" : "See More")
-                .font(.headline)
-                .foregroundColor(.blue)
-        }
     }
     
     private func userDataAPICall(){

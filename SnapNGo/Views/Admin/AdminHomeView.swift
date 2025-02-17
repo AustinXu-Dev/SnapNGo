@@ -132,7 +132,7 @@ struct AdminHomeView: View {
                 .blur(radius: 1)
                 .ignoresSafeArea(edges: .top)
             HStack{
-                Image(getOneAdminVM.adminData?.gender == "male" ? "boy" : "girl")
+                Image(getOneAdminVM.adminData?.gender == "male" ? "male" : "female")
                     .resizable()
                     .frame(width: 43, height: 43)
                     .scaledToFit()

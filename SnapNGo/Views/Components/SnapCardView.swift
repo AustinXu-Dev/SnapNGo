@@ -14,7 +14,7 @@ struct SnapCardView<ButtonContent: View>: View {
     
     var body: some View {
         HStack() {
-            Image("quiz_icon")
+            Image("snap_icon")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 60, height: 60)

@@ -67,8 +67,8 @@ struct ShopInventoryCardView: View {
         .alert("Confirm Purchase", isPresented: $showConfirmationAlert) {
             Button("Cancel", role: .cancel) {} // ❌ Cancel button
             Button("Confirm") { // ✅ Confirm purchase
+                isLoading = true
                 purchaseItemVM.purchaseItem(userId: userId, itemId: itemId, quantity: 1){
-                    isLoading = true
                 }
             }
         } message: {

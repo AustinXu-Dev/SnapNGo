@@ -20,12 +20,14 @@ enum Screen: Identifiable, Hashable {
     case facultyDetail(named: FacultyData)
     case tasks
     case quizDetail(taskId: String, questionNo: Int, named: Quiz, status: StatusModel)
+    case snapQuizDetail
     case mapView
     case createTeam
     case createdTeamMember(named: CreatedTeam)
     case joinQRCode(named: String)
     case joinedTeamView
     case editProfile(named: User)
+    case editProfilePic(named: String)
     case shopView(userId: String, userPoints: Int)
     case teamTaskView(named: CreatedTeam)
     case adminQuizDetail(named: Quiz, questionNo: Int)

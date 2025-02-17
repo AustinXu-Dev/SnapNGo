@@ -137,8 +137,9 @@ struct HomeView: View {
                 .ignoresSafeArea(edges: .top)
             HStack{
                 HStack{
-                    Image("profile")
+                    Image(getOneUserVM.getProfileImage())
                         .resizable()
+                        .scaledToFit()
                         .frame(width: 43, height: 43)
                     Text(getOneUserVM.userData?.name ?? "User")
                         .fontWeight(.semibold)
