@@ -20,7 +20,7 @@ enum Screen: Identifiable, Hashable {
     case facultyDetail(named: FacultyData)
     case tasks
     case quizDetail(taskId: String, questionNo: Int, named: Quiz, status: StatusModel)
-    case snapQuizDetail
+    case snapQuizDetail(named: SnapQuiz, questionNo: Int, taskId: String)
     case mapView
     case createTeam
     case createdTeamMember(named: CreatedTeam)

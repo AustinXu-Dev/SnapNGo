@@ -13,4 +13,5 @@ struct CreateTeamDTO: Codable{
     let teamImageUrl: String
     let maxMember: Int
     let assignedQuizzes: [String]?
+    let assignedSnapQuizzes: [String]?
 }

@@ -20,7 +20,7 @@ struct Admin: Codable, Hashable{
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [Tasks]?
-    let completedTasks: [Tasks]?
+    let snapTaskQuiz: [SnapTaskQuiz]?
     let inventory: [InventoryItem]?
     let role: String
     let teamIds: [String]

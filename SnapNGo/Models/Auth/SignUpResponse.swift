@@ -23,7 +23,7 @@ struct SignUpUser: Codable {
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [String]?
-    let completedTasks: [String]?
+    let snapTaskQuiz: [String]?
     let inventory: [String]?
     let role: String
     let teamIds: [String]?

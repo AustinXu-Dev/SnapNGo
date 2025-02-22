@@ -20,6 +20,7 @@ struct User: Codable, Hashable {
     let totalPoints: Int
     let totalTasks: Int
     let tasks: [Tasks]?
+    let snapTaskQuiz: [SnapTaskQuiz]?
     let gender: String
     let inventory: [InventoryItem]?
     let role: String
@@ -35,6 +36,21 @@ struct Tasks: Codable, Hashable {
     let _id: String
     let quizDetails: Quiz
 }
+
+struct SnapTaskQuiz: Codable, Hashable {
+    let snapQuizId: String
+    let status: SnapStatusModel
+    let _id: String
+    let snapQuizDetails: SnapQuiz
+}
+
+struct SnapStatusModel: Codable, Hashable{
+    let type: String
+    let isFinished: Bool
+    let isAnswerCorrect: Bool
+    let userAnswerNumber: String?
+}
+
 
 struct StatusModel: Codable, Hashable{
     let type: String

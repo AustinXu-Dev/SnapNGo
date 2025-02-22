@@ -12,10 +12,3 @@ struct OneQuizResponse: Codable{
     let question: Quiz
 }
 
-struct Quiz: Codable, Hashable{
-    let question: String
-    let options: [String]
-    let answer: Int
-    let rewardPoints: Int
-    let _id: String
-}

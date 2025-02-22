@@ -67,6 +67,7 @@ struct HomeView: View {
                 print("Error here")
                 return
             }
+            print(userId)
             getOneUserVM.getOneUser(userId: userId)
         }
     }
@@ -83,11 +84,11 @@ struct HomeView: View {
                 Text(Constants.MyTasks.title)
                     .font(.headline)
                     .foregroundColor(.accent)
-                Text("\(taskSectionVM.completedTasks)")
+                Text("\(taskSectionVM.getCompletedTasks())")
                     .font(.subheadline)
-                ProgressView(value: Float(taskSectionVM.completedTasks), total: Float(taskSectionVM.totalTasks))
+                ProgressView(value: Float(taskSectionVM.getCompletedTasks()), total: Float(taskSectionVM.getTotalTasks()))
                     .progressViewStyle(LinearProgressViewStyle(tint: .accent))
-                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.completedTasks)/\(taskSectionVM.totalTasks)")
+                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.getCompletedTasks())/\(taskSectionVM.getTotalTasks())")
                     .font(.subheadline)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

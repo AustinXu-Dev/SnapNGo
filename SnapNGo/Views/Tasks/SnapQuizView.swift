@@ -3,47 +3,85 @@ import CoreML
 import CoreImage
 
 struct SnapQuizView: View {
+    
+    var questionNo: Int
+    var snapQuizData: SnapQuiz
+    var taskId: String
+    
+    @State private var vStackHeight: CGFloat = 0
     @State private var image: UIImage?
     @State private var target: String = ""
     @State private var targetProbability: [String: Double] = [:]
     @State private var showingImagePicker = false
-    @State private var isCamera = false // To toggle between camera and photo library
+    
+    @State private var isAnswerCorrect: Bool = false
+    @State private var isShowingAlert: Bool = false
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
+    
+    @StateObject private var snapQuizViewModel = SnapQuizCompletionViewModel()
+    @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     
     var body: some View {
         ZStack{
             ScrollView{
                 VStack(spacing: Constants.LayoutPadding.medium){
+                    
                     LineView()
                     Spacer()
                         .frame(height: 40)
-                    Text("Capture the Photo of CL Building")
-                        .heading1()
                     
-                    Image("cl_building")
-                        .resizable()
-                        .frame(width: 299, height: 299)
-                        .scaledToFill()
-                        .clipped()
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    Button {
-                        showingImagePicker = true
-                    } label: {
-                        Text("Snap")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 8)
-                            .frame(height: 36)
-                            .background(Color.accentColor)
-                            .cornerRadius(8)
+                    quizQuestionView
+                    
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: 299, height: 299)
+                            .scaledToFill()
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    
+                    HStack{
+                        Button {
+                            showingImagePicker = true
+                        } label: {
+                            Text("Capture")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 8)
+                                .frame(height: 36)
+                                .background(Color.accentColor)
+                                .cornerRadius(8)
+                        }
+                        
+                        Button {
+                            validate()
+//                            isShowingAlert = true
+                        } label: {
+                            Text("Use Photo")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 8)
+                                .frame(height: 36)
+                                .background(Color.accentColor)
+                                .cornerRadius(8)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     
-                    Text("Captured Object: \(target)")
+//                    Text("Captured Object: \(target)")
                     //                Text("Probabilities: \(targetProbability.description)")
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, 16)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            if snapQuizViewModel.isLoading{
+                loadingBoxView(message: "Submitting answer")
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
@@ -74,9 +112,13 @@ struct SnapQuizView: View {
                                 // Update the UI
                                 if confidence > 0.8 {
                                     target = predictedClass
+                                    if target == snapQuizData.quizName{
+                                        isAnswerCorrect = true
+                                    }
                                     targetProbability = Dictionary(uniqueKeysWithValues: Array(topPredictions))
                                 } else {
                                     target = "Uncertain (Low Confidence)"
+                                    isAnswerCorrect = false
                                     targetProbability = [:]
                                 }
                             }
@@ -87,5 +129,102 @@ struct SnapQuizView: View {
                 }
             }
         }
+//        .onChange(of: isAnswerCorrect) { oldValue, newValue in
+//            isShowingAlert = true
+//            if newValue{
+//                alertTitle = "Correct!"
+//                alertMessage = "Yay! You captured it correctly."
+//            } else {
+//                alertTitle = "Oops!"
+//                alertMessage = "You captured it wrong, please try again."
+//            }
+//        }
+        .alert(isPresented: $isShowingAlert) {
+            if isAnswerCorrect {
+                return Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"), action: {
+                        // API call here
+                        guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                            print("Error here")
+                            return
+                        }
+                        snapQuizViewModel.checkQuizAnswer(userId: userId, taskId: taskId, selectedAnswer: target.lowercased()){
+                            getOneUserVM.userData = snapQuizViewModel.userData
+                            AppCoordinator.pop()
+                        }
+                    })
+                )
+            } else {
+                return Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton: .default(Text("Try Again"), action: {
+                        // Add retry action here
+                        image = nil
+                    }),
+                    secondaryButton: .cancel(Text("Cancel"))
+                )
+            }
+        }
+        
+    }
+    
+    private var quizQuestionView: some View{
+        ZStack{
+            Image("snap_icon")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .offset(y: -vStackHeight / 2)
+                .zIndex(1)
+            
+            VStack(alignment: .center, spacing: 8){
+                Spacer()
+                    .frame(height: 40)
+                Text("Snap Quiz \(questionNo)")
+                    .heading1()
+                Text("Capture the image of \(snapQuizData.quizName.capitalized).")
+                    .multilineTextAlignment(.center)
+                    .lineLimit(5)
+                    .body1()
+                Text("hint: It can be found near CL Plaza")
+                    .multilineTextAlignment(.center)
+                    .body1()
+                    .frame(width: 200)
+                Spacer()
+                    .frame(height: 20)
+            }
+            .frame(maxWidth: .infinity, minHeight: 100)
+
+            .background(
+                GeometryReader { geometry in
+                    Color.clear
+                        .onAppear {
+                            vStackHeight = geometry.size.height
+                        }
+                        .onChange(of: geometry.size.height) { _, newHeight in
+                            vStackHeight = newHeight
+                        }
+                }.background(
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(Color.white)
+                )
+            )
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private func validate(){
+        if snapQuizData.quizName.lowercased() == target.lowercased(){
+            isAnswerCorrect = true
+            alertTitle = "Correct!"
+            alertMessage = "Yay! You captured it correctly."
+        } else {
+            isAnswerCorrect = false
+            alertTitle = "Oops!"
+            alertMessage = "You captured it wrong, please try again."
+        }
+        isShowingAlert = true
     }
 }

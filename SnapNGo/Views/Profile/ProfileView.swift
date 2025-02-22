@@ -78,6 +78,7 @@ struct ProfileView: View {
                 googleVM.signOutWithGoogle()
                 
                 // Delete username and userId fro UserDefaults
+                TokenManager.share.deleteToken()
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.username)
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.userId)
                 AppCoordinator.selectedTabIndex = .home

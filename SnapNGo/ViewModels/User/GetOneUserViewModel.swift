@@ -14,6 +14,8 @@ class GetOneUserViewModel: ObservableObject {
     @Published var userGender: String = ""
     @Published var tasks: [Tasks] = []
     @Published var quizzes: [Quiz] = []
+    @Published var snapTasks: [SnapTaskQuiz] = []
+    @Published var snapQuizzes: [SnapQuiz] = []
     @Published var inventoryItems: [InventoryItem] = []
     @Published var teamId: String? = nil
     @Published var totalPoints: Int = 0
@@ -23,10 +25,14 @@ class GetOneUserViewModel: ObservableObject {
     @Published var userItems: [ShopItem] = []
     
     func getOneUser(userId: String) {
+        print("getOneUser() called with userId: \(userId)")
         isLoading = true
         errorMessage = nil
         let getOneUser = GetOneUser(userId: userId)
-        getOneUser.execute(getMethod: "GET", token: nil) { result in
+        
+        print(getOneUser.methodPath)
+        getOneUser.execute(getMethod: "GET") { result in
+            print(result)
             DispatchQueue.main.async {
                 switch result {
                 case .success(let userData):
@@ -40,6 +46,10 @@ class GetOneUserViewModel: ObservableObject {
                     self.tasks = userData.tasks!
                     self.quizzes = userData.tasks!.map({ quiz in
                         quiz.quizDetails
+                    })
+                    self.snapTasks = userData.snapTaskQuiz!
+                    self.snapQuizzes = userData.snapTaskQuiz!.map({ quiz in
+                        quiz.snapQuizDetails
                     })
                     self.inventoryItems = userData.inventory ?? []
                     self.totalPoints = userData.totalPoints

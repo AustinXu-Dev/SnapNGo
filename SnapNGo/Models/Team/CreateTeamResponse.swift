@@ -21,6 +21,7 @@ struct CreateTeamModel: Codable{
     let members: [String]?
     let maxMember: Int
     let assignedQuizzes: [String]?
+    let assignedSnapQuizzes: [String]?
     let _id: String
     let createdAt: Date
     let updatedAt: Date

@@ -15,18 +15,19 @@ struct TaskSectionView: View {
         HStack {
             Image(taskSectionVM.teamImage.isEmpty ? "team_image_1" : taskSectionVM.teamImage)
                 .resizable()
-                .frame(width: 125, height: 125) // Set specific dimensions
-                .scaledToFill()
+                .frame(width: 110, height: 110)
+                .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding(.all, 4)
             VStack(alignment: .leading) {
                 Text(taskSectionVM.teamName)
                     .font(.headline)
                     .foregroundColor(.accent)
-                Text("\(taskSectionVM.totalTasks)")
+                Text("\(taskSectionVM.getTotalTasks())")
                     .font(.subheadline)
-                ProgressView(value: Float(taskSectionVM.completedTasks), total: Float(taskSectionVM.totalTasks))
+                ProgressView(value: Float(taskSectionVM.getCompletedTasks()), total: Float(taskSectionVM.getTotalTasks()))
                     .progressViewStyle(LinearProgressViewStyle(tint: .accent))
-                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.completedTasks)/\(taskSectionVM.totalTasks)")
+                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.getCompletedTasks())/\(taskSectionVM.getTotalTasks())")
                     .font(.subheadline)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

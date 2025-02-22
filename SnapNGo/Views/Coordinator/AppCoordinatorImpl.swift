@@ -64,8 +64,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             ContentView()
         case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData, status: let statusData):
             QuizDetailView(taskId: taskId, questionNo: questionNo, quizData: quizData, statusData: statusData)
-        case .snapQuizDetail:
-            SnapQuizView()
+        case .snapQuizDetail(named: let snapQuiz, questionNo: let questionNo, taskId: let taskId):
+            SnapQuizView(questionNo: questionNo, snapQuizData: snapQuiz, taskId: taskId)
         case .historyDetail(named: let historyData):
             HistoryDetailView(historyData: historyData)
         case .chapelDetail(named: let chapelData):

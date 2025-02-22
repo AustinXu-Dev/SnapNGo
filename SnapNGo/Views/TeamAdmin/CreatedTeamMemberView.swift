@@ -55,6 +55,7 @@ struct CreatedTeamMemberView: View {
             getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in
                 teamMembers = getOneCreatedTeamVM.membersData
             }
+            print(teamData)
         })
         .refreshable {
             getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in

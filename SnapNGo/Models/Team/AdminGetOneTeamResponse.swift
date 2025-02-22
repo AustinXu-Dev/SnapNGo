@@ -30,12 +30,15 @@ struct TeamMember: Codable {
     let email: String
     let password: String
     let profileImageUrl: String
+    let gender: String
     let dob: Date?
     let school: String
     let address: String
     let totalPoints: Int
     let totalTasks: Int
+    let teamPoints: Int
     let tasks: [TeamTasks]?
+    let snapTaskQuiz: [TeamSnapTask]?
     let inventory: [InventoryItem]?
     let role: String
     let teamIds: [String]
@@ -47,5 +50,11 @@ struct TeamMember: Codable {
 struct TeamTasks: Codable{
     let quizId: String
     let status: StatusModel
+    let _id: String
+}
+
+struct TeamSnapTask: Codable{
+    let snapQuizId: String
+    let status: SnapStatusModel
     let _id: String
 }

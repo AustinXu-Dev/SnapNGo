@@ -20,6 +20,7 @@ struct AllTeamsModel: Codable{
     let members: [String]?
     let maxMember: Int
     let assignedQuizzes: [String]?
+    let assignedSnapQuizzes: [String]?
     let adminId: String
     let adminEmail: String
 }

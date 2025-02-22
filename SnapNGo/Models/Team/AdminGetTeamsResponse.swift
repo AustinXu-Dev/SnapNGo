@@ -22,6 +22,7 @@ struct CreatedTeam: Codable, Hashable{
     let members: [String]
     let maxMember: Int
     let assignedQuizzes: [String]
+    let assignedSnapQuizzes: [String]?
     let createdAt: Date
     let updatedAt: Date
     let __v: Int

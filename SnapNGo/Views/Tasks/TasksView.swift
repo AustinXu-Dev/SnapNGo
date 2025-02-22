@@ -54,7 +54,7 @@ struct TasksView: View {
             
             HStack{
                 Image("tasks_count_icon")
-                Text("Total ( \(taskSectionVM.totalTasks) ) tasks")
+                Text("Total ( \(taskSectionVM.getTotalTasks()) ) tasks")
                     .heading2()
             }
             .frame(maxWidth: .infinity,alignment: .leading)
@@ -76,15 +76,25 @@ struct TasksView: View {
             .padding(.bottom, Constants.LayoutPadding.medium)
             
             if selectedSegment == 0{
-                SnapCardView(snapQuestion: "") {
-                    Button {
-                        AppCoordinator.push(.snapQuizDetail)
-                    } label: {
-                        Text("Snap")
-                            .heading3()
+                ScrollView{
+                    LazyVStack{
+                        ForEach(Array(getOneUserVM.snapTasks.enumerated()), id: \.element._id) { index, task in
+                            SnapCardView(snapQuestion: "Snap Question \(index + 1)") {
+                                Button {
+                                    AppCoordinator.push(.snapQuizDetail(named: task.snapQuizDetails, questionNo: index+1, taskId: task._id))
+                                } label: {
+                                    Text("Snap")
+                                        .heading3()
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .frame(width: 80, height: 80)
+                            }
+                        }
                     }
-                    .buttonStyle(.borderedProminent)
-                    .frame(width: 80, height: 80)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .refreshable {
+                    refreshUserData()
                 }
             } else {
                 ScrollView{
@@ -98,11 +108,7 @@ struct TasksView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .refreshable {
-                    guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
-                        print("Error here")
-                        return
-                    }
-                    getOneUserVM.getOneUser(userId: userId)
+                    refreshUserData()
                 }
             }
         }
@@ -184,6 +190,15 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+    }
+    
+    private func refreshUserData(){
+        guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+            print("Error here")
+            return
+        }
+        getOneUserVM.getOneUser(userId: userId)
+        
     }
 }
 

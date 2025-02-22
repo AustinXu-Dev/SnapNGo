@@ -111,7 +111,7 @@ struct CreateTeamPreScreen: View {
             
             ForEach(getCreatedTeamsVM.teamsData, id: \._id) { team in
                 TeamCardView(image: team.teamImageUrl, teamName: team.teamName, membersCount: team.members.count-1){
-                    AppCoordinator.push(.createdTeamMember(named: team))
+//                    AppCoordinator.push(.createdTeamMember(named: team))
                     // Team Task View
                     AppCoordinator.push(.teamTaskView(named: team))
                 }

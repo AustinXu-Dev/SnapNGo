@@ -22,6 +22,7 @@ struct OneTeamModel: Codable{
     let members: [OneMemberModel]?
     let maxMember: Int
     let assignedQuizzes: [String]?
+    let assignedSnapQuizzes: [String]?
 }
 
 struct OneMemberModel: Codable{

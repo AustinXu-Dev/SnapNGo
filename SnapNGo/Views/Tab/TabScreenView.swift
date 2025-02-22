@@ -60,8 +60,12 @@ struct TabScreenView: View {
                 }
             }
             .onReceive(getOneUserVM.$tasks) { tasks in
-                taskSectionVM.totalTasks = tasks.count
-                taskSectionVM.completedTasks = tasks.filter { $0.status.isFinished }.count
+                taskSectionVM.quizTasks = tasks.count
+                taskSectionVM.completedQuizTasks = tasks.filter { $0.status.isFinished }.count
+            }
+            .onReceive(getOneUserVM.$snapTasks) { snapTasks in
+                taskSectionVM.snapTasks = snapTasks.count
+                taskSectionVM.completedSnapTasks = snapTasks.filter { $0.status.isFinished }.count
             }
             if getOneUserVM.isLoading {
                 loadingBoxView(message: "loading")
