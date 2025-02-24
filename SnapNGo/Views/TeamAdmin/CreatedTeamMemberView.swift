@@ -11,9 +11,13 @@ struct CreatedTeamMemberView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @StateObject var getOneCreatedTeamVM = GetOneCreatedTeamViewModel()
+    @StateObject var kickMemberVM = AdminKickMemberViewModel()
     
     var teamData: CreatedTeam
     @State var teamMembers: [TeamMember] = []
+    @State var showKickMemberAlert: Bool = false
+    @State private var showSuccessAlert: Bool = false
+    @State private var memberImages: [String: String] = [:]
     
     var body: some View {
         ZStack{
@@ -22,13 +26,33 @@ struct CreatedTeamMemberView: View {
                     LineView()
                     HStack{
                         Image(Constants.TeamViewConstant.participantIcon)
-                        Text("^[\(teamData.members.count-1) Team member](inflect: true)")
+                        Text("^[\(teamMembers.count) Team member](inflect: true)")
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     LazyVStack{
                         ForEach(teamMembers, id: \._id) { member in
-                            MemberCardView(image: "sample", memberName: member.name, points: member.totalPoints)
+                            let image = memberImages[member._id] ?? "member_1"
+
+                            MemberCardView(image: image, memberName: member.name, points: member.totalPoints)
+                                .onTapGesture {
+                                    showKickMemberAlert = true
+                                }
+                                .alert("Are you sure you want to kick \(member.name) from this team? (This action cannot be undone)?", isPresented: $showKickMemberAlert){
+                                    Button("Cancel", role: .destructive) {}
+                                    Button("Ok", role: .cancel) {
+                                        kickMemberVM.kickMember(adminEmail: teamData.adminEmail, teamId: teamData._id, userId: member._id) { sucess in
+                                                showSuccessAlert = true
+                                        }
+                                    }
+                                }
+                                .alert("Member has been successfully removed!", isPresented: $showSuccessAlert) {
+                                    Button("OK", role: .cancel) {
+                                        getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in
+                                            teamMembers = getOneCreatedTeamVM.membersData
+                                        }
+                                    }
+                                }
                         }
                     }
                 }
@@ -39,6 +63,9 @@ struct CreatedTeamMemberView: View {
             
             if getOneCreatedTeamVM.isLoading{
                 loadingBoxView(message: "Loading team members...")
+            }
+            if kickMemberVM.isLoading{
+                loadingBoxView(message: "Kicking member")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -54,6 +81,11 @@ struct CreatedTeamMemberView: View {
         .onAppear(perform: {
             getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in
                 teamMembers = getOneCreatedTeamVM.membersData
+                for member in teamMembers {
+                    if memberImages[member._id] == nil {
+                        memberImages[member._id] = MemberData.memberImages.randomElement() ?? "member_1"
+                    }
+                }
             }
             print(teamData)
         })

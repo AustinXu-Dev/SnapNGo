@@ -14,9 +14,15 @@ struct MemberCardView: View{
     
     var body: some View{
         HStack{
-            RoundedRectangle(cornerRadius: 5)
+//            RoundedRectangle(cornerRadius: 5)
+//                .frame(width: 66, height: 66)
+//                .foregroundStyle(.blue)
+            
+            Image(image)
+                .resizable()
                 .frame(width: 66, height: 66)
-                .foregroundStyle(.blue)
+                .scaledToFit()
+                .cornerRadius(5)
                 .padding(Constants.LayoutPadding.xsmall)
             VStack(alignment: .leading){
                 Text(memberName)

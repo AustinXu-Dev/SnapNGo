@@ -198,7 +198,9 @@ struct TeamView: View {
             
             LazyVStack{
                 ForEach(getOneTeamVM.members, id: \._id) { member in
-                    MemberCardView(image: "sample", memberName: member.name, points: member.totalPoints)
+                    let randomImage = MemberData.memberImages.randomElement() ?? "member_1"
+                    
+                    MemberCardView(image: randomImage, memberName: member.name, points: member.totalPoints)
                 }
             }
         }

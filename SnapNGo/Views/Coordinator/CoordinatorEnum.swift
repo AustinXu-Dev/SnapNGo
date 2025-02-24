@@ -31,6 +31,7 @@ enum Screen: Identifiable, Hashable {
     case shopView(userId: String, userPoints: Int)
     case teamTaskView(named: CreatedTeam)
     case adminQuizDetail(named: Quiz, questionNo: Int)
+    case adminSnapQuizDetail(named: SnapQuiz, questionNo: Int)
     
     var id: Self { return self }
 }

@@ -20,7 +20,7 @@ struct SnapCardView<ButtonContent: View>: View {
                 .frame(width: 60, height: 60)
                 .padding(.horizontal, 8)
             VStack(alignment: .leading) {
-                Text("Find an object")
+                Text(snapQuestion)
                     .font(.headline)
                     .padding(.bottom, 5)
                 Text("hint: It's located near somewhere.")
@@ -38,5 +38,43 @@ struct SnapCardView<ButtonContent: View>: View {
         .padding(.vertical, 8)
         .background(Color.white)
         .cornerRadius(12)
+    }
+}
+
+struct AdminSnapCardView: View {
+    
+    var snapQuestion: String
+    var action: () -> Void
+    
+    var body: some View {
+        HStack() {
+            Image("snap_icon")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 60, height: 60)
+                .padding(.horizontal, 8)
+            VStack(alignment: .leading) {
+                Text(snapQuestion)
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                Text("hint: It's located near somewhere.")
+                    .font(.system(size: 12))
+                    .foregroundColor(.black)
+                    .lineLimit(5)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .padding(.leading, 5)
+            
+            Image(systemName: "chevron.right")
+                .padding(.trailing, 10)
+        }
+        .frame(maxWidth: .infinity, maxHeight: 90)
+        .padding(.horizontal, 5)
+        .padding(.vertical, 8)
+        .background(Color.white)
+        .cornerRadius(12)
+        .onTapGesture {
+            action()
+        }
     }
 }

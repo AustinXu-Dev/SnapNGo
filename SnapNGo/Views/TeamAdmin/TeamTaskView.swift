@@ -64,6 +64,7 @@ struct TeamTaskView: View {
         .onAppear {
             getQuizVM.teamId = teamData._id
             getQuizVM.quizzesId = teamData.assignedQuizzes
+            getQuizVM.snapQuizzesId = teamData.assignedSnapQuizzes
             getQuizVM.fetchQuiz { _ in
                 
             }
@@ -80,6 +81,32 @@ struct TeamTaskView: View {
             .padding(.bottom, Constants.LayoutPadding.medium)
             
             if selectedSegment == 0{
+                ScrollView{
+                    LazyVStack{
+                        ForEach(Array(getQuizVM.snapQuizzes.enumerated()), id: \.element._id) { index, snapQuiz in
+                            AdminSnapCardView(snapQuestion: "Snap Question \(index + 1)") {
+                                AppCoordinator.push(.adminSnapQuizDetail(named: snapQuiz, questionNo: index+1))
+                            }
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .refreshable {
+                    guard let adminId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                        print("Error here")
+                        return
+                    }
+                    getOneAdminVM.getOneAdmin(adminId: adminId, completion: { _ in
+                        
+                    })
+                    
+                    getQuizVM.teamId = teamData._id
+                    getQuizVM.quizzesId = teamData.assignedQuizzes
+                    getQuizVM.fetchQuiz { _ in
+                        
+                    }
+                }
+            } else {
                 ScrollView{
                     LazyVStack{
                         ForEach(Array(getQuizVM.quizzes.enumerated()), id: \.element._id) { index, quiz in
@@ -104,15 +131,6 @@ struct TeamTaskView: View {
                     getQuizVM.fetchQuiz { _ in
                         
                     }
-                }
-            } else {
-                SnapCardView(snapQuestion: "") {
-                    Button {
-                        print("Snap")
-                    } label: {
-                        Text("Snap")
-                    }
-
                 }
             }
         }

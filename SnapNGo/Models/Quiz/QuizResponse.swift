@@ -10,4 +10,5 @@ import Foundation
 struct QuizResponse: Codable{
     let message: String
     let quizzes: [Quiz]
+    let snapQuizzes: [SnapQuiz]
 }

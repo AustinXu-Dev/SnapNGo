@@ -10,4 +10,5 @@ import Foundation
 struct GetQuizDTO: Codable{
     let teamId: String
     let quizzes: [String]
+    let snapQuizzes: [String]
 }

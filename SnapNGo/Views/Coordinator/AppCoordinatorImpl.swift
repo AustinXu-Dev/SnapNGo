@@ -96,6 +96,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             TeamTaskView(teamData: createdTeamData)
         case .adminQuizDetail(named: let quizData, questionNo: let questionNo):
             AdminQuizDetailView(quizData: quizData, questionNo: questionNo)
+        case .adminSnapQuizDetail(named: let snapQuizData, questionNo: let questionNo):
+            AdminSnapQuizDetailView(snapQuizData: snapQuizData, questionNo: questionNo)
         }
     }
     
