@@ -14,14 +14,17 @@ struct EditProfilePicView: View {
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
     @StateObject var equipItemVM = EquipItemViewModel()
+    @StateObject var unequipItemVM = UnequipItemsViewModel()
     
     @State private var selectedFaceID: String? = nil
     @State private var selectedHairID: String? = nil
     @State private var selectedFaceName: String? = nil
     @State private var selectedHairName: String? = nil
+    @State private var alertTitle = ""
 
     @State var profileImage: String
     @State private var showEquipAlert = false
+    @State private var showUnequipAlert = false
     @State private var showSuccessAlert = false
     
     let columns = [
@@ -71,7 +74,7 @@ struct EditProfilePicView: View {
                     }
                     
                     Button {
-                        showEquipAlert = true
+                        doneButtonAction()
                     } label: {
                         Text("Done")
                             .frame(maxWidth: .infinity)
@@ -97,36 +100,78 @@ struct EditProfilePicView: View {
                 equipItemVM.equipItem(userId: getOneUserVM.userId, itemIds: selectedIDs)
             }
         }
-        .alert("Item Equipped Successfully!", isPresented: $showSuccessAlert) {
+        .alert("Are you sure you want to unequip item(s)?", isPresented: $showUnequipAlert) {
+            Button("Cancel", role: .cancel) {}
+            Button("OK") {
+                unequipItemVM.unequipItems(userId: getOneUserVM.userId)
+            }
+        }
+        .alert(alertTitle, isPresented: $showSuccessAlert) {
             Button("OK") {
                 userDataAPICall()
                 AppCoordinator.pop()
             }
         }
+        .onReceive(unequipItemVM.$isSuccess, perform: { output in
+            if output{
+                alertTitle = "Unequip Items Successfully!"
+                showSuccessAlert = true
+            }
+        })
         .onReceive(equipItemVM.$isSuccess) { output in
             if output{
+                alertTitle = "Item Equipped Successfully!"
                 showSuccessAlert = true
             }
         }
+        .onAppear {
+            selectedFaceID = getOneUserVM.getFaceItemId()
+            selectedHairID = getOneUserVM.getHairItemId()
+            selectedFaceName = getOneUserVM.getFaceItemName()
+            selectedHairName = getOneUserVM.getHairItemName()
+
+        }
     }
-    
-    private func onTapItem(category: String, itemId: String, itemName: String){
-        switch category{
+
+    private func onTapItem(category: String, itemId: String, itemName: String) {
+        print(itemName, "tapped") // Debugging line to see which item is tapped
+
+        switch category {
         case "Face":
-            selectedFaceID = (selectedFaceID == itemId) ? nil : itemId
-            selectedFaceName = (selectedFaceName == itemName) ? nil : itemName
+            if selectedFaceID == itemId {
+                // Deselect the item if already selected
+                selectedFaceID = nil
+                selectedFaceName = nil
+            } else {
+                // Select the new item and maintain hair selection
+                selectedFaceID = itemId
+                selectedFaceName = itemName
+            }
         case "Hair":
-            selectedHairID = (selectedHairID == itemId) ? nil : itemId
-            selectedHairName = (selectedHairName == itemName) ? nil : itemName
+            if selectedHairID == itemId {
+                // Deselect the item if already selected
+                selectedHairID = nil
+                selectedHairName = nil
+            } else {
+                // Select the new item and maintain face selection
+                selectedHairID = itemId
+                selectedHairName = itemName
+            }
         default:
             break
         }
 
+        // Update the profileImage based on the selected items
         DispatchQueue.main.async {
-            profileImage = getOneUserVM.userGender.lowercased() + (selectedHairName.map { "_\($0)" } ?? "") + (selectedFaceName.map { "_\($0)" } ?? "")
+            // Ensure profileImage is updated correctly
+            profileImage = getOneUserVM.userGender.lowercased() +
+                (selectedHairName.map { "_\($0)" } ?? "") +
+                (selectedFaceName.map { "_\($0)" } ?? "")
         }
 
+        print("Updated profileImage: \(profileImage)") // Debugging line to check the updated profileImage
     }
+
     
     private func userDataAPICall(){
         guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
@@ -134,5 +179,13 @@ struct EditProfilePicView: View {
             return
         }
         getOneUserVM.getOneUser(userId: userId)
+    }
+    
+    private func doneButtonAction(){
+        if selectedFaceID == nil && selectedHairID == nil {
+            showUnequipAlert = true
+        } else {
+            showEquipAlert = true
+        }
     }
 }

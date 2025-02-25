@@ -96,6 +96,44 @@ class GetOneUserViewModel: ObservableObject {
         }
     }
     
+    func getHairItemId() -> String? {
+        if let equippedHairItemID = self.inventoryItems.first(where: { inventoryItem in
+            inventoryItem.isEquipped && inventoryItem.itemInfo.category == "Hair"
+        })?.itemId {
+            return equippedHairItemID
+        }
+        return nil
+    }
+    
+    func getHairItemName() -> String? {
+        if let equippedHairItemName = self.inventoryItems.first(where: { inventoryItem in
+            inventoryItem.isEquipped && inventoryItem.itemInfo.category == "Hair"
+        })?.itemInfo.name {
+            return equippedHairItemName.lowercased()
+        }
+        return nil
+    }
+
+    func getFaceItemId() -> String? {
+        if let equippedFaceItemID = self.inventoryItems.first(where: { inventoryItem in
+            inventoryItem.isEquipped && inventoryItem.itemInfo.category == "Face"
+        })?.itemId {
+            return equippedFaceItemID
+        }
+        return nil
+    }
+    
+    func getFaceItemName() -> String? {
+        if let equippedFaceItemName = self.inventoryItems.first(where: { inventoryItem in
+            inventoryItem.isEquipped && inventoryItem.itemInfo.category == "Face"
+        })?.itemInfo.name {
+            return equippedFaceItemName.lowercased()
+        }
+        return nil
+    }
+
+
+    
     func reset() {
         userData = nil
         userId = ""
