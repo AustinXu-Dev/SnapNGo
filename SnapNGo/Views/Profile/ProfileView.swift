@@ -205,23 +205,26 @@ struct ProfileView: View {
     }
     
     private var inventorySection: some View{
-        VStack(alignment: .leading) {
-            HStack{
-                Text("Inventory")
-                    .heading2()
-                
-                Spacer()
-            }
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: Array(repeating: GridItem(.flexible(), spacing: 10), count: 2), spacing: 15) {
-                    ForEach(getOneUserVM.inventoryItems, id: \.self) { item in
-                        InventoryCardView(itemName: item.itemInfo.name)
-                            .frame(width: 168)
+        VStack(alignment: .leading, spacing: Constants.LayoutPadding.medium) {
+            Text("Inventory")
+                .heading2()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            if getOneUserVM.inventoryItems.isEmpty{
+                Text("You currently have no inventory.")
+                    .body1()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHGrid(rows: Array(repeating: GridItem(.flexible(), spacing: 10), count: getOneUserVM.getRowCount()), spacing: 15) {
+                        ForEach(getOneUserVM.inventoryItems, id: \.self) { item in
+                            InventoryCardView(itemName: item.itemInfo.name)
+                                .frame(width: 168)
+                        }
                     }
                 }
+                .frame(minHeight: 130)
+
             }
-            .frame(minHeight: 130)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -239,3 +242,13 @@ struct ProfileView: View {
 #Preview {
     ProfileView()
 }
+
+//                ScrollView(.horizontal, showsIndicators: false) {
+//                    LazyHGrid(rows: Array(repeating: GridItem(.flexible(), spacing: 10), count: 2), spacing: 15) {
+//                        ForEach(getOneUserVM.inventoryItems, id: \.self) { item in
+//                            InventoryCardView(itemName: item.itemInfo.name)
+//                                .frame(width: 168)
+//                        }
+//                    }
+//                }
+//                .frame(minHeight: 130)

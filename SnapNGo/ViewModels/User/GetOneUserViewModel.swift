@@ -87,6 +87,15 @@ class GetOneUserViewModel: ObservableObject {
         return result
     }
     
+    func getRowCount() -> Int{
+        let count = self.inventoryItems.count
+        if count == 1 || count == 2{
+            return 1
+        } else {
+            return 2
+        }
+    }
+    
     func reset() {
         userData = nil
         userId = ""
