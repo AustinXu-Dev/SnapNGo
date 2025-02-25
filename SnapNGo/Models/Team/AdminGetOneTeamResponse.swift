@@ -44,7 +44,7 @@ struct TeamMember: Codable {
     let teamPoints: Int
     let tasks: [TeamTasks]?
     let snapTaskQuiz: [TeamSnapTask]?
-    let inventory: [InventoryItem]?
+    let inventory: [TeamInventoryItem]?
     let role: String
     let teamIds: [String]
     let createdAt: Date
@@ -61,5 +61,12 @@ struct TeamTasks: Codable{
 struct TeamSnapTask: Codable{
     let snapQuizId: String
     let status: SnapStatusModel
+    let _id: String
+}
+
+struct TeamInventoryItem: Codable, Hashable {
+    let itemId: String
+    let quantity: Int
+    let isEquipped: Bool
     let _id: String
 }

@@ -34,25 +34,25 @@ struct CreatedTeamMemberView: View {
                         ForEach(teamMembers, id: \._id) { member in
                             let image = memberImages[member._id] ?? "member_1"
 
-                            MemberCardView(image: image, memberName: member.name, points: member.totalPoints)
-                                .onTapGesture {
-                                    showKickMemberAlert = true
-                                }
-                                .alert("Are you sure you want to kick \(member.name) from this team? (This action cannot be undone)?", isPresented: $showKickMemberAlert){
-                                    Button("Cancel", role: .destructive) {}
-                                    Button("Ok", role: .cancel) {
-                                        kickMemberVM.kickMember(adminEmail: teamData.adminEmail, teamId: teamData._id, userId: member._id) { sucess in
-                                                showSuccessAlert = true
-                                        }
+                            MemberCardView(image: image, memberName: member.name, points: member.totalPoints){
+                                showKickMemberAlert = true
+
+                            }
+                            .alert("Are you sure you want to kick \(member.name) from this team? (This action cannot be undone)?", isPresented: $showKickMemberAlert){
+                                Button("Cancel", role: .destructive) {}
+                                Button("Ok", role: .cancel) {
+                                    kickMemberVM.kickMember(adminEmail: teamData.adminEmail, teamId: teamData._id, userId: member._id) { sucess in
+                                            showSuccessAlert = true
                                     }
                                 }
-                                .alert("Member has been successfully removed!", isPresented: $showSuccessAlert) {
-                                    Button("OK", role: .cancel) {
-                                        getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in
-                                            teamMembers = getOneCreatedTeamVM.membersData
-                                        }
+                            }
+                            .alert("Member has been successfully removed!", isPresented: $showSuccessAlert) {
+                                Button("OK", role: .cancel) {
+                                    getOneCreatedTeamVM.getOneCreatedTeam(teamId: teamData._id, adminEmail: teamData.adminEmail) { _ in
+                                        teamMembers = getOneCreatedTeamVM.membersData
                                     }
                                 }
+                            }
                         }
                     }
                 }

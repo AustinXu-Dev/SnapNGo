@@ -23,10 +23,10 @@ struct TeamMemberView: View {
             .frame(maxWidth: .infinity)
             .padding(.horizontal, Constants.LayoutPadding.medium)
             
-            MemberCardView(image: image, memberName: memberName, points: points)
-            MemberCardView(image: image, memberName: memberName, points: points)
-            MemberCardView(image: image, memberName: memberName, points: points)
-            MemberCardView(image: image, memberName: memberName, points: points)
+//            MemberCardView(image: image, memberName: memberName, points: points)
+//            MemberCardView(image: image, memberName: memberName, points: points)
+//            MemberCardView(image: image, memberName: memberName, points: points)
+//            MemberCardView(image: image, memberName: memberName, points: points)
 
             Spacer()
         }

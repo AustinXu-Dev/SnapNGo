@@ -17,6 +17,7 @@ struct LinkBoxView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .frame(alignment: .center)
+                .padding(Constants.LayoutPadding.medium)
             Link(url, destination: URL(string: url)!)
                 .heading3()
         }

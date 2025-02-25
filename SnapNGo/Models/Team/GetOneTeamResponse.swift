@@ -33,4 +33,5 @@ struct OneMemberModel: Codable{
     let role: String
     let totalPoints: Int
     let teamIds: [String]?
+    let teamPoints: Int
 }

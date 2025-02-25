@@ -11,6 +11,7 @@ struct MemberCardView: View{
     let image: String
     let memberName: String
     let points: Int
+    let action: () -> Void
     
     var body: some View{
         HStack{
@@ -30,6 +31,9 @@ struct MemberCardView: View{
                     .lineLimit(2)
                 Text("Member")
                     .fontWeight(.light)
+            }
+            .onTapGesture {
+                action()
             }
             Spacer()
             VStack{

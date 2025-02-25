@@ -20,9 +20,9 @@ class UserJoinTeamViewModel: ObservableObject{
         
         let joinTeamDTO = JoinTeamDTO(userId: userId)
         let joinTeamManager = JoinTeamUseCase(teamId: teamId)
-        
+        print(joinTeamDTO)
+        print(joinTeamManager.methodPath)
         joinTeamManager.execute(data: joinTeamDTO, getMethod: "POST") { result in
-            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):

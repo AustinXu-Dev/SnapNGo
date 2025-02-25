@@ -19,7 +19,8 @@ struct PurchaseItemResponse: Codable{
     let teamPoints: Int
     let totalPoints: Int
     let totalTasks: Int
-    let tasks: [Tasks]?
+    let tasks: [PurchaseReponseTask]?
+    let snapTaskQuiz: [PurchaseReponseSnapTask]?
     let gender: String
     let inventory: [PurchasedItemInventory]?
     let role: String
@@ -28,6 +29,19 @@ struct PurchaseItemResponse: Codable{
     let updatedAt: Date
     let __v: Int
 }
+
+struct PurchaseReponseTask: Codable, Hashable {
+    let quizId: String
+    let status: StatusModel
+    let _id: String
+}
+
+struct PurchaseReponseSnapTask: Codable, Hashable {
+    let snapQuizId: String
+    let status: SnapStatusModel
+    let _id: String
+}
+
 
 struct PurchasedItemInventory: Codable{
     let itemId: String

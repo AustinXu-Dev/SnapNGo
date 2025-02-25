@@ -73,14 +73,36 @@ extension APIManager {
 //            }
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(formatter)
             //MARK: - Get and Delete
             if let responseData = data {
+                print("API Manager",responseData)
                 do {
                     let decodeData = try decoder.decode(ModelType.self, from: responseData)
+                    print("api manager: ", decodeData)
                     completion(.success(decodeData))
-                } catch {
+                } catch let decodingError as DecodingError {
+                    print("‼️ Decoding Error: \(decodingError)")
+                    
+                    switch decodingError {
+                    case .dataCorrupted(let context):
+                        print("Data corrupted: \(context.debugDescription)")
+                    case .keyNotFound(let key, let context):
+                        print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
+                    case .typeMismatch(let type, let context):
+                        print("Type mismatch for \(type): \(context.debugDescription)")
+                    case .valueNotFound(let type, let context):
+                        print("Value of type \(type) was expected but not found: \(context.debugDescription)")
+                    @unknown default:
+                        print("Unknown decoding error")
+                    }
+                    
+                    completion(.failure(decodingError))
+                }
+                catch {
                     completion(.failure(error))
                 }
             } else if getMethod == "DELETE" && (200...299).contains(httpResponse.statusCode) {

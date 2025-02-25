@@ -23,7 +23,7 @@ struct TaskSectionView: View {
                 Text(taskSectionVM.teamName)
                     .font(.headline)
                     .foregroundColor(.accent)
-                Text("\(taskSectionVM.getTotalTasks())")
+                Text("Total tasks \(taskSectionVM.getTotalTasks())")
                     .font(.subheadline)
                 ProgressView(value: Float(taskSectionVM.getCompletedTasks()), total: Float(taskSectionVM.getTotalTasks()))
                     .progressViewStyle(LinearProgressViewStyle(tint: .accent))

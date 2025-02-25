@@ -73,6 +73,7 @@ struct TeamView: View {
             CodeScannerView(codeTypes: [.qr], simulatedData: "https://www.google.com", completion: handleScan)
         }
         .onReceive(joinTeamVM.$errorMessage) { errorMessage in
+            print("Received, error message: \(errorMessage ?? "nil")")
             if let message = errorMessage {
                 alertMessage = message
                 alertTitle = "Error joining team."
@@ -200,7 +201,7 @@ struct TeamView: View {
                 ForEach(getOneTeamVM.members, id: \._id) { member in
                     let randomImage = MemberData.memberImages.randomElement() ?? "member_1"
                     
-                    MemberCardView(image: randomImage, memberName: member.name, points: member.totalPoints)
+                    MemberCardView(image: randomImage, memberName: member.name, points: member.totalPoints){ }
                 }
             }
         }
@@ -250,7 +251,7 @@ struct TeamView: View {
                         alertTitle = "Leave Team Warning"
                         alertMessage = "Are you sure you want to leave the team?"
                     } label: {
-                        Image(systemName: "rectangle.portrait.and.arrow.right.fill")
+                        Image(systemName: "rectangle.portrait.and.arrow.forward")
                     }
                 } else {
                     Spacer()

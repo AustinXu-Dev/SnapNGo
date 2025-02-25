@@ -19,10 +19,10 @@ struct JoinTeamModel: Codable{
     let adminEmail: String
     let teamImageUrl: String
     let totalTasks: Int
-    let members: [String]?
+    let members: [String]
     let maxMember: Int
-    let assignedQuizzes: [String]?
-    let assignedSnapQuizzes: [String]?
+    let assignedQuizzes: [String]
+    let assignedSnapQuizzes: [String]
     let createdAt: Date
     let updatedAt: Date
     let __v: Int

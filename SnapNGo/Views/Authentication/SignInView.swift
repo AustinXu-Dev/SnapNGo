@@ -45,7 +45,6 @@ struct SignInView: View {
                         .cornerRadius(8)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.trailing, 8)
                 .padding(.top, 16)
                 
                 lineDivider
@@ -104,7 +103,7 @@ struct SignInView: View {
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)
@@ -125,7 +124,7 @@ struct SignInView: View {
             SecureField(Constants.AuthenticationViewConstant.passwordPlaceholder, text: $password)
                 .autocapitalization(.none)
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)
