@@ -10,8 +10,12 @@ import SwiftUI
 struct AdminProfileView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var taskSectionVM: TaskSectionViewModel
+    @EnvironmentObject var getOneUserVM: GetOneUserViewModel
+    @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
     @EnvironmentObject var getOneAdminVM: GetOneAdminViewModel
-
+    @EnvironmentObject var getCreatedTeamsVM: GetAllCreatedTeamsViewModel
+    
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     @ObservedObject var googleVM = GoogleAuthViewModel()
     
@@ -58,11 +62,19 @@ struct AdminProfileView: View {
         .alert("Are you sure you want to sign out?", isPresented: $showAlert) {
             Button("Cancel", role: .destructive) {}
             Button("Ok", role: .cancel) {
+                // MARK: - Sign out Action
                 googleVM.signOutWithGoogle()
                 
                 // Delete username and userId fro UserDefaults
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.username)
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.userId)
+                
+                taskSectionVM.reset()
+                getOneUserVM.reset()
+                getOneTeamVM.reset()
+                getOneAdminVM.reset()
+                getCreatedTeamsVM.reset()
+                
                 AppCoordinator.selectedTabIndex = .home
             }
         }

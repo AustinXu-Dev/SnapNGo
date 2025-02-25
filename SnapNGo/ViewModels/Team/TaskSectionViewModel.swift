@@ -22,8 +22,18 @@ class TaskSectionViewModel: ObservableObject {
     func getTotalTasks() -> Int {
         return quizTasks + snapTasks
     }
-        
-    func getProgress() -> Double{
-        return Double(getTotalTasks() / getCompletedTasks())
+    
+    func getProgress() -> Double {
+        guard getTotalTasks() > 0 else { return 0.0 }
+        return Double(getCompletedTasks()) / Double(getTotalTasks())
+    }
+    
+    func reset() {
+        teamName = ""
+        teamImage = ""
+        quizTasks = 0
+        snapTasks = 0
+        completedQuizTasks = 0
+        completedSnapTasks = 0
     }
 }

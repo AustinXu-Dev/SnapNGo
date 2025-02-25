@@ -33,4 +33,11 @@ class GetAllCreatedTeamsViewModel: ObservableObject{
             }
         }
     }
+    
+    func reset() {
+        teamsData = []
+        isLoading = false
+        errorMessage = nil
+    }
+
 }

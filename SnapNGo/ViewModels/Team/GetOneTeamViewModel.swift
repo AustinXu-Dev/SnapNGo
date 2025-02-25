@@ -50,4 +50,16 @@ class GetOneTeamViewModel: ObservableObject {
         }
     }
 
+    func reset() {
+        teamData = nil
+        teamId = ""
+        teamName = ""
+        teamImage = ""
+        members = []
+        quizIds = []
+        isLoading = false
+        errorMessage = nil
+        isSuccess = false
+    }
+
 }

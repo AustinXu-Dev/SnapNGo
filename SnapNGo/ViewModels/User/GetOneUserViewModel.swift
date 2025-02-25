@@ -87,5 +87,19 @@ class GetOneUserViewModel: ObservableObject {
         return result
     }
     
-    
+    func reset() {
+        userData = nil
+        userId = ""
+        userGender = ""
+        tasks = []
+        quizzes = []
+        snapTasks = []
+        snapQuizzes = []
+        inventoryItems = []
+        teamId = nil
+        totalPoints = 0
+        isLoading = false
+        errorMessage = nil
+        userItems = []
+    }
 }

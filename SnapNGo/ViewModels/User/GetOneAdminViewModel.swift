@@ -39,4 +39,14 @@ class GetOneAdminViewModel: ObservableObject{
             }
         }
     }
+    
+    func reset() {
+        adminData = nil
+        adminId = ""
+        adminEmail = ""
+        createdTeamIds = []
+        isLoading = false
+        errorMessage = nil
+    }
+
 }

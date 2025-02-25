@@ -10,7 +10,12 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var AppCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var taskSectionVM: TaskSectionViewModel
     @EnvironmentObject var getOneUserVM: GetOneUserViewModel
+    @EnvironmentObject var getOneTeamVM: GetOneTeamViewModel
+    @EnvironmentObject var getOneAdminVM: GetOneAdminViewModel
+    @EnvironmentObject var getCreatedTeamsVM: GetAllCreatedTeamsViewModel
+    
     @AppStorage("appState") private var userAppState: String = AppState.notSignedIn.rawValue
     @ObservedObject var googleVM = GoogleAuthViewModel()
     @StateObject var equipItemVM = EquipItemViewModel()
@@ -75,12 +80,19 @@ struct ProfileView: View {
         .alert("Are you sure you want to sign out?", isPresented: $showAlert) {
             Button("Cancel", role: .destructive) {}
             Button("Ok", role: .cancel) {
+                //MARK: - Sign out Action
                 googleVM.signOutWithGoogle()
-                
                 // Delete username and userId fro UserDefaults
                 TokenManager.share.deleteToken()
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.username)
                 UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.userId)
+                taskSectionVM.reset()
+                getOneUserVM.reset()
+                getOneTeamVM.reset()
+                getOneAdminVM.reset()
+                getCreatedTeamsVM.reset()
+                
+                
                 AppCoordinator.selectedTabIndex = .home
             }
         }
@@ -159,9 +171,7 @@ struct ProfileView: View {
         VStack(alignment: .leading) {
             Text(getOneUserVM.userData?.name ?? "John Doe")
                 .heading1()
-            //            Text(getOneUserVM.teamId ?? "")
-            //                .body1()
-            //                .foregroundStyle(.accent)
+
             HStack{
                 Image("tabler_school")
                 Text(getOneUserVM.userData?.school ?? "Assumption University of Thailand")
