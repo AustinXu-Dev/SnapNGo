@@ -48,14 +48,9 @@ struct ProfileView: View {
                     
                     editProfile
                     
+                    LineView()
                     
-                    Button {
-                        showAlert = true
-                    } label: {
-                        Text("Log out")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom, Constants.LayoutPadding.large)
+                    logoutButton
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, Constants.LayoutPadding.medium)
@@ -187,19 +182,24 @@ struct ProfileView: View {
     }
     
     private var editProfile: some View{
-        HStack{
-            Text("Edit User Profile")
-                .body1()
-            Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.black)
-        }
-        .frame(maxWidth: .infinity)
-        .onTapGesture {
-            if let userData = getOneUserVM.userData{
-                AppCoordinator.push(.editProfile(named: userData))
-            } else {
-                userDataAPICall()
+        VStack(alignment: .leading, spacing: Constants.LayoutPadding.medium) {
+            Text("Setting")
+                .heading2()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack{
+                Text("Edit User Profile")
+                    .body1()
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.black)
+            }
+            .frame(maxWidth: .infinity)
+            .onTapGesture {
+                if let userData = getOneUserVM.userData{
+                    AppCoordinator.push(.editProfile(named: userData))
+                } else {
+                    userDataAPICall()
+                }
             }
         }
     }
@@ -227,6 +227,21 @@ struct ProfileView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var logoutButton: some View{
+        Button {
+            showAlert = true
+        } label: {
+            HStack{
+                Text("Log out")
+                Image(systemName: "rectangle.portrait.and.arrow.right")
+            }
+            .foregroundStyle(.white)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, Constants.LayoutPadding.large)
+        .buttonStyle(.borderedProminent)
     }
     
     private func userDataAPICall(){
