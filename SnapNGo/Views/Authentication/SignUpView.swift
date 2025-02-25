@@ -27,7 +27,6 @@ struct SignUpView: View {
     
     var body: some View {
         ZStack{
-            
             ScrollView{
                 VStack(alignment: .center, spacing: 5){
                     Image("logo")
@@ -65,7 +64,6 @@ struct SignUpView: View {
                             .cornerRadius(8)
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 8)
                     .padding(.top, 16)
                     
                     lineDivider
@@ -78,6 +76,7 @@ struct SignUpView: View {
                     } label: {
                         Image("continue_with_google")
                     }
+                    .padding(.bottom, 8)
                     
                     HStack{
                         Text(Constants.AuthenticationViewConstant.haveAccountText)
@@ -94,33 +93,31 @@ struct SignUpView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, 8)
-                
-                if signUpVM.isLoading{
-                    loadingBoxView(message: "Signing up")
-                }
-
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(ColorConstants.background)
             .onTapGesture {
                 isFocused = false
             }
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Sign Up Error"),
-                    message: Text(signUpVM.errorMessage ?? "An unknown error occurred."),
-                    dismissButton: .default(Text("OK"))
-                )
+            if signUpVM.isLoading{
+                loadingBoxView(message: "Signing up")
             }
-            .alert(isPresented: $signUpVM.success) {
-                Alert(
-                    title: Text("Register Successful"),
-                    message: Text("Please Sign in again!"),
-                    dismissButton: .default(Text("OK")){
-                        appCoordinator.pop()
-                    }
-                )
-            }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Sign Up Error"),
+                message: Text(signUpVM.errorMessage ?? "An unknown error occurred."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        .alert(isPresented: $signUpVM.success) {
+            Alert(
+                title: Text("Register Successful"),
+                message: Text("Please Sign in again!"),
+                dismissButton: .default(Text("OK")){
+                    appCoordinator.pop()
+                }
+            )
         }
     }
     
@@ -135,7 +132,7 @@ struct SignUpView: View {
                 .autocorrectionDisabled()
                 .autocapitalization(.none)
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)
@@ -158,7 +155,7 @@ struct SignUpView: View {
                 .autocorrectionDisabled()
                 .autocapitalization(.none)
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)
@@ -180,7 +177,7 @@ struct SignUpView: View {
                 Text("Female").tag("Female")
             }
             .pickerStyle(MenuPickerStyle())
-            .frame(width: 361, height: 41.49)
+            .frame(maxWidth: .infinity, maxHeight: 41.49)
             .background(Color.white)
             .cornerRadius(8)
             .overlay(
@@ -201,7 +198,7 @@ struct SignUpView: View {
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)
@@ -221,9 +218,8 @@ struct SignUpView: View {
             
             SecureField(Constants.AuthenticationViewConstant.passwordPlaceholder, text: $password)
                 .autocapitalization(.none)
-                
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)
@@ -246,7 +242,7 @@ struct SignUpView: View {
             SecureField(Constants.AuthenticationViewConstant.confirmPasswordPlaceholder, text: $confirmPassword)
                 .autocapitalization(.none)
                 .padding()
-                .frame(width: 361, height: 41.49)
+                .frame(maxWidth: .infinity, maxHeight: 41.49)
                 .background(Color.white)
                 .cornerRadius(8)
                 .focused($isFocused)

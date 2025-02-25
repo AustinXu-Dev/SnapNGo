@@ -57,6 +57,7 @@ struct SignInView: View {
                 } label: {
                     Image("continue_with_google")
                 }
+                .padding(.bottom, 8)
                 
                 HStack{
                     Text(Constants.AuthenticationViewConstant.noAccountText)
