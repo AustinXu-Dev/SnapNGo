@@ -28,7 +28,7 @@ struct QuizDetailView: View {
                     Spacer()
                         .frame(height: 40)
                     quizQuestionView
-                    
+                        .padding(.bottom, Constants.LayoutPadding.small)
                     Text("Choose Wisely!")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .heading2()
@@ -36,7 +36,8 @@ struct QuizDetailView: View {
                     Text("You will not get score if you select incorrect answers")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .body2()
-                    
+                        .padding(.bottom, Constants.LayoutPadding.medium)
+
                     optionsView
                     
                     if let selectedOption = selectedOption{

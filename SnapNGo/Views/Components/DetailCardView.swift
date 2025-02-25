@@ -20,8 +20,8 @@ struct DetailCardView: View {
                 if let imageUrl = image{
                     KFImage(URL(string: imageUrl))
                         .resizable()
-                        .frame(maxWidth: .infinity, maxHeight: 140)
-                        .scaledToFit()
+                        .frame(maxWidth: .infinity, minHeight: 140)
+                        .scaledToFill()
                 } else {
                     Image("huamak_chapel")
                         .resizable()

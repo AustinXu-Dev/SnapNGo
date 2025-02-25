@@ -201,7 +201,7 @@ struct TeamView: View {
                 ForEach(getOneTeamVM.members, id: \._id) { member in
                     let randomImage = MemberData.memberImages.randomElement() ?? "member_1"
                     
-                    MemberCardView(image: randomImage, memberName: member.name, points: member.totalPoints){ }
+                    MemberCardView(image: randomImage, memberName: member.name, points: member.teamPoints){ }
                 }
             }
         }

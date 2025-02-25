@@ -27,7 +27,7 @@ struct TaskSectionView: View {
                     .font(.subheadline)
                 ProgressView(value: Float(taskSectionVM.getCompletedTasks()), total: Float(taskSectionVM.getTotalTasks()))
                     .progressViewStyle(LinearProgressViewStyle(tint: .accent))
-                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.getCompletedTasks())/\(taskSectionVM.getTotalTasks())")
+                Text("\(Constants.MyTasks.progressLabel) \(taskSectionVM.getCompletedTasks()) / \(taskSectionVM.getTotalTasks())")
                     .font(.subheadline)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

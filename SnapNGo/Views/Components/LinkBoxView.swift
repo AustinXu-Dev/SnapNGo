@@ -12,14 +12,16 @@ struct LinkBoxView: View {
     var url: String
     var body: some View {
         VStack{
-            Text(text)
-                .body2()
-                .lineLimit(3)
-                .multilineTextAlignment(.center)
-                .frame(alignment: .center)
-                .padding(Constants.LayoutPadding.medium)
-            Link(url, destination: URL(string: url)!)
-                .heading3()
+            VStack{
+                Text(text)
+                    .body2()
+                    .lineLimit(3)
+                    .multilineTextAlignment(.center)
+                    .frame(alignment: .center)
+                Link(url, destination: URL(string: url)!)
+                    .heading3()
+            }
+            .padding(Constants.LayoutPadding.small)
         }
         .frame(minWidth: 370, minHeight: 44)
         .background(RoundedRectangle(cornerRadius: 8).fill(.white))

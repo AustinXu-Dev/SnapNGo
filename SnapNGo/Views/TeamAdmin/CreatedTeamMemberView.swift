@@ -34,7 +34,7 @@ struct CreatedTeamMemberView: View {
                         ForEach(teamMembers, id: \._id) { member in
                             let image = memberImages[member._id] ?? "member_1"
 
-                            MemberCardView(image: image, memberName: member.name, points: member.totalPoints){
+                            MemberCardView(image: image, memberName: member.name, points: member.teamPoints){
                                 showKickMemberAlert = true
 
                             }
