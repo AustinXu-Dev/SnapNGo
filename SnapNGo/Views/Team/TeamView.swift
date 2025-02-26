@@ -17,6 +17,8 @@ struct TeamView: View {
     @State private var alertMessage: String = ""
     @State private var showErrorAlert = false
     @State private var lastFetch: Date?
+    @State private var teamMembers: [LeaderboardMember] = []
+    @State private var memberImages: [String: String] = [:]
     
     @StateObject private var joinTeamVM = UserJoinTeamViewModel()
     @StateObject private var leaveTeamVM = LeaveTeamViewModel()
@@ -26,9 +28,16 @@ struct TeamView: View {
     
     var body: some View {
         ZStack{
+            if checkLeaderboardTop() {
+                leaderboardTopOverlayView
+            }
             ScrollView{
                 if getOneTeamVM.isSuccess{
-                    membersView
+                    if teamMembers.count > 4 {
+                        leaderboardView
+                    } else {
+                        normalMembersView
+                    }
                 } else {
                     scanView
                 }
@@ -48,7 +57,7 @@ struct TeamView: View {
                 loadingBoxView(message: "Leaving Team...")
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(ColorConstants.background)
         .safeAreaInset(edge: .top, content: {
             Color.clear
@@ -63,8 +72,13 @@ struct TeamView: View {
             } else {
                 lastFetch = Date()
                 if let teamId = getOneUserVM.teamId{
-                    getOneTeamVM.getOneTeam(teamId: teamId) {_ in
-                        
+                    getOneTeamVM.getLeaderboard(teamId: teamId) { _ in
+                        teamMembers = getOneTeamVM.leaderboardMembers
+                        for member in teamMembers {
+                            if memberImages[member.name] == nil {
+                                memberImages[member.name] = MemberData.memberImages.randomElement() ?? "member_1"
+                            }
+                        }
                     }
                 }
             }
@@ -99,15 +113,15 @@ struct TeamView: View {
         } message: {
             Text(alertMessage)
         }
-
-        
         .refreshable {
             guard let userId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
                 print("Error here")
                 return
             }
             if let teamId = getOneUserVM.teamId{
-                getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
+                getOneTeamVM.getLeaderboard(teamId: teamId) { _ in
+                    teamMembers = getOneTeamVM.leaderboardMembers
+                }
             } else {
                 getOneUserVM.getOneUser(userId: userId)
             }
@@ -188,27 +202,92 @@ struct TeamView: View {
         .background(ColorConstants.background)
     }
     
-    private var membersView: some View{
+    private var leaderboardView: some View{
         VStack{
-            LineView()
-            HStack{
-                Image(Constants.TeamViewConstant.participantIcon)
-                Text("^[\(getOneTeamVM.members.count) Team member](inflect: true)")
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            Rectangle()
+                .frame(height: 2)
+                .foregroundColor(.accent)
+                .padding(.vertical, 4)
             
-            LazyVStack{
-                ForEach(getOneTeamVM.members, id: \._id) { member in
-                    let randomImage = MemberData.memberImages.randomElement() ?? "member_1"
-                    
-                    MemberCardView(image: randomImage, memberName: member.name, points: member.teamPoints){ }
+            HStack{
+                VStack{
+                    Spacer()
+                    Text("2")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 20, weight: .semibold))
+                    Image(memberImages[teamMembers[1].name] ?? "member_1")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                    Text("\(teamMembers[1].teamPoints)")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 16, weight: .semibold))
+                    Text(teamMembers[1].name)
+                        .foregroundStyle(.white)
+                        .font(.system(size: 14, weight: .regular))
+                }
+                .frame(maxHeight: .infinity)
+                Spacer()
+                VStack{
+                    Text("1")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 32, weight: .semibold))
+                    Image(memberImages[teamMembers[0].name] ?? "member_1")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                    Text("\(teamMembers[0].teamPoints)")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 16, weight: .semibold))
+                    Text(teamMembers[0].name)
+                        .foregroundStyle(.white)
+                        .font(.system(size: 14, weight: .regular))
+                    Spacer()
+                }
+                .frame(maxHeight: .infinity)
+                Spacer()
+                VStack{
+                    Spacer()
+                    Text("3")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 20, weight: .semibold))
+                    Image(memberImages[teamMembers[2].name] ?? "member_1")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                    Text("\(teamMembers[2].teamPoints)")
+                        .foregroundStyle(.white)
+                        .font(.system(size: 16, weight: .semibold))
+                    Text(teamMembers[2].name)
+                        .foregroundStyle(.white)
+                        .font(.system(size: 14, weight: .regular))
+                }
+                .frame(maxHeight: .infinity)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 204)
+            
+            Spacer().frame(height: 50)
+            
+            VStack{
+                HStack{
+                    Image(Constants.TeamViewConstant.participantIcon)
+                    Text("^[\(getOneTeamVM.members.count) Team member](inflect: true)")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                LazyVStack{
+                    ForEach(teamMembers.dropFirst(3), id: \.self) { member in
+                        let image = memberImages[member.name] ?? "member_1"
+                        
+                        MemberCardView(image: image, memberName: member.name, points: member.teamPoints){ }
+                    }
                 }
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, Constants.LayoutPadding.medium)
         .onChange(of: getOneTeamVM.errorMessage) { _, error in
-            // Show an error alert when errorMessage changes
             if error != nil {
                 showErrorAlert = true
             }
@@ -227,12 +306,55 @@ struct TeamView: View {
         
     }
     
+    private var normalMembersView: some View{
+        VStack{
+            LineView()
+            HStack{
+                Image(Constants.TeamViewConstant.participantIcon)
+                Text("^[\(getOneTeamVM.members.count) Team member](inflect: true)")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            LazyVStack{
+                ForEach(teamMembers, id: \.self) { member in
+                    let image = memberImages[member.name] ?? "member_1"
+                    
+                    MemberCardView(image: image, memberName: member.name, points: member.teamPoints){ }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, Constants.LayoutPadding.medium)
+        .onChange(of: getOneTeamVM.errorMessage) { _, error in
+            if error != nil {
+                showErrorAlert = true
+            }
+        }
+        .alert(isPresented: $showErrorAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(getOneTeamVM.errorMessage ?? "Unknown error"),
+                dismissButton: .default(Text("Retry")) {
+                    // Retry fetching data on dismiss
+                    guard let teamId = getOneUserVM.userData?.teamIds.first else { return }
+                    getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
+                }
+            )
+        }
+    }
+    
     private var topOverlayView: some View{
         ZStack{
-            Color.clear
-                .frame(height: 100)
-                .background(.ultraThinMaterial)
-                .ignoresSafeArea(edges: .top)
+            if checkLeaderboardTop(){
+                Color.clear
+                    .frame(height: 100)
+                    .ignoresSafeArea(edges: .top)
+            } else {
+                Color.clear
+                    .frame(height: 100)
+                    .background(.ultraThinMaterial)
+                    .ignoresSafeArea(edges: .top)
+            }
             HStack{
                 if getOneTeamVM.isSuccess{
                     Button {
@@ -265,7 +387,37 @@ struct TeamView: View {
             .frame(maxWidth: .infinity)
             .offset(y: -30)
             .padding(.horizontal)
-        }.frame(maxHeight: .infinity, alignment: .top)
+        }
+        .frame(maxHeight: .infinity, alignment: .top)
+        .zIndex(-3)
+
+    }
+    
+    private var leaderboardTopOverlayView: some View {
+        ZStack {
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(stops: [
+                            .init(color: Color.white, location: 0.0),
+                            .init(color: Color.accentColor, location: 0.7)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(height: 381)
+                .clipShape(
+                    RoundedCornerShape(radius: 60, corners: [.bottomLeft, .bottomRight])
+                )
+                .ignoresSafeArea(edges: .top)
+        }
+        .frame(maxHeight: .infinity, alignment: .top)
+        .zIndex(-10)
+    }
+
+    private func checkLeaderboardTop() -> Bool {
+        return getOneTeamVM.isSuccess && teamMembers.count > 4
     }
 }
 

@@ -14,6 +14,7 @@ class GetOneTeamViewModel: ObservableObject {
     @Published var teamName: String = ""
     @Published var teamImage: String = ""
     @Published var members: [OneMemberModel] = []
+    @Published var leaderboardMembers: [LeaderboardMember] = []
     @Published var quizIds: [String] = []
     
     @Published var isLoading: Bool = false
@@ -45,6 +46,26 @@ class GetOneTeamViewModel: ObservableObject {
                     self.isLoading = false
                     self.errorMessage = "Failed to get all teams: \(error.localizedDescription)"
                     completion(error)
+                }
+            }
+        }
+    }
+    
+    func getLeaderboard(teamId: String, completion: @escaping (Error?) -> Void) {
+        isLoading = true
+        errorMessage = nil
+        let getLeaderboard = GetLeaderboardUseCase(teamId: teamId)
+        getLeaderboard.execute(getMethod: "GET", token: nil) { result in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                switch result {
+                case .success(let success):
+                    self.leaderboardMembers = success.leaderboard.members
+                    completion(nil)
+                case .failure(let failure):
+                    self.errorMessage = failure.localizedDescription
+                    print("In get leaderboard: ", failure.localizedDescription)
+                    completion(failure)
                 }
             }
         }

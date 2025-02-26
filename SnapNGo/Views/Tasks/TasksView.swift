@@ -42,6 +42,12 @@ struct TasksView: View {
         .overlay {
             topOverlayView
         }
+        .refreshable {
+            if let teamId = getOneUserVM.teamId{
+                getOneTeamVM.getOneTeam(teamId: teamId) { _ in
+                }
+            }
+        }
     }
     
     private var taskView: some View{
