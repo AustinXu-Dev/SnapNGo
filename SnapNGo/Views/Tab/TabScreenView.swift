@@ -57,7 +57,10 @@ struct TabScreenView: View {
                         taskSectionVM.teamImage = getOneTeamVM.teamImage
                         taskSectionVM.teamName = getOneTeamVM.teamName
                     }
+                } else {
+                    getOneTeamVM.reset()
                 }
+                
             }
             .onReceive(getOneUserVM.$tasks) { tasks in
                 taskSectionVM.quizTasks = tasks.count

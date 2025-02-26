@@ -41,6 +41,8 @@ class GetOneUserViewModel: ObservableObject {
                     self.userGender = userData.gender
                     if !userData.teamIds.isEmpty{
                         self.teamId = userData.teamIds[0]
+                    } else {
+                        self.teamId = nil
                     }
                     self.tasks = userData.tasks!
                     self.quizzes = userData.tasks!.map({ quiz in

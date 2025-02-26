@@ -45,12 +45,21 @@ struct ProfileView: View {
                     inventorySection
                     
                     LineView()
+                                        
+                    IconTextRow(icon: "edit_icon", text: "Edit User Profile", textColor: .black, IconColor: .accent){
+                        if let userData = getOneUserVM.userData{
+                            AppCoordinator.push(.editProfile(named: userData))
+                        } else {
+                            userDataAPICall()
+                        }
+                    }
                     
-                    editProfile
+                    Spacer().frame(height: 16)
                     
-                    LineView()
+                    IconTextRow(icon: "logout_icon", text: "Log Out", textColor: Color("icon_red_color"), IconColor: Color("icon_red_color")){
+                        showAlert = true
+                    }
                     
-                    logoutButton
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, Constants.LayoutPadding.medium)
@@ -156,7 +165,7 @@ struct ProfileView: View {
         } label: {
             Text("Update profile image >>")
                 .underline()
-                .heading3()
+                .heading2()
         }
         .padding(.vertical, Constants.LayoutPadding.small)
         

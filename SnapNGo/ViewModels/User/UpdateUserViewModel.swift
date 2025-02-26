@@ -11,10 +11,10 @@ class UpdateUserViewModel: ObservableObject{
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
-    func updateUser(name: String, email: String, school: String, userId: String, completion: @escaping (User?) -> Void){
+    func updateUser(name: String, email: String, school: String, gender: String,userId: String, completion: @escaping (User?) -> Void){
         isLoading = true
         
-        let updateUserDTO = UpdateUserDTO(name: name, email: email, school: school)
+        let updateUserDTO = UpdateUserDTO(name: name, email: email, gender: gender, school: school)
         let updateUserManager = UpdateUser(userId: userId)
         
         updateUserManager.execute(data: updateUserDTO, getMethod: "PATCH") { result in
