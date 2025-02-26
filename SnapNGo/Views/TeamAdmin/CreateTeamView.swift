@@ -16,8 +16,10 @@ struct CreateTeamView: View {
 
     let maxSelections = 5
     let locationMapping: [String: String] = Constants.LocationMapping.locationMapping
+    let snapLocationMapping: [String: String] = Constants.SnapLocationMapping.snapLocationMapping
     
     @State private var selectedLocations: Set<String> = []
+    @State private var selectedSnapLocations: Set<String> = []
     @State private var errorMessage: String? = nil
     
     var body: some View {
@@ -42,7 +44,7 @@ struct CreateTeamView: View {
                 VStack(alignment: .leading) {
                     Text(Constants.CreateTeamViewConstant.teamNameTitle)
                         .heading2()
-                    TextField("Pleae enter a team name", text: $createTeamVM.teamName)
+                    TextField("Please enter a team name", text: $createTeamVM.teamName)
                         .body1()
                         .textFieldStyle(.roundedBorder)
                     
@@ -50,6 +52,11 @@ struct CreateTeamView: View {
                         .heading2()
                     
                     locationSelectionView
+                    
+                    Text(Constants.CreateTeamViewConstant.chooseSnapLocationsTitle)
+                        .heading2()
+                    
+                    snapLocationSelectionView
                     
                     Text("Max Members")
                         .heading2()
@@ -95,18 +102,23 @@ struct CreateTeamView: View {
     
     private func toggleSelection(location: String) {
         if selectedLocations.contains(location) {
-            // Remove if already selected
             selectedLocations.remove(location)
         } else if selectedLocations.count < maxSelections {
-            // Add if not selected and under limit
             selectedLocations.insert(location)
+        }
+    }
+    
+    private func toggleSnapSelection(location: String) {
+        if selectedSnapLocations.contains(location) {
+            selectedSnapLocations.remove(location)
+        } else if selectedSnapLocations.count < maxSelections {
+            selectedSnapLocations.insert(location)
         }
     }
     
     private func createTeamButtonAction() {
         errorMessage = nil
         
-        // Validation
         guard !createTeamVM.teamName.isEmpty else {
             errorMessage = "Team name cannot be empty."
             return
@@ -127,11 +139,18 @@ struct CreateTeamView: View {
             errorMessage = "Please select at least 1 and no more than \(maxSelections) locations."
             return
         }
-        // Convert the selected display names their internal names
-        let internalLocations = selectedLocations.compactMap{ locationMapping[$0]}
+        
+        guard selectedSnapLocations.count > 0 && selectedSnapLocations.count <= maxSelections else {
+            errorMessage = "Please select at least 1 and no more than \(maxSelections) snap locations."
+            return
+        }
+        
+        let internalLocations = selectedLocations.compactMap { locationMapping[$0] }
+        let internalSnapLocations = selectedSnapLocations.compactMap { snapLocationMapping[$0] }
         
         createTeamVM.adminEmail = getOneAdminVM.adminEmail
         createTeamVM.assignedQuizzes = internalLocations
+        createTeamVM.assignedSnapQuizzes = internalSnapLocations
         
         createTeamVM.createTeam { error in
             guard error == nil else {
@@ -143,8 +162,8 @@ struct CreateTeamView: View {
         }
     }
     
-    private var locationSelectionView: some View{
-        VStack{
+    private var locationSelectionView: some View {
+        VStack {
             ForEach(locationMapping.keys.sorted(), id: \.self) { location in
                 HStack {
                     Image(systemName: selectedLocations.contains(location) ? "checkmark.square.fill" : "square")
@@ -162,6 +181,32 @@ struct CreateTeamView: View {
                 .padding(.horizontal, Constants.LayoutPadding.medium)
                 .padding(.vertical, Constants.LayoutPadding.small)
             }
+            .padding(.vertical, Constants.LayoutPadding.small)
+        }
+        .background(Color.white)
+        .cornerRadius(8)
+    }
+    
+    private var snapLocationSelectionView: some View {
+        VStack {
+            ForEach(snapLocationMapping.keys.sorted(), id: \.self) { location in
+                HStack {
+                    Image(systemName: selectedSnapLocations.contains(location) ? "checkmark.square.fill" : "square")
+                        .foregroundColor(selectedSnapLocations.contains(location) ? .blue : .gray)
+                    
+                    Text(location)
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    toggleSnapSelection(location: location)
+                }
+                .padding(.horizontal, Constants.LayoutPadding.medium)
+                .padding(.vertical, Constants.LayoutPadding.small)
+            }
+            .padding(.vertical, Constants.LayoutPadding.small)
         }
         .background(Color.white)
         .cornerRadius(8)

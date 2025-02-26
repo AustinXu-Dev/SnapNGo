@@ -54,6 +54,7 @@ struct Constants{
         static let teamImageTitle = "Team Image"
         static let teamNameTitle = "Team Name"
         static let chooseLocationsTitle = "Choose the locations (Maximum Location: 5)"
+        static let chooseSnapLocationsTitle = "Choose the snap locations (Max Snap: 5)"
         static let createQrButtonText = "Create QR"
         static let scanQrText = "Scan QR code to Join the Team"
         
@@ -103,6 +104,17 @@ struct Constants{
             "Bio Technology": "biotech",
             "Nursing": "nursing",
             "VMES": "vmes"
+        ]
+    }
+    
+    struct SnapLocationMapping{
+        static let snapLocationMapping: [String: String] = [
+            "CL Building": "CLBuilding",
+            "Galileo Statue": "Galileo",
+            "Red Tram": "Tram",
+            "Clock Tower": "ClockTower",
+            "University Chapel": "Chapel",
+            "Salathai": "Salathai",
         ]
     }
 }

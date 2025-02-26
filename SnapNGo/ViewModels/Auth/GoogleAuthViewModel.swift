@@ -77,6 +77,7 @@ class GoogleAuthViewModel: ObservableObject{
                 self.signUpService.name = authResult.user.displayName ?? "No name"
                 self.signUpService.email = authResult.user.email ?? ""
                 self.signUpService.password = authResult.user.uid
+                self.signUpService.gender = "male"
                 self.signUpService.school = "ABAC"
                 
                 // For sign in
