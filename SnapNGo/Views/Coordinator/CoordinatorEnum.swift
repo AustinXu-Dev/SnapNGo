@@ -20,7 +20,7 @@ enum Screen: Identifiable, Hashable {
     case facultyDetail(named: FacultyData)
     case tasks
     case quizDetail(taskId: String, questionNo: Int, named: Quiz, status: StatusModel)
-    case snapQuizDetail(named: SnapQuiz, questionNo: Int, taskId: String)
+    case snapQuizDetail(named: SnapQuiz, questionNo: Int, taskId: String, hint: String)
     case mapView
     case createTeam
     case createdTeamMember(named: CreatedTeam)
@@ -31,7 +31,7 @@ enum Screen: Identifiable, Hashable {
     case shopView(userId: String, userPoints: Int)
     case teamTaskView(named: CreatedTeam)
     case adminQuizDetail(named: Quiz, questionNo: Int)
-    case adminSnapQuizDetail(named: SnapQuiz, questionNo: Int)
+    case adminSnapQuizDetail(named: SnapQuiz, questionNo: Int, hint: String)
     
     var id: Self { return self }
 }

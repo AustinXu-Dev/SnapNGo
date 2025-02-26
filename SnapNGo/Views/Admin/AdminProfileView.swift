@@ -37,10 +37,15 @@ struct AdminProfileView: View {
                     Button {
                         showAlert = true
                     } label: {
-                        Text("Log out")
+                        HStack{
+                            Text("Log out")
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                        }
+                        .foregroundStyle(.white)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, Constants.LayoutPadding.large)
+                    .buttonStyle(.borderedProminent)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, Constants.LayoutPadding.medium)

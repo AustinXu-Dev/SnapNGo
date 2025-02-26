@@ -64,8 +64,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             ContentView()
         case .quizDetail(taskId: let taskId, questionNo: let questionNo, named: let quizData, status: let statusData):
             QuizDetailView(taskId: taskId, questionNo: questionNo, quizData: quizData, statusData: statusData)
-        case .snapQuizDetail(named: let snapQuiz, questionNo: let questionNo, taskId: let taskId):
-            SnapQuizView(questionNo: questionNo, snapQuizData: snapQuiz, taskId: taskId)
+        case .snapQuizDetail(named: let snapQuiz, questionNo: let questionNo, taskId: let taskId, hint: let hint):
+            SnapQuizView(questionNo: questionNo, snapQuizData: snapQuiz, taskId: taskId, hint: hint)
         case .historyDetail(named: let historyData):
             HistoryDetailView(historyData: historyData)
         case .chapelDetail(named: let chapelData):
@@ -96,8 +96,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             TeamTaskView(teamData: createdTeamData)
         case .adminQuizDetail(named: let quizData, questionNo: let questionNo):
             AdminQuizDetailView(quizData: quizData, questionNo: questionNo)
-        case .adminSnapQuizDetail(named: let snapQuizData, questionNo: let questionNo):
-            AdminSnapQuizDetailView(snapQuizData: snapQuizData, questionNo: questionNo)
+        case .adminSnapQuizDetail(named: let snapQuizData, questionNo: let questionNo, hint: let hint):
+            AdminSnapQuizDetailView(snapQuizData: snapQuizData, questionNo: questionNo, hint: hint)
         }
     }
     

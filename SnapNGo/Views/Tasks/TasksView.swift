@@ -79,15 +79,8 @@ struct TasksView: View {
                 ScrollView{
                     LazyVStack{
                         ForEach(Array(getOneUserVM.snapTasks.enumerated()), id: \.element._id) { index, task in
-                            SnapCardView(snapQuestion: "Snap Question \(index + 1)") {
-                                Button {
-                                    AppCoordinator.push(.snapQuizDetail(named: task.snapQuizDetails, questionNo: index+1, taskId: task._id))
-                                } label: {
-                                    Text("Snap")
-                                        .heading3()
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .frame(width: 80, height: 80)
+                            SnapCardView(snapQuestion: "Snap Question \(index + 1)", hint: giveHint(for: task.snapQuizDetails.quizName)) {
+                                snapQuizButton(for: task, index: index)
                             }
                         }
                     }
@@ -113,6 +106,33 @@ struct TasksView: View {
             }
         }
         .frame(maxWidth: .infinity)
+    }
+    
+    private func snapQuizButton(for task: SnapTaskQuiz, index: Int) -> some View{
+        if task.status.isFinished {
+            return AnyView(
+                Button {
+                    AppCoordinator.push(.snapQuizDetail(named: task.snapQuizDetails, questionNo: index+1, taskId: task._id, hint: giveHint(for: task.snapQuizDetails.quizName)))
+                } label: {
+                    Image(task.status.isAnswerCorrect ? "quiz_correct_icon" : "quiz_wrong_icon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                }
+                .frame(width: 95, height: 95)
+            )
+        } else {
+            return AnyView(
+                Button {
+                    AppCoordinator.push(.snapQuizDetail(named: task.snapQuizDetails, questionNo: index+1, taskId: task._id, hint: giveHint(for: task.snapQuizDetails.quizName)))
+                } label: {
+                    Text("Snap")
+                        .heading3()
+                }
+                .buttonStyle(.borderedProminent)
+                .frame(width: 80, height: 80)
+            )
+        }
     }
     
     private func quizButton(for task: Tasks, index: Int) -> some View {
@@ -190,6 +210,25 @@ struct TasksView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)
+    }
+    
+    private func giveHint(for place: String) -> String{
+        switch place {
+        case "ClockTower":
+            return "near Dormitory"
+        case "Galileo":
+            return "inside MSME Building"
+        case "Tram":
+            return "around School campus"
+        case "CLBuilding":
+            return "near CL Plaza"
+        case "Chapel":
+            return "near the lake"
+        case "Salathai":
+            return "near the lake"
+        default:
+            return ""
+        }
     }
     
     private func refreshUserData(){

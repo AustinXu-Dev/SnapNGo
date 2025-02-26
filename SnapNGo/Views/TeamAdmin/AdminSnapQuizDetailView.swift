@@ -11,6 +11,7 @@ struct AdminSnapQuizDetailView: View {
     
     var snapQuizData: SnapQuiz
     var questionNo: Int
+    var hint: String
     
     @State private var vStackHeight: CGFloat = 0
     @State private var image: UIImage?
@@ -66,7 +67,7 @@ struct AdminSnapQuizDetailView: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(5)
                     .body1()
-                Text("hint: It can be found near CL Plaza")
+                Text("hint: It can be found \(hint)")
                     .multilineTextAlignment(.center)
                     .body1()
                     .frame(width: 200)

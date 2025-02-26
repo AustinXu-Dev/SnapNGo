@@ -7,6 +7,7 @@ struct SnapQuizView: View {
     var questionNo: Int
     var snapQuizData: SnapQuiz
     var taskId: String
+    var hint: String
     
     @State private var vStackHeight: CGFloat = 0
     @State private var image: UIImage?
@@ -129,18 +130,8 @@ struct SnapQuizView: View {
                 }
             }
         }
-//        .onChange(of: isAnswerCorrect) { oldValue, newValue in
-//            isShowingAlert = true
-//            if newValue{
-//                alertTitle = "Correct!"
-//                alertMessage = "Yay! You captured it correctly."
-//            } else {
-//                alertTitle = "Oops!"
-//                alertMessage = "You captured it wrong, please try again."
-//            }
-//        }
         .alert(isPresented: $isShowingAlert) {
-            if isAnswerCorrect {
+//            if isAnswerCorrect {
                 return Alert(
                     title: Text(alertTitle),
                     message: Text(alertMessage),
@@ -156,17 +147,17 @@ struct SnapQuizView: View {
                         }
                     })
                 )
-            } else {
-                return Alert(
-                    title: Text(alertTitle),
-                    message: Text(alertMessage),
-                    primaryButton: .default(Text("Try Again"), action: {
-                        // Add retry action here
-                        image = nil
-                    }),
-                    secondaryButton: .cancel(Text("Cancel"))
-                )
-            }
+//            } else {
+//                return Alert(
+//                    title: Text(alertTitle),
+//                    message: Text(alertMessage),
+//                    primaryButton: .default(Text("Try Again"), action: {
+//                        // Add retry action here
+//                        image = nil
+//                    }),
+//                    secondaryButton: .cancel(Text("Cancel"))
+//                )
+//            }
         }
         
     }
@@ -188,7 +179,7 @@ struct SnapQuizView: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(5)
                     .body1()
-                Text("hint: It can be found near CL Plaza")
+                Text("hint: It can be found \(hint)")
                     .multilineTextAlignment(.center)
                     .body1()
                     .frame(width: 200)

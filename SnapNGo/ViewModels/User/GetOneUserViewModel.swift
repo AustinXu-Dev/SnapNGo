@@ -36,7 +36,6 @@ class GetOneUserViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let userData):
-                    print("Get one user ", userData)
                     self.userData = userData
                     self.userId = userData._id
                     self.userGender = userData.gender
@@ -57,6 +56,7 @@ class GetOneUserViewModel: ObservableObject {
                 case .failure(let error):
                     self.isLoading = false
                     self.errorMessage = "Failed to get user detail by id: \(error.localizedDescription)"
+                    print("Failed to get user detail by id: \(error.localizedDescription)")
                 }
             }
         }

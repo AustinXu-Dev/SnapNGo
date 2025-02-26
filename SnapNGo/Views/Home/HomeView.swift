@@ -33,6 +33,9 @@ struct HomeView: View {
                     noTeamView
                 } else {
                     TaskSectionView()
+                        .onTapGesture {
+                            AppCoordinator.selectedTabIndex = .team
+                        }
                 }
                 
                 LineView()

@@ -53,7 +53,6 @@ extension APIManager {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
-                print(error)
                 print("In API manager: ", error.localizedDescription)
                 return
             }
@@ -79,27 +78,25 @@ extension APIManager {
             decoder.dateDecodingStrategy = .formatted(formatter)
             //MARK: - Get and Delete
             if let responseData = data {
-                print("API Manager",responseData)
                 do {
                     let decodeData = try decoder.decode(ModelType.self, from: responseData)
-                    print("api manager: ", decodeData)
                     completion(.success(decodeData))
                 } catch let decodingError as DecodingError {
-                    print("‼️ Decoding Error: \(decodingError)")
+//                    print("‼️ Decoding Error: \(decodingError)")
                     
-                    switch decodingError {
-                    case .dataCorrupted(let context):
-                        print("Data corrupted: \(context.debugDescription)")
-                    case .keyNotFound(let key, let context):
-                        print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
-                    case .typeMismatch(let type, let context):
-                        print("Type mismatch for \(type): \(context.debugDescription)")
-                    case .valueNotFound(let type, let context):
-                        print("Value of type \(type) was expected but not found: \(context.debugDescription)")
-                    @unknown default:
-                        print("Unknown decoding error")
-                    }
-                    
+//                    switch decodingError {
+//                    case .dataCorrupted(let context):
+//                        print("Data corrupted: \(context.debugDescription)")
+//                    case .keyNotFound(let key, let context):
+//                        print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
+//                    case .typeMismatch(let type, let context):
+//                        print("Type mismatch for \(type): \(context.debugDescription)")
+//                    case .valueNotFound(let type, let context):
+//                        print("Value of type \(type) was expected but not found: \(context.debugDescription)")
+//                    @unknown default:
+//                        print("Unknown decoding error")
+//                    }
+//                    
                     completion(.failure(decodingError))
                 }
                 catch {

@@ -84,8 +84,8 @@ struct TeamTaskView: View {
                 ScrollView{
                     LazyVStack{
                         ForEach(Array(getQuizVM.snapQuizzes.enumerated()), id: \.element._id) { index, snapQuiz in
-                            AdminSnapCardView(snapQuestion: "Snap Question \(index + 1)") {
-                                AppCoordinator.push(.adminSnapQuizDetail(named: snapQuiz, questionNo: index+1))
+                            AdminSnapCardView(snapQuestion: "Snap Question \(index + 1)", hint: giveHint(for: snapQuiz.quizName)) {
+                                AppCoordinator.push(.adminSnapQuizDetail(named: snapQuiz, questionNo: index+1, hint: giveHint(for: snapQuiz.quizName)))
                             }
                         }
                     }
@@ -166,6 +166,24 @@ struct TeamTaskView: View {
         }.frame(maxHeight: .infinity, alignment: .top)
     }
     
+    private func giveHint(for place: String) -> String{
+        switch place {
+        case "ClockTower":
+            return "near Dormitory"
+        case "Galileo":
+            return "inside MSME Building"
+        case "Tram":
+            return "around School campus"
+        case "CLBuilding":
+            return "near CL Plaza"
+        case "Chapel":
+            return "near the lake"
+        case "Salathai":
+            return "near the lake"
+        default:
+            return ""
+        }
+    }
 }
 
 #Preview {

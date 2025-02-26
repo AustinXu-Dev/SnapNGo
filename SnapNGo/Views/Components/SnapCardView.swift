@@ -10,6 +10,7 @@ import SwiftUI
 struct SnapCardView<ButtonContent: View>: View {
     
     var snapQuestion: String
+    var hint: String
     var buttonContent: () -> ButtonContent
     
     var body: some View {
@@ -23,7 +24,7 @@ struct SnapCardView<ButtonContent: View>: View {
                 Text(snapQuestion)
                     .font(.headline)
                     .padding(.bottom, 5)
-                Text("hint: It's located near somewhere.")
+                Text("hint: It can be found \(hint).")
                     .font(.system(size: 12))
                     .foregroundColor(.black)
                     .lineLimit(5)
@@ -44,6 +45,7 @@ struct SnapCardView<ButtonContent: View>: View {
 struct AdminSnapCardView: View {
     
     var snapQuestion: String
+    var hint: String
     var action: () -> Void
     
     var body: some View {
@@ -57,7 +59,7 @@ struct AdminSnapCardView: View {
                 Text(snapQuestion)
                     .font(.headline)
                     .padding(.bottom, 5)
-                Text("hint: It's located near somewhere.")
+                Text("hint: It can be found \(hint).")
                     .font(.system(size: 12))
                     .foregroundColor(.black)
                     .lineLimit(5)
