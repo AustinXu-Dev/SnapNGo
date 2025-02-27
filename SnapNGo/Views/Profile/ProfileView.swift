@@ -34,7 +34,7 @@ struct ProfileView: View {
                 VStack{
                     profilePic
                     
-                    updateProfilePic
+//                    updateProfilePic
                     
                     LineView()
                     
@@ -63,6 +63,9 @@ struct ProfileView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, Constants.LayoutPadding.medium)
+                
+                Spacer()
+                    .frame(height: 30)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             if equipItemVM.isLoading{
@@ -153,6 +156,17 @@ struct ProfileView: View {
                 Image(getOneUserVM.getProfileImage())
                     .resizable()
                     .scaledToFit()
+                Button {
+                    AppCoordinator.push(.editProfilePic(named: getOneUserVM.getProfileImage()))
+                } label: {
+                    Circle()
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.accent)
+                        .overlay {
+                            Image("profile_edit_icon")
+                        }
+                }
+                .offset(x: 75,y: 80)
             }
             .frame(maxWidth: .infinity, maxHeight: 220)
         }
@@ -219,7 +233,7 @@ struct ProfileView: View {
                 .heading2()
                 .frame(maxWidth: .infinity, alignment: .leading)
             if getOneUserVM.inventoryItems.isEmpty{
-                Text("You currently have no inventory.")
+                Text("You currently have no items in inventory.")
                     .body1()
                     .frame(maxWidth: .infinity, alignment: .leading)
             } else {

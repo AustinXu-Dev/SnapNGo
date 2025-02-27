@@ -36,7 +36,7 @@ struct AdminHomeView: View {
                 } else {
                     ForEach(showAllTeams ? getCreatedTeamsVM.teamsData : Array(getCreatedTeamsVM.teamsData.prefix(2)), id: \._id) { team in
                         TeamSectionView(team: team) {
-                            print("team section tapped")
+                            AppCoordinator.push(.teamTaskView(named: team))
                         }
                     }
                     
@@ -47,14 +47,15 @@ struct AdminHomeView: View {
                             HStack{
                                 Text(showAllTeams ? "See Less" : "See More")
                                     .heading3()
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.accent)
                                     .padding(.top, 5)
                                 Image(systemName: showAllTeams ? "chevron.up" : "chevron.down")
                                     .font(.body)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.accent)
                                 
                             }
                         }
+                        .padding(.top, Constants.LayoutPadding.xsmall)
                     }
                 }
                 LineView()
@@ -66,6 +67,9 @@ struct AdminHomeView: View {
                 aboutUsSectionView
             }
             .padding(.horizontal, 16)
+            
+            Spacer()
+                .frame(height: 30)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorConstants.background)

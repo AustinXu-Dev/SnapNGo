@@ -77,6 +77,7 @@ class GetOneTeamViewModel: ObservableObject {
         teamName = ""
         teamImage = ""
         members = []
+        leaderboardMembers = []
         quizIds = []
         isLoading = false
         errorMessage = nil

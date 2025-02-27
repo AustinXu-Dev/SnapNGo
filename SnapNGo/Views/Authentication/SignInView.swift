@@ -75,13 +75,17 @@ struct SignInView: View {
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 8)
+            .padding(.horizontal, 12)
             .background(ColorConstants.background)
             .onTapGesture {
                 isFocused = false
             }
             if signInVM.isLoading{
                 loadingBoxView(message: "Signing in...")
+            }
+            
+            if googleVM.isLoading{
+                loadingBoxView(message: "Signing with google...")
             }
         }
         .alert(isPresented: $signInVM.isFailure) {

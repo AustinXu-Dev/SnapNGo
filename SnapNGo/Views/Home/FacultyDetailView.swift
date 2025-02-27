@@ -16,8 +16,12 @@ struct FacultyDetailView: View {
     var body: some View {
         ScrollView{
             VStack(spacing: Constants.LayoutPadding.small){
-                imageSection
-                
+//                imageSection
+                Image(facultyData.abbreviation)
+                    .resizable()
+                    .frame(maxWidth: .infinity)
+                    .cornerRadius(8)
+                    .scaledToFill()
                 bodySection
                 
                 LinkBoxView(text: "Curious about the programs at \(facultyData.abbreviation)? Hit up this link for all the info:", url: facultyData.link)

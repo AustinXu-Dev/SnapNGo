@@ -38,6 +38,7 @@ struct TeamSectionView: View {
                         .scaledToFit()
                 }
                 .foregroundStyle(.clear)
+                .padding(.trailing, 8)
 
         }
         .frame(maxWidth: .infinity, maxHeight: 72)

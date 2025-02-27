@@ -55,32 +55,40 @@ struct EditProfilePicView: View {
                     Text("Inventory")
                         .heading2()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    LazyVGrid(columns: columns, spacing: 15) {
-                        ForEach(getOneUserVM.inventoryItems, id: \.self) { item in
-                            //MARK: - Showing the inventory items
-                            let isSelected = (item.itemInfo.category == "Face" && selectedFaceID == item.itemId) ||
-                            (item.itemInfo.category == "Hair" && selectedHairID == item.itemId)
-                            
-                            InventoryCardView(itemName: item.itemInfo.name)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
-                                )
-                                .onTapGesture {
-                                    onTapItem(category: item.itemInfo.category, itemId: item.itemId, itemName: item.itemInfo.name.lowercased())
-                                }
+                        
+                    if getOneUserVM.inventoryItems.isEmpty {
+                        Text("You currently have no items in inventory.")
+                            .body1()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, Constants.LayoutPadding.small)
+                    } else {
+                        LazyVGrid(columns: columns, spacing: 15) {
+                            ForEach(getOneUserVM.inventoryItems, id: \.self) { item in
+                                //MARK: - Showing the inventory items
+                                let isSelected = (item.itemInfo.category == "Face" && selectedFaceID == item.itemId) ||
+                                (item.itemInfo.category == "Hair" && selectedHairID == item.itemId)
+                                
+                                InventoryCardView(itemName: item.itemInfo.name)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+                                    )
+                                    .onTapGesture {
+                                        onTapItem(category: item.itemInfo.category, itemId: item.itemId, itemName: item.itemInfo.name.lowercased())
+                                    }
+                            }
                         }
+                        Button {
+                            doneButtonAction()
+                        } label: {
+                            Text("Done")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(.vertical, Constants.LayoutPadding.medium)
                     }
                     
-                    Button {
-                        doneButtonAction()
-                    } label: {
-                        Text("Done")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.vertical, Constants.LayoutPadding.medium)
+                    
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, Constants.LayoutPadding.medium)

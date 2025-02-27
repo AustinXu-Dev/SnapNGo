@@ -90,6 +90,8 @@ struct TasksView: View {
                             }
                         }
                     }
+                    Spacer()
+                        .frame(height: 30)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .refreshable {
@@ -104,6 +106,8 @@ struct TasksView: View {
                             }
                         }
                     }
+                    Spacer()
+                        .frame(height: 30)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .refreshable {

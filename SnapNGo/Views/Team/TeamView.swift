@@ -31,18 +31,40 @@ struct TeamView: View {
             if checkLeaderboardTop() {
                 leaderboardTopOverlayView
             }
-            ScrollView{
-                if getOneTeamVM.isSuccess{
-                    if teamMembers.count > 4 {
-                        leaderboardView
-                    } else {
+            
+            
+            if getOneTeamVM.isSuccess{
+                if teamMembers.count > 4 {
+                    leaderboardView
+                    Spacer()
+                        .frame(height: 30)
+                }
+                else {
+                    ScrollView{
                         normalMembersView
                     }
-                } else {
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            } else {
+                ScrollView{
                     scanView
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            ScrollView{
+//                if getOneTeamVM.isSuccess{
+//                    if teamMembers.count > 4 {
+//                        leaderboardView
+//                        Spacer()
+//                            .frame(height: 30)
+//                    } else {
+//                        normalMembersView
+//                    }
+//                } else {
+//                    scanView
+//                }
+//            }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             // Loading View
             if joinTeamVM.isLoading {
@@ -223,9 +245,12 @@ struct TeamView: View {
                         .foregroundStyle(.white)
                         .font(.system(size: 16, weight: .semibold))
                     Text(teamMembers[1].name)
+                        .multilineTextAlignment(.center)
                         .foregroundStyle(.white)
                         .font(.system(size: 14, weight: .regular))
+                        .lineLimit(2)
                 }
+                .frame(width: 80)
                 .frame(maxHeight: .infinity)
                 Spacer()
                 VStack{
@@ -240,10 +265,13 @@ struct TeamView: View {
                         .foregroundStyle(.white)
                         .font(.system(size: 16, weight: .semibold))
                     Text(teamMembers[0].name)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.center)
                         .foregroundStyle(.white)
                         .font(.system(size: 14, weight: .regular))
                     Spacer()
                 }
+                .frame(width: 80)
                 .frame(maxHeight: .infinity)
                 Spacer()
                 VStack{
@@ -259,17 +287,20 @@ struct TeamView: View {
                         .foregroundStyle(.white)
                         .font(.system(size: 16, weight: .semibold))
                     Text(teamMembers[2].name)
+                        .lineLimit(2)
                         .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
                         .font(.system(size: 14, weight: .regular))
                 }
+                .frame(width: 80)
                 .frame(maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity)
             .frame(height: 204)
             
-            Spacer().frame(height: 50)
+            Spacer().frame(height: 55)
             
-            VStack{
+            ScrollView{
                 HStack{
                     Image(Constants.TeamViewConstant.participantIcon)
                     Text("^[\(getOneTeamVM.leaderboardMembers.count) Team member](inflect: true)")
@@ -284,6 +315,7 @@ struct TeamView: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, Constants.LayoutPadding.medium)
@@ -408,7 +440,7 @@ struct TeamView: View {
                 )
                 .frame(height: 381)
                 .clipShape(
-                    RoundedCornerShape(radius: 60, corners: [.bottomLeft, .bottomRight])
+                    RoundedCornerShape(radius: 40, corners: [.bottomLeft, .bottomRight])
                 )
                 .ignoresSafeArea(edges: .top)
         }

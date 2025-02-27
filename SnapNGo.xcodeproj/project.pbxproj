@@ -23,6 +23,7 @@
 		BCA1DC5C2D4F5E1E003DF657 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */; };
 		BCA1DC5D2D4F5E3E003DF657 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = BCA1DC5B2D4F5E1E003DF657 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BCABDD8C2D56406000608751 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BCABDD8B2D56406000608751 /* Kingfisher */; };
+		BCFADE3F2D704FE0007BE28B /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFADE3E2D704FE0007BE28B /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		BC2172552CC69ACD00C042EA /* SnapNGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapNGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCFADE3E2D704FE0007BE28B /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -100,6 +102,7 @@
 		BC21724C2CC69ACD00C042EA = {
 			isa = PBXGroup;
 			children = (
+				BCFADE3E2D704FE0007BE28B /* Test.swift */,
 				BC2172572CC69ACD00C042EA /* SnapNGo */,
 				B36E34AA2CD7C9B40081FB4E /* Frameworks */,
 				BC2172562CC69ACD00C042EA /* Products */,
@@ -213,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCFADE3F2D704FE0007BE28B /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

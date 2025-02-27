@@ -32,6 +32,7 @@ struct HistoryDetailView: View {
                             .scaledToFit()
                             .frame(height: 125)
                     }
+                    .cornerRadius(8)
                     ExpandableText(historyData.description)
                         .font(.system(size: 12, weight: .regular))
                         .expandAnimation(.easeInOut)

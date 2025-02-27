@@ -13,6 +13,7 @@ import SwiftUI
 import Combine
 
 class GoogleAuthViewModel: ObservableObject{
+    @Published var isLoading = false
     @Published var errorMessage = ""
     @Published var uid = ""
     @Published var email = ""
@@ -25,10 +26,10 @@ class GoogleAuthViewModel: ObservableObject{
     private var cancellables = Set<AnyCancellable>()
     
     func signInWithGoogle(presenting: UIViewController, completion: @escaping (Error?, Bool) -> Void) {
-        
         guard let clientID = FirebaseManager.shared.firebaseApp?.options.clientID else {
             self.errorMessage = "Missing Firebase Client ID"
             DispatchQueue.main.async {
+                self.isLoading = false  // Stop loading on error
                 completion(NSError(domain: "GoogleAuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Missing Firebase client ID."]), false)
             }
             return
@@ -41,13 +42,16 @@ class GoogleAuthViewModel: ObservableObject{
             if let error = error {
                 self.errorMessage = "Failed to Sign In with instance: \(error)"
                 DispatchQueue.main.async {
+                    self.isLoading = false  // Stop loading on error
                     completion(error, false)
                 }
                 return
             }
-            
+            self.isLoading = true
+
             guard let user = user?.user, let idToken = user.idToken else {
                 DispatchQueue.main.async {
+                    self.isLoading = false  // Stop loading on error
                     completion(nil, false)
                 }
                 return
@@ -96,9 +100,11 @@ class GoogleAuthViewModel: ObservableObject{
                     print("In view model",self.signUpService.name, self.signUpService.email, self.signUpService.password)
                     self.signUpService.signingInWithGoogle = true
                     self.signUpService.signUp()
+                    self.isLoading = false
                     completion(nil, true)
                 } else {
                     self.signInService.signIn()
+                    self.isLoading = false  // Stop loading on error
                     print("User app state is \(self.userAppState)")
                     completion(nil, false)
 //                    self.getAllUsersVM.$userData

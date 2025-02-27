@@ -45,29 +45,42 @@ struct SnapQuizView: View {
                     }
                     
                     HStack{
-                        Button {
-                            showingImagePicker = true
-                        } label: {
-                            Text("Capture")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 8)
-                                .frame(height: 36)
-                                .background(Color.accentColor)
-                                .cornerRadius(8)
-                        }
-                        
-                        Button {
-                            validate()
-//                            isShowingAlert = true
-                        } label: {
-                            Text("Use Photo")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 8)
-                                .frame(height: 36)
-                                .background(Color.accentColor)
-                                .cornerRadius(8)
+                        if image == nil{
+                            Button {
+                                showingImagePicker = true
+                            } label: {
+                                Text("Capture")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 8)
+                                    .frame(height: 36)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(8)
+                            }
+                        } else {
+                            Button {
+                                showingImagePicker = true
+                            } label: {
+                                Text("Capture")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 8)
+                                    .frame(height: 36)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(8)
+                            }
+                            
+                            Button {
+                                validate()
+                            } label: {
+                                Text("Use Photo")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 8)
+                                    .frame(height: 36)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(8)
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -141,7 +154,7 @@ struct SnapQuizView: View {
                             print("Error here")
                             return
                         }
-                        snapQuizViewModel.checkQuizAnswer(userId: userId, taskId: taskId, selectedAnswer: target.lowercased()){
+                        snapQuizViewModel.checkQuizAnswer(userId: userId, taskId: taskId, selectedAnswer: target){
                             getOneUserVM.userData = snapQuizViewModel.userData
                             AppCoordinator.pop()
                         }
@@ -175,7 +188,7 @@ struct SnapQuizView: View {
                     .frame(height: 40)
                 Text("Snap Quiz \(questionNo)")
                     .heading1()
-                Text("Capture the image of \(snapQuizData.quizName.capitalized).")
+                Text("Capture the image of \(snapQuizData.quizName).")
                     .multilineTextAlignment(.center)
                     .lineLimit(5)
                     .body1()

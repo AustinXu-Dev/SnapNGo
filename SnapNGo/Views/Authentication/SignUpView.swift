@@ -92,7 +92,7 @@ struct SignUpView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.horizontal, 8)
+                .padding(.horizontal, 12)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(ColorConstants.background)

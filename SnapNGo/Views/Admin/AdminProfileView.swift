@@ -34,18 +34,13 @@ struct AdminProfileView: View {
                     
                     profileDetail
                     
-                    Button {
+                    LineView()
+                    
+                    IconTextRow(icon: "logout_icon", text: "Log Out", textColor: Color("icon_red_color"), IconColor: Color("icon_red_color")){
                         showAlert = true
-                    } label: {
-                        HStack{
-                            Text("Log out")
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                        }
-                        .foregroundStyle(.white)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom, Constants.LayoutPadding.large)
-                    .buttonStyle(.borderedProminent)
+                    Spacer()
+                        .frame(height: 30)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, Constants.LayoutPadding.medium)

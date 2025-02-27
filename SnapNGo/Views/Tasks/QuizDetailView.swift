@@ -97,13 +97,14 @@ struct QuizDetailView: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(5)
                     .body1()
-                Text("hint: Answer can be found in \"About Us\" section.")
-                    .multilineTextAlignment(.center)
-                    .body1()
-                    .frame(width: 200)
+//                Text("hint: Answer can be found in \"About Us\" section.")
+//                    .multilineTextAlignment(.center)
+//                    .body1()
+//                    .frame(width: 200)
                 Spacer()
                     .frame(height: 20)
             }
+            .padding(Constants.LayoutPadding.small)
             .frame(maxWidth: .infinity, minHeight: 100)
 
             .background(

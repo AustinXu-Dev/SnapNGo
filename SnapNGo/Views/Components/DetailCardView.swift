@@ -22,10 +22,12 @@ struct DetailCardView: View {
                         .resizable()
                         .frame(maxWidth: .infinity, minHeight: 140)
                         .scaledToFill()
+                        .cornerRadius(8)
                 } else {
                     Image("huamak_chapel")
                         .resizable()
                         .frame(maxWidth: .infinity, maxHeight: 140)
+                        .cornerRadius(8)
                 }
             }
             
