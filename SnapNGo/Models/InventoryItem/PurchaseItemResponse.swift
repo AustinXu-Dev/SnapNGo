@@ -8,6 +8,11 @@
 import Foundation
 
 struct PurchaseItemResponse: Codable{
+    let message: String
+    let user: PurchaseUser
+}
+
+struct PurchaseUser: Codable{
     let _id: String
     let name: String
     let email: String

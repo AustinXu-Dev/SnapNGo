@@ -85,7 +85,7 @@ struct ShopInventoryCardView: View {
         }
         .onReceive(purchaseItemVM.$purchaseFailed) { failed in
             if failed {
-                alertMessage = "Purchase failed. Please try again."
+                alertMessage = "Purchase failed!"
                 isLoading = false
                 showResultAlert = true
             }

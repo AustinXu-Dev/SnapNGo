@@ -140,12 +140,21 @@ struct TeamView: View {
                 print("Error here")
                 return
             }
-            if let teamId = getOneUserVM.teamId{
+            getOneUserVM.getOneUser(userId: userId)
+        }
+        .onReceive(getOneUserVM.$teamId) { output in
+            if let teamId = output{
                 getOneTeamVM.getLeaderboard(teamId: teamId) { _ in
                     teamMembers = getOneTeamVM.leaderboardMembers
+                    for member in teamMembers {
+                        if memberImages[member._id] == nil {
+                            memberImages[member._id] = MemberData.memberImages.randomElement() ?? "member_1"
+                        }
+                    }
                 }
             } else {
-                getOneUserVM.getOneUser(userId: userId)
+                getOneTeamVM.reset()
+
             }
         }
     }
@@ -179,7 +188,9 @@ struct TeamView: View {
                     if joinTeamVM.joinTeamSuccess{ 
                         let teamId = joinTeamVM.teamId
                         getOneTeamVM.getOneTeam(teamId: teamId) { _ in }
-                        
+                        getOneTeamVM.getLeaderboard(teamId: teamId) { _ in
+                            
+                        }
                         // Refresh the background user state
                         // User will be updated with new team data & tasks
                         getOneUserVM.getOneUser(userId: userId)

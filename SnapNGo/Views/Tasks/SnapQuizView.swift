@@ -111,7 +111,7 @@ struct SnapQuizView: View {
                     if let pixelBuffer = resizedImage.pixelBuffer(width: 299, height: 299) {
                         do {
                             // Load the model and make a prediction
-                            let model = try SnapClassifier(configuration: MLModelConfiguration())
+                            let model = try SnapClassifier2(configuration: MLModelConfiguration())
                             if let prediction = try? model.prediction(image: pixelBuffer) {
                                 // Get the predicted class and its confidence score
                                 let predictedClass = prediction.target

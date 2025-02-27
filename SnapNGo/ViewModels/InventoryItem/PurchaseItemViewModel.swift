@@ -29,7 +29,7 @@ class PurchaseItemViewModel: ObservableObject{
                     completion()
                 case .failure(let failure):
                     self.purchaseFailed = true
-                    self.errorMessage = failure.localizedDescription
+                    self.errorMessage = "failure.localizedDescription"
                     print("Error in purchase item: \(failure.localizedDescription)")
                     completion()
                 }
