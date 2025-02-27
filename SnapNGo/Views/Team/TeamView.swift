@@ -146,11 +146,7 @@ struct TeamView: View {
             if let teamId = output{
                 getOneTeamVM.getLeaderboard(teamId: teamId) { _ in
                     teamMembers = getOneTeamVM.leaderboardMembers
-                    for member in teamMembers {
-                        if memberImages[member._id] == nil {
-                            memberImages[member._id] = MemberData.memberImages.randomElement() ?? "member_1"
-                        }
-                    }
+                    randomize()
                 }
             } else {
                 getOneTeamVM.reset()
@@ -461,6 +457,14 @@ struct TeamView: View {
 
     private func checkLeaderboardTop() -> Bool {
         return getOneTeamVM.isSuccess && teamMembers.count > 4
+    }
+    
+    private func randomize(){
+        for member in teamMembers {
+            if memberImages[member.name] == nil {
+                memberImages[member.name] = MemberData.memberImages.randomElement() ?? "member_1"
+            }
+        }
     }
 }
 
