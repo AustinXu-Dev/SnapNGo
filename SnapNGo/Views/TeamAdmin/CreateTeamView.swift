@@ -157,8 +157,9 @@ struct CreateTeamView: View {
                 print("Error occurred: \(error!.localizedDescription)")
                 return
             }
-            
-            AppCoordinator.push(.joinQRCode(named: createTeamVM.teamIdResponse!))
+            getOneAdminVM.getOneAdmin(adminId: createTeamVM.adminId) { _ in
+                AppCoordinator.push(.joinQRCode(named: createTeamVM.teamIdResponse!))
+            }
         }
     }
     

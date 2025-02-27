@@ -26,6 +26,7 @@ struct JoinQRView: View {
             
             Button {
                 AppCoordinator.popToRoot()
+                
                 getCreatedTeamsVM.getAllCreatedTeams(adminEmail: getOneAdminVM.adminEmail)
             } label: {
                 Text("Go back")

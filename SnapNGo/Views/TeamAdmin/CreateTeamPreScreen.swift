@@ -35,8 +35,17 @@ struct CreateTeamPreScreen: View {
         }
         .background(ColorConstants.background)
         .refreshable {
+            guard let adminId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.userId) else {
+                print("Error here")
+                return
+            }
+            getOneAdminVM.getOneAdmin(adminId: adminId){ _ in
+            }
+        }
+        .onChange(of: getOneAdminVM.createdTeamIds) { oldValue, newValue in
             getCreatedTeamsVM.getAllCreatedTeams(adminEmail: getOneAdminVM.adminEmail)
         }
+        
     }
     
     private var createTeamPreScreen: some View{
@@ -53,7 +62,7 @@ struct CreateTeamPreScreen: View {
                 .heading1()
                 .padding(.bottom, 8)
             Text(Constants.CreateTeamViewConstant.description)
-                .frame(width: 380)
+                .frame(width: 375)
                 .multilineTextAlignment(.center)
                 .body1()
                 .padding(.bottom, 8)
@@ -88,10 +97,20 @@ struct CreateTeamPreScreen: View {
                     .heading1()
                     .frame(maxWidth: .infinity, alignment: .center)
                 Spacer()
-                Button {
-                    AppCoordinator.push(.createTeam)
-                } label: {
-                    Image("create_team_icon")
+                if getOneAdminVM.createdTeamIds.isEmpty{
+                    Button {
+                        print("hello")
+                    } label: {
+                        Image(systemName: "calendar.badge.plus")
+                            .opacity(0)
+                    }
+                } else {
+                    Button {
+                        AppCoordinator.push(.createTeam)
+                    } label: {
+                        Image("create_team_icon")
+                        
+                    }
                 }
             }
             .frame(maxWidth: .infinity)

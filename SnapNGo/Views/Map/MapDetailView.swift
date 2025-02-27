@@ -17,6 +17,7 @@ struct MapDetailView: View {
     @State private var startLocation: String = "VMES"
     @State private var endLocation: String = "MS"
 
+    @StateObject private var locationManager = LocationManager()
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 13.611779526627688, longitude: 100.83789503816988),
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
@@ -73,6 +74,7 @@ struct MapDetailView: View {
                         .font(.headline)
                     Spacer()
                     Picker("", selection: $startLocation) {
+                        Text("Current Location").tag("Current Location")
                         ForEach(sampleSchoolLocations) { location in
                             Text(location.abbreviation).tag(location.abbreviation)
                         }
@@ -107,14 +109,22 @@ struct MapDetailView: View {
     }
     
     private func calculateRoute() {
-        guard let start = sampleSchoolLocations.first(where: { $0.abbreviation == startLocation }),
+        var startCoordinates: CLLocationCoordinate2D?
+
+        if startLocation == "Current Location", let userLocation = locationManager.userLocation {
+            startCoordinates = userLocation.coordinate
+        } else if let start = sampleSchoolLocations.first(where: { $0.abbreviation == startLocation }) {
+            startCoordinates = start.coordinates
+        }
+
+        guard let startCoordinates,
               let end = sampleSchoolLocations.first(where: { $0.abbreviation == endLocation }) else {
             return
         }
-        
+
         route = nil
 
-        let startPlacemark = MKPlacemark(coordinate: start.coordinates)
+        let startPlacemark = MKPlacemark(coordinate: startCoordinates)
         let endPlacemark = MKPlacemark(coordinate: end.coordinates)
 
         let request = MKDirections.Request()
@@ -133,6 +143,7 @@ struct MapDetailView: View {
             self.route = route.polyline
         }
     }
+
 }
 
 #Preview {

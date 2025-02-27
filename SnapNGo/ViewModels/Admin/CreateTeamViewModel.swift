@@ -12,6 +12,7 @@ class CreateTeamViewModel: ObservableObject{
     
     @Published var teamName: String = ""
     @Published var adminEmail: String = ""
+    @Published var adminId: String = ""
     @Published var teamImageUrl: String = ""
     @Published var totalTasks: Int = 0
     @Published var maxMember: String = ""
@@ -34,6 +35,7 @@ class CreateTeamViewModel: ObservableObject{
                 case .success(let response):
                     self.isLoading = false
                     self.teamIdResponse = response.team._id
+                    self.adminId = response.team.adminId
                     print(response.team)
                     completion(nil)
                 case .failure(let failure):
