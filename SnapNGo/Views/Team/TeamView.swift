@@ -272,7 +272,7 @@ struct TeamView: View {
             VStack{
                 HStack{
                     Image(Constants.TeamViewConstant.participantIcon)
-                    Text("^[\(getOneTeamVM.members.count) Team member](inflect: true)")
+                    Text("^[\(getOneTeamVM.leaderboardMembers.count) Team member](inflect: true)")
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -311,7 +311,7 @@ struct TeamView: View {
             LineView()
             HStack{
                 Image(Constants.TeamViewConstant.participantIcon)
-                Text("^[\(getOneTeamVM.members.count) Team member](inflect: true)")
+                Text("^[\(getOneTeamVM.leaderboardMembers.count) Team member](inflect: true)")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             

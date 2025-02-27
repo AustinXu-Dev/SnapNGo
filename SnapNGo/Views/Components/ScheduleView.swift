@@ -24,8 +24,8 @@ struct ScheduleView: View {
             
             HStack {
                 Text(day)
-                    .heading2()
-                
+                    .body1()
+
                 Spacer()
                 
                 Text(massType)
