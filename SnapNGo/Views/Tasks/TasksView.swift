@@ -122,7 +122,7 @@ struct TasksView: View {
         if task.status.isFinished {
             return AnyView(
                 Button {
-                    AppCoordinator.push(.snapQuizDetail(named: task.snapQuizDetails, questionNo: index+1, taskId: task._id, hint: giveHint(for: task.snapQuizDetails.quizName)))
+//                    AppCoordinator.push(.snapQuizDetail(named: task.snapQuizDetails, questionNo: index+1, taskId: task._id, hint: giveHint(for: task.snapQuizDetails.quizName)))
                 } label: {
                     Image(task.status.isAnswerCorrect ? "quiz_correct_icon" : "quiz_wrong_icon")
                         .resizable()
@@ -130,6 +130,7 @@ struct TasksView: View {
                         .frame(width: 50, height: 50)
                 }
                 .frame(width: 95, height: 95)
+                .disabled(true)
             )
         } else {
             return AnyView(
