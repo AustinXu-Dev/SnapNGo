@@ -2,18 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need to use your location.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need to use your photo library.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We need to use your location.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need to use your location.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>We need to use your location.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need to use camera for scaning QR codes.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -29,6 +17,8 @@
 	<dict>
 		<key>UIImageName</key>
 		<string>launch_screen</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
 	</dict>
 </dict>
 </plist>
