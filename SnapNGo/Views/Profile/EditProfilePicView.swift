@@ -98,6 +98,9 @@ struct EditProfilePicView: View {
             if equipItemVM.isLoading{
                 loadingBoxView(message: "Equipping Item...")
             }
+            if unequipItemVM.isLoading{
+                loadingBoxView(message: "Unequipping Item...")
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)

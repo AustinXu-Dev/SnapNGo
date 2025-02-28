@@ -130,7 +130,7 @@ struct MapDetailView: View {
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: startPlacemark)
         request.destination = MKMapItem(placemark: endPlacemark)
-        request.transportType = .automobile
+        request.transportType = .walking
 
         let directions = MKDirections(request: request)
         directions.calculate { response, error in
